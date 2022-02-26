@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.0.0-rc.1",
+    "@types/ramda": "^0.28.0",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.7",
     "ramda": "^0.28.0",
