@@ -443,6 +443,11 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
+"@types/video.js@^7.3.31":
+  version "7.3.31"
+  resolved "https://registry.yarnpkg.com/@types/video.js/-/video.js-7.3.31.tgz#53838220986552b72fb118b8ab91814f12478f4c"
+  integrity sha512-ffDI1HsCro2LCcB8IHpvV8D6HX5nQIfMZteCLaECGeK0EVSuw7MXs2IpIf62BnAUzWrnsySxfLR5OKuGq7HyPw==
+
 "@typescript-eslint/eslint-plugin@^5.12.1":
   version "5.12.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.12.1.tgz"
@@ -2602,7 +2607,7 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-"video.js@^6 || ^7", video.js@^7.17.0:
+"video.js@^5.6.0 || ^6.2.8 || ^7.0.2", "video.js@^6 || ^7", video.js@^7.17.0:
   version "7.17.0"
   resolved "https://registry.yarnpkg.com/video.js/-/video.js-7.17.0.tgz#35918cc03748a5680f5d5f1da410e06eeea7786e"
   integrity sha512-8RbLu9+Pdpep9OTPncUHIvZXFgn/7hKdPnSTE/lGSnlFSucXtTUBp41R7NDwncscMLQ0WgazUbmFlvr4MNWMbA==
@@ -2632,6 +2637,13 @@ videojs-vtt.js@^0.15.3:
   integrity sha512-5FvVsICuMRx6Hd7H/Y9s9GDeEtYcXQWzGMS+sl4UX3t/zoHp3y+isSfIPRochnTH7h+Bh1ILyC639xy9Z6kPag==
   dependencies:
     global "^4.3.1"
+
+videojs-youtube@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/videojs-youtube/-/videojs-youtube-2.6.1.tgz#3f7cce15229509ea6d54582e28793df530254860"
+  integrity sha512-qvwrkgXixbX8xzdkBa7o5r9KUITRISAy4bbyrpBgub3m0mhwz6WLXDIwJZ6/w4Z/JijWjLQqlg8W1jYhCEgHZw==
+  dependencies:
+    video.js "^5.6.0 || ^6.2.8 || ^7.0.2"
 
 vite@^2.8.0:
   version "2.8.4"

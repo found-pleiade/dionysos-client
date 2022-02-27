@@ -32,16 +32,18 @@ type connectProps = {
 const Connect = ({ send, username, setUsername }: connectProps) => {
   const isValidUsername = isValid(R.length(username));
 
+  const buttonText = isValidUsername ? 'Never gonna give you up' : 'You know the rules, and so do I';
+
   return (
-    <div className="bg-neutral-800 h-[270px] w-[500px] rounded-lg relative top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-between flex-col p-6">
+    <div className="bg-neutral-800 h-[250px] w-[600px] rounded-lg relative top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-between flex-col p-6">
       <h1 className="text-center font-medium text-2xl">Welcome to Dyonisos</h1>
       <div>
-        <h2 className="mb-2">Choose your username</h2>
+        <h2 className="mb-2">We&apos;re no strangers to love</h2>
         <Input value={username} setValue={setUsername} />
       </div>
       <div className="flex justify-between">
         <div />
-        <Button to="/home" text="Join" colorless={!isValidUsername} disabled={!isValidUsername} onClick={sendUsername(isValidUsername, send, username)} />
+        <Button to="/home" text={buttonText} colorless={!isValidUsername} disabled={!isValidUsername} onClick={sendUsername(isValidUsername, send, username)} />
       </div>
     </div>
   );
