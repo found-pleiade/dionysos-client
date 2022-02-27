@@ -8,14 +8,15 @@ type buttonProps = {
   colorless?: boolean,
   hidden?: boolean,
   onClick?: React.MouseEventHandler<HTMLButtonElement>,
+  disabled?: boolean,
 }
 
 const Button = ({
-  to = '', text, colorless = false, hidden = false, onClick,
+  to = '', text, colorless = false, hidden = false, onClick, disabled = false,
 }: buttonProps) => {
   const style = 'px-8 py-2 capitalize rounded-md ease-out transition-all font-medium';
   const visibility = hidden ? 'hidden' : 'visible';
-  const buttonStyle = colorless ? 'bg-neutral-700' : 'bg-vin-500';
+  const buttonStyle = colorless ? 'bg-neutral-700' : 'bg-vin-600 hover:bg-vin-500 transition-colors';
 
   const buttonProp = (
     <button
@@ -36,7 +37,7 @@ const Button = ({
     </Link>
   );
 
-  return R.isNil(to) ? buttonProp : linkProp;
+  return R.isNil(to) || disabled ? buttonProp : linkProp;
 };
 
 export default Button;
