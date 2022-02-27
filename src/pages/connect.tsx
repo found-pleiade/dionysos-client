@@ -11,7 +11,7 @@ const ltFifty = R.lt(R.__, 50);
 
 const isValid = R.allPass([gtZero, ltFifty]);
 
-const usernameToNCO = (username: string) => JSON.stringify({ code: 'NCO', payload: { username } });
+const requestData = (code: string, data: {}) => JSON.stringify({ code, payload: data });
 
 const sendUsername = (
   isValidUsername: boolean,
@@ -19,7 +19,7 @@ const sendUsername = (
   username: string,
 ) => R.ifElse(
   () => isValidUsername,
-  () => send(usernameToNCO(username)),
+  () => send(requestData('NCO', { username })),
   () => null,
 );
 
