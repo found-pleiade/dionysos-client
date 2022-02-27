@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Videojs from '../components/Videojs';
 
 type homeProps = {
@@ -7,7 +7,7 @@ type homeProps = {
 }
 
 const Home = ({ username, userid }: homeProps) => {
-  const playerRef = React.useRef(null);
+  const playerRef = useRef(null);
 
   const videoJsOptions = {
     autoplay: false,
