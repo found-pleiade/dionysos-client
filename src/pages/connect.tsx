@@ -3,11 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import Button from '../components/Button';
 import Input from '../components/Input';
-
-type connectProps = {
-  username: string,
-  setUsername: React.Dispatch<React.SetStateAction<string>>
-}
+import { sendFunction } from '../constants';
 
 const gtZero = R.gt(R.__, 0);
 
@@ -15,7 +11,25 @@ const ltFifty = R.lt(R.__, 50);
 
 const isValid = R.allPass([gtZero, ltFifty]);
 
-const Connect = ({ username, setUsername }: connectProps) => {
+const usernameToNCO = (username: string) => JSON.stringify({ code: 'NCO', payload: username });
+
+const sendUsername = (
+  isValidUsername: boolean,
+  send: sendFunction,
+  username: string,
+) => R.ifElse(
+  () => isValidUsername,
+  () => send(usernameToNCO(username)),
+  () => null,
+);
+
+type connectProps = {
+  send: sendFunction,
+  username: string,
+  setUsername: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Connect = ({ send, username, setUsername }: connectProps) => {
   const isValidUsername = isValid(R.length(username));
 
   return (
@@ -27,7 +41,7 @@ const Connect = ({ username, setUsername }: connectProps) => {
       </div>
       <div className="flex justify-between">
         <div />
-        <Button to="/home" text="Join" colorless={!isValidUsername} disabled={!isValidUsername} />
+        <Button to="/home" text="Join" colorless={!isValidUsername} disabled={!isValidUsername} onClick={sendUsername(isValidUsername, send, username)} />
       </div>
     </div>
   );
