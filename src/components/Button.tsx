@@ -7,7 +7,7 @@ type buttonProps = {
   text: string,
   colorless?: boolean,
   hidden?: boolean,
-  onClick?: React.MouseEventHandler<HTMLButtonElement>,
+  onClick?: any,
   disabled?: boolean,
 }
 
@@ -33,6 +33,7 @@ const Button = ({
     <Link
       to={to}
       className={`${style} ${buttonStyle} ${visibility}`}
+      onClick={onClick}
     >
       {text}
     </Link>
