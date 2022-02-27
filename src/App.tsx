@@ -10,6 +10,7 @@ const socket = new WebSocket('wss://dionysos.yannlacroix.fr');
 
 const App = () => {
   const [username, setUsername] = useState('');
+  const [userid, setUserid] = useState('');
 
   useEffect(() => {
     socket.onopen = (event) => {
@@ -17,7 +18,12 @@ const App = () => {
     };
 
     socket.onmessage = (event) => {
-      console.log('onmessage: ', event);
+      const { data } = event;
+      const { code, payload } = JSON.parse(data);
+
+      if (code === 'COS') {
+        setUserid(payload.userId);
+      }
     };
 
     socket.onerror = (event) => {
@@ -29,12 +35,15 @@ const App = () => {
     };
   }, []);
 
+  const connect = <Connect send={send(socket)} username={username} setUsername={setUsername} />;
+  const home = <Home username={username} userid={userid} />;
+
   return (
     <div className="text-neutral-50 bg-neutral-900 h-screen">
       <MemoryRouter>
         <Routes>
-          <Route path="/" element={<Connect send={send(socket)} username={username} setUsername={setUsername} />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={connect} />
+          <Route path="/home" element={home} />
         </Routes>
       </MemoryRouter>
     </div>
