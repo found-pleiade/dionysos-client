@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import Id from '../components/Id';
 import Videojs from '../components/Videojs';
 
 type homeProps = {
@@ -37,9 +38,12 @@ const Home = ({ username, userid }: homeProps) => {
   return (
     <div className="h-screen w-screen truncate bg-black flex">
       <div className="flex flex-col justify-between p-3 bg-neutral-900">
-        <h1 className="text-2xl mb-20">Salon</h1>
+        <div className="mb-20">
+          <h1 className="text-2xl">Room</h1>
+          <Id userid="roomid" />
+        </div>
 
-        <ul className="h-full">
+        <ul className={`h-full ${'hidden'}`}>
           <li>user</li>
           <li>user</li>
           <li>user</li>
@@ -49,7 +53,7 @@ const Home = ({ username, userid }: homeProps) => {
 
         <div>
           <p className="text-md text-neutral-100">{username}</p>
-          <button className="text-sm text-neutral-400 cursor-pointer" title="Click to copy" onClick={() => navigator.clipboard.writeText(userid)} type="button">{userid}</button>
+          <Id userid={userid} />
         </div>
       </div>
 
