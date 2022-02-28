@@ -11,6 +11,9 @@ const socket = new WebSocket('wss://dionysos.yannlacroix.fr');
 const App = () => {
   const [username, setUsername] = useState('');
   const [userid, setUserid] = useState('');
+  const [users, setUsers] = useState<Array<string>>([]);
+  const [room, setRoom] = useState('');
+  const [roomid, setRoomid] = useState('');
 
   useEffect(() => {
     socket.onopen = (event) => {
@@ -36,7 +39,15 @@ const App = () => {
   }, []);
 
   const connect = <Connect send={send(socket)} username={username} setUsername={setUsername} />;
-  const home = <Home username={username} userid={userid} />;
+  const home = (
+    <Home
+      username={username}
+      userid={userid}
+      users={users}
+      room={room}
+      roomid={roomid}
+    />
+  );
 
   return (
     <div className="text-neutral-50 bg-neutral-900 h-screen">
