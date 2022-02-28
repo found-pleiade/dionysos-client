@@ -12,7 +12,7 @@ const App = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [username, setUsername] = useState('');
   const [userid, setUserid] = useState('');
-  const [users, setUsers] = useState<Array<string>>([]);
+  const [users, setUsers] = useState<Array<{ id: number, name: string }>>([]);
   const [room, setRoom] = useState('');
   const [roomid, setRoomid] = useState('');
 
@@ -33,6 +33,7 @@ const App = () => {
 
       if (code === 'RCS') {
         setRoomid(payload.roomId);
+        setUsers([{ id: 0, name: username }]);
       }
     };
 
@@ -42,8 +43,9 @@ const App = () => {
 
     socket.onclose = (event) => {
       console.log('onclose: ', event);
+      setIsConnected(false);
     };
-  }, []);
+  }, [username]);
 
   const connect = (
     <Connect
