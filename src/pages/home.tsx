@@ -1,13 +1,19 @@
 import React, { useRef, useState } from 'react';
 import Id from '../components/Id';
+import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
 
 type homeProps = {
   username: string,
-  userid: string
+  userid: string,
+  users: Array<string>,
+  room: string,
+  roomid: string,
 }
 
-const Home = ({ username, userid }: homeProps) => {
+const Home = ({
+  username, userid, users, room, roomid,
+}: homeProps) => {
   const playerRef = useRef(null);
 
   const videoJsOptions = {
@@ -37,19 +43,13 @@ const Home = ({ username, userid }: homeProps) => {
 
   return (
     <div className="h-screen w-screen truncate bg-black flex">
-      <div className="flex flex-col justify-between p-3 bg-neutral-900">
+      <div className="flex flex-col justify-between p-3 bg-neutral-900 w-[375px]">
         <div className="mb-20">
-          <h1 className="text-2xl">Room</h1>
-          <Id userid="roomid" />
+          <h1 className="text-2xl">{room}</h1>
+          <Id userid={roomid} />
         </div>
 
-        <ul className={`h-full ${'hidden'}`}>
-          <li>user</li>
-          <li>user</li>
-          <li>user</li>
-          <li>user</li>
-          <li>user</li>
-        </ul>
+        <Userlist users={users} />
 
         <div>
           <p className="text-md text-neutral-100">{username}</p>
