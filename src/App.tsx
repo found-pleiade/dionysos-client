@@ -9,6 +9,7 @@ const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 const socket = new WebSocket('wss://dionysos.yannlacroix.fr');
 
 const App = () => {
+  const [isConnected, setIsConnected] = useState(false);
   const [username, setUsername] = useState('');
   const [userid, setUserid] = useState('');
   const [users, setUsers] = useState<Array<string>>([]);
@@ -18,14 +19,20 @@ const App = () => {
   useEffect(() => {
     socket.onopen = (event) => {
       console.log('onopen: ', event);
+      setIsConnected(true);
     };
 
     socket.onmessage = (event) => {
       const { data } = event;
       const { code, payload } = JSON.parse(data);
+      console.log(code, payload);
 
       if (code === 'COS') {
         setUserid(payload.userId);
+      }
+
+      if (code === 'RCS') {
+        setRoomid(payload.roomId);
       }
     };
 
@@ -38,14 +45,23 @@ const App = () => {
     };
   }, []);
 
-  const connect = <Connect send={send(socket)} username={username} setUsername={setUsername} />;
+  const connect = (
+    <Connect
+      send={send(socket)}
+      username={username}
+      setUsername={setUsername}
+      isConnected={isConnected}
+    />
+  );
   const home = (
     <Home
       username={username}
       userid={userid}
       users={users}
       room={room}
+      setRoom={setRoom}
       roomid={roomid}
+      send={send(socket)}
     />
   );
 
