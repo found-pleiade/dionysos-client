@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import * as R from 'ramda';
+import { window as tauriWindow } from '@tauri-apps/api';
 import Id from '../components/Id';
 import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
@@ -65,6 +66,11 @@ const Home = ({
   };
 
   const roomNotEmpty = room !== '' && roomid !== '';
+
+  document.querySelector('.vjs-fullscreen-control')?.addEventListener('click', async (event) => {
+    const current = tauriWindow.getCurrent();
+    current.setFullscreen(!(await current.isFullscreen()));
+  });
 
   return (
     <div className="h-screen w-screen truncate bg-black flex">
