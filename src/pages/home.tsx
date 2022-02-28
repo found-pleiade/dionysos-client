@@ -5,6 +5,7 @@ import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
 import { sendFunction } from '../constants';
 import { requestData } from '../utils';
+import Separator from '../components/Separator';
 
 const sendRoom = (
   isAlreadyCreated: boolean,
@@ -25,7 +26,7 @@ const sendRoom = (
 type homeProps = {
   username: string,
   userid: string,
-  users: Array<string>,
+  users: Array<{ id: number, name: string }>,
   room: string,
   setRoom: Function,
   roomid: string,
@@ -67,12 +68,18 @@ const Home = ({
       <div className="flex flex-col justify-between p-3 bg-neutral-900 w-[375px]">
         <button type="button" onClick={sendRoom(false, send, 'Test room', username, true, setRoom)}>Create a room</button>
 
-        <div className="mb-20">
+        <Separator />
+
+        <div className="">
           <h1 className="text-2xl">{room}</h1>
           <Id userid={roomid} />
         </div>
 
+        <Separator />
+
         <Userlist users={users} />
+
+        <Separator />
 
         <div>
           <p className="text-md text-neutral-100">{username}</p>
