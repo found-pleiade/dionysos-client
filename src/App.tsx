@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { dataType } from './constants';
 import Connect from './pages/connect';
 import Home from './pages/home';
+import { User } from './utils/types';
 
 const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 
@@ -12,7 +13,7 @@ const App = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [username, setUsername] = useState('');
   const [userid, setUserid] = useState('');
-  const [users, setUsers] = useState<Array<{ id: number, name: string }>>([]);
+  const [users, setUsers] = useState<Array<User>>([]);
   const [room, setRoom] = useState('');
   const [roomid, setRoomid] = useState('');
 
@@ -33,7 +34,17 @@ const App = () => {
 
       if (code === 'RCS') {
         setRoomid(payload.roomId);
-        setUsers([{ id: 0, name: username }]);
+        setUsers([{ id: userid, name: username }]);
+      }
+
+      if (code === 'JRO') {
+        setUsers([{ id: userid, name: username }]);
+      }
+
+      if (code === 'NEP') {
+        setRoom(payload.roomname);
+        setRoomid(payload.roomId);
+        setUsers(payload.peers);
       }
     };
 
@@ -45,7 +56,7 @@ const App = () => {
       console.log('onclose: ', event);
       setIsConnected(false);
     };
-  }, [username]);
+  }, [username, userid]);
 
   const connect = (
     <Connect
@@ -68,7 +79,7 @@ const App = () => {
   );
 
   return (
-    <div className="text-neutral-50 bg-neutral-900 h-screen">
+    <div className="text-neutral-50 bg-neutral-900 h-screen cursor-default">
       <MemoryRouter>
         <Routes>
           <Route path="/" element={connect} />
