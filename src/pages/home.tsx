@@ -8,8 +8,9 @@ import { sendFunction } from '../constants';
 import { requestData, visibility } from '../utils';
 import Separator from '../components/Separator';
 import RoomInput from '../components/RoomInput';
+import { User } from '../utils/types';
 
-const sendRoom = (
+const newRoom = (
   send: sendFunction,
   room: string,
   username: string,
@@ -20,6 +21,14 @@ const sendRoom = (
   send(requestData('NRO', { roomname: room, ownername: username, isPrivate }));
 };
 
+const joinRoom = (
+  send: sendFunction,
+  username: string,
+  roomidEl: HTMLInputElement,
+) => {
+  send(requestData('JRO', { requesterUsername: username, roomid: roomidEl.value }));
+};
+
 const onRoomInputChange = (
   event: React.ChangeEvent<HTMLInputElement>,
   setRoom: React.Dispatch<React.SetStateAction<string>>,
@@ -28,7 +37,7 @@ const onRoomInputChange = (
 type homeProps = {
   username: string,
   userid: string,
-  users: Array<{ id: number, name: string }>,
+  users: Array<User>,
   room: string,
   setRoom: React.Dispatch<React.SetStateAction<string>>,
   roomid: string,
@@ -66,6 +75,7 @@ const Home = ({
   };
 
   const roomNotEmpty = room !== '' && roomid !== '';
+  const emptyUserList = users.length <= 0;
 
   document.querySelector('.vjs-fullscreen-control')?.addEventListener('click', async (event) => {
     const current = tauriWindow.getCurrent();
@@ -74,28 +84,26 @@ const Home = ({
 
   return (
     <div className="h-screen w-screen truncate bg-black flex">
-      <div className="flex flex-col justify-between p-3 bg-neutral-900 w-[375px]">
-        <div className="flex flex-col gap-3">
-          <RoomInput text="Create" placeholder="Enter a room name" onClick={() => sendRoom(send, room, username, true, setRoom)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, setRoom)} groupClassName={visibility(!roomNotEmpty)} buttonClassName="bg-neutral-600 focus:bg-neutral-500 hover:bg-neutral-500" />
+      <div className="flex flex-col justify-between p-3 bg-neutral-900">
+        <div className={`flex flex-col gap-3 ${visibility(!roomNotEmpty)}`}>
+          <RoomInput text="Create" placeholder="Enter a room name" onClick={() => newRoom(send, room, username, false, setRoom)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, setRoom)} buttonClassName="bg-neutral-600 focus:bg-neutral-500 hover:bg-neutral-500" />
 
-          <RoomInput text="Join" placeholder="Enter a room ID" onClick={() => { console.log('clicked'); }} groupClassName={visibility(!roomNotEmpty)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />
+          <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, username, event.target.parentElement?.firstElementChild as HTMLInputElement)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />
         </div>
 
-        <Separator className={visibility(!roomNotEmpty)} />
-
         <div className={visibility(roomNotEmpty)}>
-          <h1 className="text-2xl">{room}</h1>
+          <h1 className="text-2xl font-medium">{room}</h1>
           <Id userid={roomid} />
         </div>
 
-        <Separator className={visibility(roomNotEmpty)} />
+        <Separator className={visibility(roomNotEmpty || !emptyUserList)} />
 
-        <Userlist users={users} />
+        <Userlist users={users} className={visibility(!emptyUserList)} />
 
-        <Separator />
+        <Separator className={visibility(!emptyUserList)} />
 
         <div>
-          <p className="text-md text-neutral-100">{username}</p>
+          <p className="text-md">{username}</p>
           <Id userid={userid} />
         </div>
       </div>
