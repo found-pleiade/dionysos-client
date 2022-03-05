@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { v4 as salt } from 'uuid';
-import { dataType } from './constants';
 import Connect from './pages/connect';
 import Home from './pages/home';
-import { Room, User } from './utils/types';
+import { Room, User, dataType } from './utils/types';
 
 const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 
@@ -50,7 +49,9 @@ const App = () => {
       }
 
       if (code === 'JRO') {
-        setRoom({ ...room, name: payload.roomName, isPrivate: payload.isPrivate });
+        setRoom({
+          ...room, name: payload.roomName, id: payload.roomId, isPrivate: payload.isPrivate,
+        });
       }
 
       if (code === 'NEP') {
