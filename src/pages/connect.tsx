@@ -3,9 +3,8 @@ import React from 'react';
 import * as R from 'ramda';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { sendFunction } from '../constants';
 import { requestData } from '../utils';
-import { SetUser, User } from '../utils/types';
+import { SetUser, User, sendFunction } from '../utils/types';
 
 const gtZero = (x: string) => R.gt(R.length(x), 0);
 
