@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { v4 as salt } from 'uuid';
 import { dataType } from './constants';
 import Connect from './pages/connect';
 import Home from './pages/home';
-import { User } from './utils/types';
+import { Room, User } from './utils/types';
 
 const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 
 const socket = new WebSocket('wss://dionysos.yannlacroix.fr');
 
+const defaultUser = {
+  id: '',
+  salt: salt(),
+  name: '',
+};
+
+const defaultRoom = {
+  id: '',
+  name: '',
+  isPrivate: false,
+  ownerId: '',
+};
+
 const App = () => {
   const [isConnected, setIsConnected] = useState(false);
-  const [username, setUsername] = useState('');
-  const [userid, setUserid] = useState('');
+  const [user, setUser] = useState<User>(defaultUser);
+  const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
-  const [room, setRoom] = useState('');
-  const [roomid, setRoomid] = useState('');
 
   useEffect(() => {
     socket.onopen = (event) => {
@@ -29,21 +41,20 @@ const App = () => {
       console.log(code, payload);
 
       if (code === 'COS') {
-        setUserid(payload.userId);
+        setUser({ ...user, id: payload.userId });
       }
 
       if (code === 'RCS') {
-        setRoomid(payload.roomId);
-        setUsers([{ id: userid, name: username }]);
+        setRoom({ ...room, id: payload.roomId, ownerId: user.id });
+        setUsers([user]);
       }
 
       if (code === 'JRO') {
-        setUsers([{ id: userid, name: username }]);
+        setRoom({ ...room, name: payload.roomName, isPrivate: payload.isPrivate });
       }
 
       if (code === 'NEP') {
-        setRoom(payload.roomname);
-        setRoomid(payload.roomId);
+        setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
       }
     };
@@ -56,24 +67,22 @@ const App = () => {
       console.log('onclose: ', event);
       setIsConnected(false);
     };
-  }, [username, userid]);
+  }, [user, room]);
 
   const connect = (
     <Connect
       send={send(socket)}
-      username={username}
-      setUsername={setUsername}
+      user={user}
+      setUser={setUser}
       isConnected={isConnected}
     />
   );
   const home = (
     <Home
-      username={username}
-      userid={userid}
+      user={user}
       users={users}
       room={room}
       setRoom={setRoom}
-      roomid={roomid}
       send={send(socket)}
     />
   );
