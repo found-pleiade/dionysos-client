@@ -14,3 +14,7 @@ export type Room = {
   ownerId: string,
   isPrivate: boolean,
 }
+
+export type dataType = string | ArrayBufferLike | Blob | ArrayBufferView;
+
+export type sendFunction = (data: dataType) => void;

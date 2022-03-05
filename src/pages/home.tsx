@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import * as R from 'ramda';
 import { window as tauriWindow } from '@tauri-apps/api';
+import { PencilAltIcon } from '@heroicons/react/solid';
 import Id from '../components/Id';
 import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
-import { sendFunction } from '../constants';
 import { requestData, visibility } from '../utils';
 import Separator from '../components/Separator';
 import RoomInput from '../components/RoomInput';
-import { Room, User } from '../utils/types';
+import { Room, User, sendFunction } from '../utils/types';
 
 const newRoom = (
   send: sendFunction,
@@ -18,15 +18,15 @@ const newRoom = (
   isPrivate: boolean,
 ) => {
   setRoom(room);
-  send(requestData('NRO', { roomname: room.name, ownername: user.name, isPrivate }));
+  send(requestData('NRO', { roomname: room.name, salt: user.salt, isPrivate }));
 };
 
 const joinRoom = (
   send: sendFunction,
-  username: string,
+  user: User,
   roomidEl: HTMLInputElement,
 ) => {
-  send(requestData('JRO', { requesterUsername: username, roomid: roomidEl.value }));
+  send(requestData('JRO', { salt: user.salt, roomid: roomidEl.value }));
 };
 
 const onRoomInputChange = (
@@ -87,7 +87,7 @@ const Home = ({
         <div className={`flex flex-col gap-3 ${visibility(!roomNotEmpty)}`}>
           <RoomInput text="Create" placeholder="Enter a room name" onClick={() => newRoom(send, user, room, setRoom, false)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} buttonClassName="bg-neutral-600 focus:bg-neutral-500 hover:bg-neutral-500" />
 
-          <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user.name, event.target.parentElement?.firstElementChild as HTMLInputElement)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />
+          <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />
         </div>
 
         <div className={visibility(roomNotEmpty)}>
@@ -102,7 +102,11 @@ const Home = ({
         <Separator className={visibility(!emptyUserList)} />
 
         <div>
-          <p className="text-md">{user.name}</p>
+          <p className="text-md flex items-center">
+            {user.name}
+            {' '}
+            <PencilAltIcon className="ml-2 h-5 w-4" />
+          </p>
           <Id id={user.id} />
         </div>
       </div>
