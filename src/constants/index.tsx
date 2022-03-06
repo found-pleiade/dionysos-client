@@ -21,6 +21,7 @@ export const codes = {
     connection: 'NCO',
     roomCreation: 'NRO',
     joinRoom: 'JRO',
+    changeUserName: 'CHU',
   },
   response: {
     error: 'ERR',

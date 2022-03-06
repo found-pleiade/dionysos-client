@@ -10,9 +10,9 @@ import { Room, User, dataType } from './utils/types';
 
 const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 
-const socket = new WebSocket(devServer);
-
 const App = () => {
+  const [webSocket, setWebSocket] = useState(new WebSocket(devServer));
+  const [serverUrl, setServerUrl] = useState(devServer);
   const [isConnected, setIsConnected] = useState(false);
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
@@ -20,12 +20,16 @@ const App = () => {
   const [errors, setErrors] = useState<Array<string>>([]);
 
   useEffect(() => {
-    socket.onopen = (event) => {
+    setWebSocket(new WebSocket(serverUrl));
+  }, [serverUrl]);
+
+  useEffect(() => {
+    webSocket.onopen = (event) => {
       console.log('onopen: ', event);
       setIsConnected(true);
     };
 
-    socket.onmessage = (event) => {
+    webSocket.onmessage = (event) => {
       const { data } = event;
       const { code, payload } = JSON.parse(data);
       console.log(code, payload);
@@ -58,21 +62,23 @@ const App = () => {
       }
     };
 
-    socket.onerror = (event) => {
+    webSocket.onerror = (event) => {
       console.log('onerror: ', event);
     };
 
-    socket.onclose = (event) => {
+    webSocket.onclose = (event) => {
       console.log('onclose: ', event);
       setIsConnected(false);
     };
-  }, [user, room, errors]);
+  }, [user, room, errors, webSocket]);
 
   const connect = (
     <Connect
-      send={send(socket)}
+      send={send(webSocket)}
       user={user}
       setUser={setUser}
+      serverUrl={serverUrl}
+      setServerUrl={setServerUrl}
       isConnected={isConnected}
     />
   );
@@ -82,7 +88,7 @@ const App = () => {
       users={users}
       room={room}
       setRoom={setRoom}
-      send={send(socket)}
+      send={send(webSocket)}
     />
   );
 

@@ -99,7 +99,7 @@ const Home = ({
   const emptyUserList = users.length <= 0;
 
   const [panel, setPanel] = useState(true);
-  const [chat, setChat] = useState(true);
+  const [chat, setChat] = useState(false);
   const translate = (condition: boolean) => (condition ? 'max-w-[650px] px-3 overflow-visible' : 'max-w-0 px-0 overflow-hidden');
 
   // document.querySelector('.vjs-fullscreen-control')?.addEventListener('click', async (event) => {
