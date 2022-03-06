@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { v4 as salt } from 'uuid';
+import Error from './components/Error';
 import Connect from './pages/connect';
 import Home from './pages/home';
 import { Room, User, dataType } from './utils/types';
 
 const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 
-const socket = new WebSocket('wss://dionysos.yannlacroix.fr');
+const socket = new WebSocket('wss://dionysos-test.yannlacroix.fr');
 
 const defaultUser = {
   id: '',
@@ -27,6 +28,7 @@ const App = () => {
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
+  const [errors, setErrors] = useState<Array<string>>([]);
 
   useEffect(() => {
     socket.onopen = (event) => {
@@ -39,6 +41,10 @@ const App = () => {
       const { code, payload } = JSON.parse(data);
       console.log(code, payload);
 
+      if (code === 'ERR') {
+        setErrors(errors.concat(payload.error));
+      }
+
       if (code === 'COS') {
         setUser({ ...user, id: payload.userId });
       }
@@ -50,7 +56,10 @@ const App = () => {
 
       if (code === 'JRO') {
         setRoom({
-          ...room, name: payload.roomName, id: payload.roomId, isPrivate: payload.isPrivate,
+          ...room,
+          name: payload.roomName,
+          id: payload.roomId,
+          isPrivate: payload.isPrivate,
         });
       }
 
@@ -68,7 +77,7 @@ const App = () => {
       console.log('onclose: ', event);
       setIsConnected(false);
     };
-  }, [user, room]);
+  }, [user, room, errors]);
 
   const connect = (
     <Connect
@@ -90,6 +99,10 @@ const App = () => {
 
   return (
     <div className="text-neutral-50 bg-neutral-900 h-screen cursor-default">
+      <div className="z-10 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
+        {errors.map((error) => <Error error={error} />)}
+      </div>
+
       <MemoryRouter>
         <Routes>
           <Route path="/" element={connect} />
