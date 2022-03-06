@@ -15,6 +15,13 @@ export type Room = {
   isPrivate: boolean,
 }
 
+export type ModalType = {
+  isShowing: boolean,
+  toggle: () => void,
+  content: any,
+  setContent: React.Dispatch<React.SetStateAction<any>>
+}
+
 export type SetRoom = React.Dispatch<React.SetStateAction<Room>>
 
 export type dataType = string | ArrayBufferLike | Blob | ArrayBufferView;
