@@ -15,6 +15,8 @@ export type Room = {
   isPrivate: boolean,
 }
 
+export type SetRoom = React.Dispatch<React.SetStateAction<Room>>
+
 export type dataType = string | ArrayBufferLike | Blob | ArrayBufferView;
 
 export type sendFunction = (data: dataType) => void;

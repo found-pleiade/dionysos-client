@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { requestData } from '../utils';
 import { SetUser, User, sendFunction } from '../utils/types';
+import { codes } from '../constants';
 
 const gtZero = (x: string) => R.gt(R.length(x), 0);
 
@@ -12,7 +13,10 @@ const ltFifty = (x: string) => R.lt(R.length(x), 50);
 
 const isValid = R.allPass([gtZero, ltFifty]);
 
-const requestNCO = (user: User) => requestData('NCO', { username: user.name, salt: user.salt });
+const requestNCO = (user: User) => requestData(
+  codes.request.connection,
+  { username: user.name, salt: user.salt },
+);
 
 const sendUsername = (
   isValidUsername: boolean,

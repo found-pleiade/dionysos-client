@@ -8,17 +8,23 @@ import Videojs from '../components/Videojs';
 import { requestData, visibility } from '../utils';
 import Separator from '../components/Separator';
 import RoomInput from '../components/RoomInput';
-import { Room, User, sendFunction } from '../utils/types';
+import {
+  Room, User, sendFunction, SetRoom,
+} from '../utils/types';
+import { codes } from '../constants';
 
 const newRoom = (
   send: sendFunction,
   user: User,
   room: Room,
-  setRoom: React.Dispatch<React.SetStateAction<Room>>,
+  setRoom: SetRoom,
   isPrivate: boolean,
 ) => {
   setRoom(room);
-  send(requestData('NRO', { roomname: room.name, salt: user.salt, isPrivate }));
+  send(requestData(
+    codes.request.roomCreation,
+    { roomname: room.name, salt: user.salt, isPrivate },
+  ));
 };
 
 const joinRoom = (
@@ -26,20 +32,23 @@ const joinRoom = (
   user: User,
   roomidEl: HTMLInputElement,
 ) => {
-  send(requestData('JRO', { salt: user.salt, roomid: roomidEl.value }));
+  send(requestData(
+    codes.request.joinRoom,
+    { salt: user.salt, roomid: roomidEl.value },
+  ));
 };
 
 const onRoomInputChange = (
   event: React.ChangeEvent<HTMLInputElement>,
   room: Room,
-  setRoom: React.Dispatch<React.SetStateAction<Room>>,
+  setRoom: SetRoom,
 ) => setRoom({ ...room, name: event.target.value });
 
 type homeProps = {
   user: User,
   users: Array<User>,
   room: Room,
-  setRoom: React.Dispatch<React.SetStateAction<Room>>,
+  setRoom: SetRoom,
   send: sendFunction,
 }
 

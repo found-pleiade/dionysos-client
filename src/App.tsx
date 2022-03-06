@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { v4 as salt } from 'uuid';
 import Error from './components/Error';
+import {
+  codes, defaultRoom, defaultUser, devServer,
+} from './constants';
 import Connect from './pages/connect';
 import Home from './pages/home';
 import { Room, User, dataType } from './utils/types';
 
 const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
 
-const socket = new WebSocket('wss://dionysos-test.yannlacroix.fr');
-
-const defaultUser = {
-  id: '',
-  salt: salt(),
-  name: '',
-};
-
-const defaultRoom = {
-  id: '',
-  name: '',
-  isPrivate: false,
-  ownerId: '',
-};
+const socket = new WebSocket(devServer);
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(false);
@@ -41,20 +30,20 @@ const App = () => {
       const { code, payload } = JSON.parse(data);
       console.log(code, payload);
 
-      if (code === 'ERR') {
+      if (code === codes.response.error) {
         setErrors(errors.concat(payload.error));
       }
 
-      if (code === 'COS') {
+      if (code === codes.response.connection) {
         setUser({ ...user, id: payload.userId });
       }
 
-      if (code === 'RCS') {
+      if (code === codes.response.roomCreation) {
         setRoom({ ...room, id: payload.roomId, ownerId: user.id });
         setUsers([user]);
       }
 
-      if (code === 'JRO') {
+      if (code === codes.response.joinRoom) {
         setRoom({
           ...room,
           name: payload.roomName,
@@ -63,7 +52,7 @@ const App = () => {
         });
       }
 
-      if (code === 'NEP') {
+      if (code === codes.response.newPeers) {
         setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
       }
