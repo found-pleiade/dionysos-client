@@ -26,19 +26,24 @@ const saveModal = (
   setValidConnection: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   setIsConnected(false);
-  const socket = new WebSocket(url.current);
 
-  socket.onopen = () => {
-    setIsConnected(true);
-    setValidConnection(true);
-    setWebSocket(socket);
-    url.setBackup(url.current);
-    modal.toggle();
-  };
+  try {
+    const socket = new WebSocket(url.current);
 
-  socket.onclose = () => {
+    socket.onopen = () => {
+      setIsConnected(true);
+      setValidConnection(true);
+      setWebSocket(socket);
+      url.setBackup(url.current);
+      modal.toggle();
+    };
+
+    socket.onclose = () => {
+      setValidConnection(false);
+    };
+  } catch (e) {
     setValidConnection(false);
-  };
+  }
 };
 
 const clickBackground = (
