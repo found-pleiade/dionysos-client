@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as R from 'ramda';
 import { CogIcon } from '@heroicons/react/solid';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { isValid, requestData } from '../utils';
 import {
-  SetUser, User, SendFunction, ModalType,
+  SetUser, User, SendFunction, ModalType, UrlType,
 } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
@@ -38,10 +38,7 @@ type connectProps = {
   modal: ModalType,
   isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  serverUrl: string,
-  setServerUrl: React.Dispatch<React.SetStateAction<string>>,
-  oldServerUrl: string,
-  setOldServerUrl: React.Dispatch<React.SetStateAction<string>>,
+  url: UrlType,
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>
 }
 
@@ -52,10 +49,7 @@ const Connect = ({
   modal,
   isConnected,
   setIsConnected,
-  serverUrl,
-  setServerUrl,
-  oldServerUrl,
-  setOldServerUrl,
+  url,
   setWebSocket,
 }: connectProps) => {
   const [username, setUsername] = useState('');
@@ -67,10 +61,7 @@ const Connect = ({
     <div>
       <ConnectModal
         modal={modal}
-        serverUrl={serverUrl}
-        setServerUrl={setServerUrl}
-        oldServerUrl={oldServerUrl}
-        setOldServerUrl={setOldServerUrl}
+        url={url}
         setWebSocket={setWebSocket}
         setIsConnected={setIsConnected}
       />

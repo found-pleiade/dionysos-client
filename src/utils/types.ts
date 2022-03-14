@@ -22,6 +22,13 @@ export type ModalType = {
   toggle: () => void,
 }
 
+export type UrlType = {
+  current: string,
+  setCurrent: React.Dispatch<React.SetStateAction<string>>,
+  backup: string,
+  setBackup: React.Dispatch<React.SetStateAction<string>>,
+}
+
 export type DataType = string | ArrayBufferLike | Blob | ArrayBufferView;
 
 export type SendFunction = (data: DataType) => void;

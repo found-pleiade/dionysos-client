@@ -4,6 +4,7 @@ import Error from './components/Error';
 import {
   codes, defaultRoom, defaultUser, devServer,
 } from './constants';
+import useUrl from './hooks/url';
 import useModal from './hooks/modal';
 import Connect from './pages/connect';
 import Home from './pages/home';
@@ -13,8 +14,7 @@ const send = (socket: WebSocket) => (data: DataType) => socket.send(data);
 
 const App = () => {
   const [webSocket, setWebSocket] = useState(new WebSocket(devServer));
-  const [serverUrl, setServerUrl] = useState(devServer);
-  const [oldServerUrl, setOldServerUrl] = useState(devServer);
+  const url = useUrl();
   const [isConnected, setIsConnected] = useState(false);
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
@@ -23,7 +23,7 @@ const App = () => {
   const connectModal = useModal();
 
   useEffect(() => {
-    setWebSocket(new WebSocket(serverUrl));
+    setWebSocket(new WebSocket(url.current));
   }, []);
 
   useEffect(() => {
@@ -83,10 +83,7 @@ const App = () => {
       modal={connectModal}
       isConnected={isConnected}
       setIsConnected={setIsConnected}
-      serverUrl={serverUrl}
-      setServerUrl={setServerUrl}
-      oldServerUrl={oldServerUrl}
-      setOldServerUrl={setOldServerUrl}
+      url={url}
       setWebSocket={setWebSocket}
     />
   );
