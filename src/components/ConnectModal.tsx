@@ -25,6 +25,11 @@ const saveModal = (
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   setValidConnection: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
+  if (url.current === url.backup) {
+    modal.toggle();
+    return;
+  }
+
   setIsConnected(false);
 
   try {
