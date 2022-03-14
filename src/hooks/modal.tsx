@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ModalType } from '../utils/types';
 
 const useModal = (): ModalType => {

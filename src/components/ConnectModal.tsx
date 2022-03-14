@@ -1,4 +1,3 @@
-import { XIcon } from '@heroicons/react/solid';
 import React, { useState } from 'react';
 import { visibility } from '../utils';
 import { ModalType, UrlType } from '../utils/types';

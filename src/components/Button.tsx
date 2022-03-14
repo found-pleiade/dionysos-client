@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 import { Link, To } from 'react-router-dom';
 import { isValid } from '../utils';
 

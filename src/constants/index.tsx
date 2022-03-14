@@ -1,4 +1,3 @@
-import React from 'react';
 import { v4 as salt } from 'uuid';
 
 export const devServer = 'wss://dionysos-test.yannlacroix.fr';
