@@ -1,6 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Link, To } from 'react-router-dom';
+import { isValid } from '../utils';
 
 type buttonProps = {
   to?: To,
@@ -39,7 +40,7 @@ const Button = ({
     </Link>
   );
 
-  return R.isNil(to) || disabled ? buttonProp : linkProp;
+  return !isValid(to as string) || disabled ? buttonProp : linkProp;
 };
 
 export default Button;

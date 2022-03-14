@@ -11,12 +11,12 @@ import { requestData, visibility } from '../utils';
 import Separator from '../components/Separator';
 import RoomInput from '../components/RoomInput';
 import {
-  Room, User, sendFunction, SetRoom,
+  Room, User, SendFunction, SetRoom,
 } from '../utils/types';
 import { codes } from '../constants';
 
 const newRoom = (
-  send: sendFunction,
+  send: SendFunction,
   user: User,
   room: Room,
   setRoom: SetRoom,
@@ -30,7 +30,7 @@ const newRoom = (
 };
 
 const joinRoom = (
-  send: sendFunction,
+  send: SendFunction,
   user: User,
   roomidEl: HTMLInputElement,
 ) => {
@@ -41,7 +41,7 @@ const joinRoom = (
 };
 
 const changeUsername = (
-  send: sendFunction,
+  send: SendFunction,
   user: User,
   newUserName: string,
 ) => {
@@ -62,7 +62,7 @@ type homeProps = {
   users: Array<User>,
   room: Room,
   setRoom: SetRoom,
-  send: sendFunction,
+  send: SendFunction,
 }
 
 const Home = ({

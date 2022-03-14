@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import Error from './components/Error';
-import Modal from './components/Modal';
 import {
   codes, defaultRoom, defaultUser, devServer,
 } from './constants';
-import useConnection from './hooks/connection';
 import useModal from './hooks/modal';
 import Connect from './pages/connect';
 import Home from './pages/home';
-import { Room, User, dataType } from './utils/types';
+import { Room, User, DataType } from './utils/types';
 
-const send = (socket: WebSocket) => (data: dataType) => socket.send(data);
+const send = (socket: WebSocket) => (data: DataType) => socket.send(data);
 
 const App = () => {
   const [webSocket, setWebSocket] = useState(new WebSocket(devServer));
   const [serverUrl, setServerUrl] = useState(devServer);
-  const connection = useConnection();
+  const [oldServerUrl, setOldServerUrl] = useState(devServer);
+  const [isConnected, setIsConnected] = useState(false);
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
   const [errors, setErrors] = useState<Array<string>>([]);
-  const modal = useModal();
+  const connectModal = useModal();
 
   useEffect(() => {
     setWebSocket(new WebSocket(serverUrl));
-  }, [serverUrl]);
+  }, []);
 
   useEffect(() => {
     webSocket.onopen = (event) => {
       console.log('onopen: ', event);
-      connection.toggle();
+      setIsConnected(true);
     };
 
     webSocket.onmessage = (event) => {
@@ -72,7 +71,7 @@ const App = () => {
 
     webSocket.onclose = (event) => {
       console.log('onclose: ', event);
-      connection.toggle();
+      setIsConnected(false);
     };
   }, [user, room, errors, webSocket]);
 
@@ -81,8 +80,14 @@ const App = () => {
       send={send(webSocket)}
       user={user}
       setUser={setUser}
-      modal={modal}
-      isConnected={connection.isConnected}
+      modal={connectModal}
+      isConnected={isConnected}
+      setIsConnected={setIsConnected}
+      serverUrl={serverUrl}
+      setServerUrl={setServerUrl}
+      oldServerUrl={oldServerUrl}
+      setOldServerUrl={setOldServerUrl}
+      setWebSocket={setWebSocket}
     />
   );
   const home = (
@@ -96,14 +101,12 @@ const App = () => {
   );
 
   return (
-    <div className="text-neutral-50 bg-neutral-900 h-screen cursor-default">
+    <div className="text-neutral-50 bg-neutral-900 h-screen cursor-default relative">
       <div className="z-10 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
         {errors.map((error) => <Error error={error} />)}
       </div>
 
       <MemoryRouter>
-        <Modal modal={modal} />
-
         <Routes>
           <Route path="/" element={connect} />
           <Route path="/home" element={home} />
