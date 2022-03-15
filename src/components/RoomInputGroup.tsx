@@ -41,13 +41,14 @@ type RoomInputGroupProps = {
   send: SendFunction,
   user: User,
   room: Room,
-  setRoom: SetRoom
+  setRoom: SetRoom,
+  className: string,
 }
 
 const RoomInputGroup = ({
-  send, user, room, setRoom,
+  send, user, room, setRoom, className,
 }: RoomInputGroupProps) => (
-  <div className={`flex flex-col gap-3 ${visibility(!(room.name !== '' && room.id !== ''))}`}>
+  <div className={`flex flex-col gap-3 ${className}`}>
     <RoomInput text="Create" placeholder="Enter a room name" onClick={() => newRoom(send, user, room, setRoom, false)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} buttonClassName="bg-neutral-600 focus:bg-neutral-500 hover:bg-neutral-500" />
 
     <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />

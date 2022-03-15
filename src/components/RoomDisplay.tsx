@@ -1,10 +1,9 @@
 import React from 'react';
-import { visibility } from '../utils';
 import { Room } from '../utils/types';
 import Id from './Id';
 
-const RoomDisplay = ({ room }: { room: Room }) => (
-  <div className={visibility(room.name !== '' && room.id !== '')}>
+const RoomDisplay = ({ room, className }: { room: Room, className?: string }) => (
+  <div className={className}>
     <h1 className="text-2xl font-medium">{room.name}</h1>
     <Id id={room.id} />
   </div>

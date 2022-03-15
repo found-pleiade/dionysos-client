@@ -68,9 +68,15 @@ const Home = ({
       {/* Panel */}
       <div className={`flex flex-col justify-between bg-neutral-900 relative transition-all py-3 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
-        <RoomInputGroup send={send} user={user} room={room} setRoom={setRoom} />
-        <RoomDisplay room={room} />
-        <Separator className={visibility(roomNotEmpty || !emptyUserList)} />
+        <RoomInputGroup
+          send={send}
+          user={user}
+          room={room}
+          setRoom={setRoom}
+          className={visibility(!roomNotEmpty)}
+        />
+        <RoomDisplay room={room} className={visibility(roomNotEmpty)} />
+        <Separator className={visibility(!emptyUserList)} />
         <Userlist users={users} className={visibility(!emptyUserList)} />
         <Separator className={visibility(!emptyUserList)} />
         <UserDisplay user={user} send={send} />
