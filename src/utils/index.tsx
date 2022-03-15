@@ -11,3 +11,5 @@ const ltFifty = (x: string) => R.lt(R.length(x), 50);
 const notNil = (x: string) => R.not(R.isNil(x));
 
 export const isValid = R.allPass([gtZero, ltFifty, notNil]);
+
+export const translate = (condition: boolean) => (condition ? 'max-w-[650px] px-3 overflow-visible' : 'max-w-0 px-0 overflow-hidden');

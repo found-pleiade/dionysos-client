@@ -7,7 +7,7 @@ import {
 import Id from '../components/Id';
 import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
-import { requestData, visibility } from '../utils';
+import { requestData, translate, visibility } from '../utils';
 import Separator from '../components/Separator';
 import RoomInput from '../components/RoomInput';
 import {
@@ -98,7 +98,6 @@ const Home = ({
 
   const roomNotEmpty = room.name !== '' && room.id !== '';
   const emptyUserList = users.length <= 0;
-  const translate = (condition: boolean) => (condition ? 'max-w-[650px] px-3 overflow-visible' : 'max-w-0 px-0 overflow-hidden');
 
   const [panel, setPanel] = useState(true);
   const [chat, setChat] = useState(false);
