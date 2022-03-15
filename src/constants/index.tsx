@@ -27,6 +27,7 @@ export const codes = {
     connection: 'COS',
     roomCreation: 'RCS',
     joinRoom: 'JRO',
+    changeUserName: 'CHU',
     newPeers: 'NEP',
   },
 };

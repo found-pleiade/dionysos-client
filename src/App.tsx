@@ -68,6 +68,10 @@ const App = () => {
         });
       }
 
+      if (code === codes.response.changeUserName) {
+        setUser({ ...user, name: payload.username });
+      }
+
       if (code === codes.response.newPeers) {
         setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
