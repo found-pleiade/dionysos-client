@@ -3,48 +3,16 @@ import * as R from 'ramda';
 import { window as tauriWindow } from '@tauri-apps/api';
 import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
-import { requestData, translate, visibility } from '../utils';
+import { translate, visibility } from '../utils';
 import Separator from '../components/Separator';
-import RoomInput from '../components/RoomInput';
 import {
   Room, User, SendFunction, SetRoom,
 } from '../utils/types';
-import { codes } from '../constants';
 import OverlayMenu from '../components/OverlayMenu';
 import UserDisplay from '../components/UserDisplay';
 import RoomDisplay from '../components/RoomDisplay';
 import MinimizeIcon from '../components/MinimizeIcon';
-
-const newRoom = (
-  send: SendFunction,
-  user: User,
-  room: Room,
-  setRoom: SetRoom,
-  isPrivate: boolean,
-) => {
-  setRoom(room);
-  send(requestData(
-    codes.request.roomCreation,
-    { roomname: room.name, salt: user.salt, isPrivate },
-  ));
-};
-
-const joinRoom = (
-  send: SendFunction,
-  user: User,
-  roomidEl: HTMLInputElement,
-) => {
-  send(requestData(
-    codes.request.joinRoom,
-    { salt: user.salt, roomid: roomidEl.value },
-  ));
-};
-
-const onRoomInputChange = (
-  event: React.ChangeEvent<HTMLInputElement>,
-  room: Room,
-  setRoom: SetRoom,
-) => setRoom({ ...room, name: event.target.value });
+import RoomInputGroup from '../components/RoomInputGroup';
 
 type homeProps = {
   user: User,
@@ -100,13 +68,7 @@ const Home = ({
       {/* Panel */}
       <div className={`flex flex-col justify-between bg-neutral-900 relative transition-all py-3 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
-
-        <div className={`flex flex-col gap-3 ${visibility(!roomNotEmpty)}`}>
-          <RoomInput text="Create" placeholder="Enter a room name" onClick={() => newRoom(send, user, room, setRoom, false)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} buttonClassName="bg-neutral-600 focus:bg-neutral-500 hover:bg-neutral-500" />
-
-          <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />
-        </div>
-
+        <RoomInputGroup send={send} user={user} room={room} setRoom={setRoom} />
         <RoomDisplay room={room} />
         <Separator className={visibility(roomNotEmpty || !emptyUserList)} />
         <Userlist users={users} className={visibility(!emptyUserList)} />
@@ -116,9 +78,8 @@ const Home = ({
 
       {/* Chat */}
       <div className={`w-[500px] flex flex-col justify-between bg-neutral-800 relative transition-all py-3 ${translate(chat)}`}>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-
         <MinimizeIcon func={setChat} />
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
       </div>
 
       {/* Video */}
