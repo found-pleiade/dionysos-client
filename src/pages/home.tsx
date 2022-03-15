@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import * as R from 'ramda';
 import { window as tauriWindow } from '@tauri-apps/api';
 import {
-  PencilAltIcon, ChevronLeftIcon, ChatAltIcon, MenuIcon,
+  PencilAltIcon, ChevronLeftIcon,
 } from '@heroicons/react/solid';
 import Id from '../components/Id';
 import Userlist from '../components/Userlist';
@@ -14,6 +14,7 @@ import {
   Room, User, SendFunction, SetRoom,
 } from '../utils/types';
 import { codes } from '../constants';
+import OverlayMenu from '../components/OverlayMenu';
 
 const newRoom = (
   send: SendFunction,
@@ -97,10 +98,10 @@ const Home = ({
 
   const roomNotEmpty = room.name !== '' && room.id !== '';
   const emptyUserList = users.length <= 0;
+  const translate = (condition: boolean) => (condition ? 'max-w-[650px] px-3 overflow-visible' : 'max-w-0 px-0 overflow-hidden');
 
   const [panel, setPanel] = useState(true);
   const [chat, setChat] = useState(false);
-  const translate = (condition: boolean) => (condition ? 'max-w-[650px] px-3 overflow-visible' : 'max-w-0 px-0 overflow-hidden');
 
   // document.querySelector('.vjs-fullscreen-control')?.addEventListener('click', async (event) => {
   //   const current = tauriWindow.getCurrent();
@@ -150,11 +151,7 @@ const Home = ({
       {/* Video */}
       <div className="relative">
         {/* Menus */}
-        <div className="absolute top-[50%] left-3 z-10 space-y-3 translate-y-[-50%]">
-          <MenuIcon className={`block p-2 h-8 w-8 bg-neutral-700 rounded-full cursor-pointer text-center opacity-60 hover:opacity-100 transition-opacity ${visibility(!panel)}`} onClick={() => setPanel(true)} />
-
-          <ChatAltIcon className={`block p-2 h-8 w-8 bg-neutral-700 rounded-full cursor-pointer text-center opacity-60 hover:opacity-100 transition-opacity ${visibility(!chat)}`} onClick={() => setChat(true)} />
-        </div>
+        <OverlayMenu panel={panel} setPanel={setPanel} chat={chat} setChat={setChat} />
 
         {/* Player */}
         <Videojs
