@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .error {
-  animation: error 5s forwards;
+  animation: error 10s forwards;
   overflow: hidden;
 }
 
