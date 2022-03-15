@@ -1,10 +1,6 @@
 import React, { useRef, useState } from 'react';
 import * as R from 'ramda';
 import { window as tauriWindow } from '@tauri-apps/api';
-import {
-  ChevronLeftIcon,
-} from '@heroicons/react/solid';
-import Id from '../components/Id';
 import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
 import { requestData, translate, visibility } from '../utils';
@@ -16,6 +12,8 @@ import {
 import { codes } from '../constants';
 import OverlayMenu from '../components/OverlayMenu';
 import UserDisplay from '../components/UserDisplay';
+import RoomDisplay from '../components/RoomDisplay';
+import MinimizeIcon from '../components/MinimizeIcon';
 
 const newRoom = (
   send: SendFunction,
@@ -101,7 +99,7 @@ const Home = ({
     <div className="h-screen w-screen truncate bg-black flex">
       {/* Panel */}
       <div className={`flex flex-col justify-between bg-neutral-900 relative transition-all py-3 ${translate(panel)}`}>
-        <ChevronLeftIcon className="block absolute top-[50%] right-3 z-10 p-1 h-8 w-8 bg-neutral-700 rounded-full cursor-pointer text-center translate-y-[-50%]" onClick={() => setPanel(false)} />
+        <MinimizeIcon func={setPanel} />
 
         <div className={`flex flex-col gap-3 ${visibility(!roomNotEmpty)}`}>
           <RoomInput text="Create" placeholder="Enter a room name" onClick={() => newRoom(send, user, room, setRoom, false)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} buttonClassName="bg-neutral-600 focus:bg-neutral-500 hover:bg-neutral-500" />
@@ -109,17 +107,10 @@ const Home = ({
           <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} buttonClassName="bg-vin-600 focus:bg-vin-500 hover:bg-vin-500" />
         </div>
 
-        <div className={visibility(roomNotEmpty)}>
-          <h1 className="text-2xl font-medium">{room.name}</h1>
-          <Id id={room.id} />
-        </div>
-
+        <RoomDisplay room={room} />
         <Separator className={visibility(roomNotEmpty || !emptyUserList)} />
-
         <Userlist users={users} className={visibility(!emptyUserList)} />
-
         <Separator className={visibility(!emptyUserList)} />
-
         <UserDisplay user={user} send={send} />
       </div>
 
@@ -127,7 +118,7 @@ const Home = ({
       <div className={`w-[500px] flex flex-col justify-between bg-neutral-800 relative transition-all py-3 ${translate(chat)}`}>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 
-        <ChevronLeftIcon className="block absolute top-[50%] right-3 z-10 p-1 h-8 w-8 bg-neutral-700 rounded-full cursor-pointer text-center translate-y-[-50%]" onClick={() => setChat(false)} />
+        <MinimizeIcon func={setChat} />
       </div>
 
       {/* Video */}
