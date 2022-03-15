@@ -9,22 +9,19 @@ import useModal from './hooks/modal';
 import Connect from './pages/connect';
 import Home from './pages/home';
 import { Room, User, DataType } from './utils/types';
+import useErrors from './hooks/errors';
 
 const send = (socket: WebSocket) => (data: DataType) => socket.send(data);
 
 const App = () => {
   const [webSocket, setWebSocket] = useState(new WebSocket(devServer));
-  const url = useUrl();
+  const url = useUrl(devServer);
   const [isConnected, setIsConnected] = useState(false);
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const errors = useErrors();
   const connectModal = useModal();
-
-  useEffect(() => {
-    setWebSocket(new WebSocket(url.current));
-  }, []);
 
   useEffect(() => {
     webSocket.onopen = (event) => {
@@ -38,7 +35,7 @@ const App = () => {
       console.log(code, payload);
 
       if (code === codes.response.error) {
-        setErrors(errors.concat(payload.error));
+        errors.add(payload.error);
       }
 
       if (code === codes.response.connection) {
@@ -67,11 +64,19 @@ const App = () => {
 
     webSocket.onerror = (event) => {
       console.log('onerror: ', event);
+      errors.add(event as unknown as string);
     };
 
     webSocket.onclose = (event) => {
       console.log('onclose: ', event);
       setIsConnected(false);
+    };
+
+    return () => {
+      webSocket.onopen = null;
+      webSocket.onmessage = null;
+      webSocket.onerror = null;
+      webSocket.onclose = null;
     };
   }, [user, room, errors, webSocket]);
 
@@ -85,6 +90,7 @@ const App = () => {
       setIsConnected={setIsConnected}
       url={url}
       setWebSocket={setWebSocket}
+      errors={errors}
     />
   );
   const home = (
@@ -99,8 +105,8 @@ const App = () => {
 
   return (
     <div className="text-neutral-50 bg-neutral-900 h-screen cursor-default relative">
-      <div className="z-10 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
-        {errors.map((error) => <Error error={error} />)}
+      <div className="z-20 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
+        {errors.get.map((error) => <Error error={error} />)}
       </div>
 
       <MemoryRouter>

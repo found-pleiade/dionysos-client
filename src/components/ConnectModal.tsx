@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { visibility } from '../utils';
-import { ModalType, UrlType } from '../utils/types';
+import { ErrorsType, ModalType, UrlType } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
 
@@ -24,8 +24,9 @@ const saveModal = (
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   setValidConnection: React.Dispatch<React.SetStateAction<boolean>>,
+  errors: ErrorsType,
 ) => {
-  if (url.current === url.backup) {
+  if (url.current === url.backup && errors.get.length === 0) {
     modal.toggle();
     return;
   }
@@ -36,17 +37,19 @@ const saveModal = (
     const socket = new WebSocket(url.current);
 
     socket.onopen = () => {
-      setIsConnected(true);
-      setValidConnection(true);
       setWebSocket(socket);
       url.setBackup(url.current);
+      setIsConnected(true);
+      setValidConnection(true);
       modal.toggle();
     };
 
-    socket.onclose = () => {
+    socket.onclose = (event) => {
+      errors.add(`${event.code} : Probably a wrong Web Socket address or a mistake server side (wss://subdomain.domain.extension)`);
       setValidConnection(false);
     };
-  } catch (e) {
+  } catch (error) {
+    errors.add(error as string);
     setValidConnection(false);
   }
 };
@@ -67,6 +70,7 @@ type ConnectModalProps = {
   url: UrlType,
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
+  errors: ErrorsType,
 }
 
 const ConnectModal = ({
@@ -74,6 +78,7 @@ const ConnectModal = ({
   url,
   setWebSocket,
   setIsConnected,
+  errors,
 }: ConnectModalProps) => {
   const [validConnection, setValidConnection] = useState(true);
 
@@ -87,7 +92,7 @@ const ConnectModal = ({
 
         <div className="flex justify-between">
           <Button text="Cancel" colorless onClick={() => cancelModal(modal, url, setIsConnected, setValidConnection)} />
-          <Button text="Save" onClick={() => saveModal(modal, url, setWebSocket, setIsConnected, setValidConnection)} />
+          <Button text="Save" onClick={() => saveModal(modal, url, setWebSocket, setIsConnected, setValidConnection, errors)} />
         </div>
       </div>
     </div>

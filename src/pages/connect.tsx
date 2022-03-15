@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { isValid, requestData } from '../utils';
 import {
-  SetUser, User, SendFunction, ModalType, UrlType,
+  SetUser, User, SendFunction, ModalType, UrlType, ErrorsType,
 } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
@@ -39,7 +39,8 @@ type connectProps = {
   isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>
+  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>,
+  errors: ErrorsType,
 }
 
 const Connect = ({
@@ -51,6 +52,7 @@ const Connect = ({
   setIsConnected,
   url,
   setWebSocket,
+  errors,
 }: connectProps) => {
   const [username, setUsername] = useState('');
 
@@ -64,6 +66,7 @@ const Connect = ({
         url={url}
         setWebSocket={setWebSocket}
         setIsConnected={setIsConnected}
+        errors={errors}
       />
 
       <div className="bg-neutral-800 space-y-6 w-[600px] rounded-lg absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-between flex-col p-6">

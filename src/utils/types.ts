@@ -29,6 +29,11 @@ export type UrlType = {
   setBackup: React.Dispatch<React.SetStateAction<string>>,
 }
 
+export type ErrorsType = {
+  get: string[];
+  add: (message: string) => void;
+}
+
 export type DataType = string | ArrayBufferLike | Blob | ArrayBufferView;
 
 export type SendFunction = (data: DataType) => void;

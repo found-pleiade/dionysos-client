@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { devServer } from '../constants';
 
-const useUrl = () => {
+const useUrl = (devServer: string) => {
   const [current, setCurrent] = useState(devServer);
   const [backup, setBackup] = useState(devServer);
 
