@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import * as R from 'ramda';
 import { window as tauriWindow } from '@tauri-apps/api';
 import {
-  PencilAltIcon, ChevronLeftIcon,
+  ChevronLeftIcon,
 } from '@heroicons/react/solid';
 import Id from '../components/Id';
 import Userlist from '../components/Userlist';
@@ -15,6 +15,7 @@ import {
 } from '../utils/types';
 import { codes } from '../constants';
 import OverlayMenu from '../components/OverlayMenu';
+import UserDisplay from '../components/UserDisplay';
 
 const newRoom = (
   send: SendFunction,
@@ -38,17 +39,6 @@ const joinRoom = (
   send(requestData(
     codes.request.joinRoom,
     { salt: user.salt, roomid: roomidEl.value },
-  ));
-};
-
-const changeUsername = (
-  send: SendFunction,
-  user: User,
-  newUserName: string,
-) => {
-  send(requestData(
-    codes.request.changeUserName,
-    { newUserName, salt: user.salt },
   ));
 };
 
@@ -130,14 +120,7 @@ const Home = ({
 
         <Separator className={visibility(!emptyUserList)} />
 
-        <div>
-          <button className="text-md flex items-center" onClick={() => changeUsername(send, user, 'Michel')} type="button">
-            {user.name}
-            {' '}
-            <PencilAltIcon className="ml-2 h-5 w-4" />
-          </button>
-          <Id id={user.id} />
-        </div>
+        <UserDisplay user={user} send={send} />
       </div>
 
       {/* Chat */}
