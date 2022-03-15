@@ -39,7 +39,7 @@ type connectProps = {
   isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>,
+  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
   errors: ErrorsType,
 }
 

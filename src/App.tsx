@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import * as R from 'ramda';
 import Error from './components/Error';
 import {
   codes, defaultRoom, defaultUser, devServer,
@@ -11,10 +12,15 @@ import Home from './pages/home';
 import { Room, User, DataType } from './utils/types';
 import useErrors from './hooks/errors';
 
-const send = (socket: WebSocket) => (data: DataType) => socket.send(data);
+const send = (socket: WebSocket | undefined) => (data: DataType) => {
+  if (R.not(R.isNil(socket))) {
+    const definedSocket = socket as WebSocket;
+    definedSocket.send(data);
+  }
+};
 
 const App = () => {
-  const [webSocket, setWebSocket] = useState(new WebSocket(devServer));
+  const [webSocket, setWebSocket] = useState<WebSocket>();
   const url = useUrl(devServer);
   const [isConnected, setIsConnected] = useState(false);
   const [user, setUser] = useState<User>(defaultUser);
@@ -24,6 +30,12 @@ const App = () => {
   const connectModal = useModal();
 
   useEffect(() => {
+    setWebSocket(new WebSocket(devServer));
+  }, []);
+
+  useEffect(() => {
+    if (R.isNil(webSocket)) return () => { };
+
     webSocket.onopen = (event) => {
       console.log('onopen: ', event);
       setIsConnected(true);

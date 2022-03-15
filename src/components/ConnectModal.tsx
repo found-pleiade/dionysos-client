@@ -21,7 +21,7 @@ const cancelModal = (
 const saveModal = (
   modal: ModalType,
   url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>,
+  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   setValidConnection: React.Dispatch<React.SetStateAction<boolean>>,
   errors: ErrorsType,
@@ -68,7 +68,7 @@ const clickBackground = (
 type ConnectModalProps = {
   modal: ModalType,
   url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket>>,
+  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   errors: ErrorsType,
 }
