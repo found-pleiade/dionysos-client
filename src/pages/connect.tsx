@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as R from 'ramda';
-import { CogIcon } from '@heroicons/react/solid';
+import { GlobeAltIcon } from '@heroicons/react/solid';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { isValid, requestData } from '../utils';
@@ -54,13 +55,41 @@ const Connect = ({
   setWebSocket,
   errors,
 }: connectProps) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [valid, setValid] = useState(false);
 
-  const validAndConnected = isValid(username) && isConnected;
-  const buttonText = isConnected ? 'Join' : 'Waiting for the server...';
+  const validAndConnected = valid && isConnected;
+  const buttonText = isConnected ? 'Join' : 'Connecting...';
+
+  const keypressCallback = (event: KeyboardEvent) => {
+    if (event.code === 'Enter' && valid && isConnected) {
+      sendUsername(validAndConnected, send, username, user, setUser)();
+      navigate('/home');
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keypress', keypressCallback);
+
+    return () => {
+      document.removeEventListener('keypress', keypressCallback);
+    };
+  }, [username, valid, isConnected]);
+
+  useEffect(() => (isValid(username) ? setValid(true) : setValid(false)), [username]);
 
   return (
     <div>
+      <div className="w-[600px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+        <div className="flex space-x-1">
+          <Input className="rounded-r-none" placeholder="Enter your username" value={username} setValue={setUsername} />
+          <Button className="rounded-l-none" to="/home" text={buttonText} disabled={!validAndConnected} onClick={sendUsername(validAndConnected, send, username, user, setUser)} />
+        </div>
+      </div>
+
+      <GlobeAltIcon className="absolute top-0 right-0 px-2 h-10 w-10 rounded-bl-lg cursor-pointer bg-accent hover:bg-accent text-foreground" onClick={() => modal.toggle()} onKeyPress={(event) => { if (event.code === 'Enter') modal.toggle(); }} tabIndex={0} />
+
       <ConnectModal
         modal={modal}
         url={url}
@@ -68,23 +97,6 @@ const Connect = ({
         setIsConnected={setIsConnected}
         errors={errors}
       />
-
-      <div className="bg-neutral-800 space-y-6 w-[600px] rounded-lg absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-between flex-col p-6">
-
-        <CogIcon className="h-7 w-7 absolute top-5 right-5 p-1 cursor-pointer hover:text-neutral-400" onClick={() => modal.toggle()} />
-
-        <h1 className="text-center font-medium text-2xl">Welcome to Dyonisos</h1>
-
-        <div>
-          <h2 className="mb-2">Choose your username</h2>
-          <Input value={username} setValue={setUsername} />
-        </div>
-
-        <div className="flex justify-between">
-          <div />
-          <Button to="/home" text={buttonText} colorless={!validAndConnected} disabled={!validAndConnected} onClick={sendUsername(validAndConnected, send, username, user, setUser)} />
-        </div>
-      </div>
     </div>
   );
 };
