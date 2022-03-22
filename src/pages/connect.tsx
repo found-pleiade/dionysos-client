@@ -88,7 +88,7 @@ const Connect = ({
         </div>
       </div>
 
-      <GlobeAltIcon className="absolute top-0 right-0 px-2 h-10 w-10 rounded-bl-lg cursor-pointer bg-accent hover:bg-accent text-foreground" onClick={() => modal.toggle()} onKeyPress={(event) => { if (event.code === 'Enter') modal.toggle(); }} tabIndex={0} />
+      <GlobeAltIcon className="absolute top-0 right-0 px-2 h-10 w-10 rounded-bl-lg cursor-pointer bg-accent-500 hover:bg-accent-400 text-foreground transition-colors" onClick={() => modal.toggle()} onKeyPress={(event) => { if (event.code === 'Enter') modal.toggle(); }} tabIndex={0} />
 
       <ConnectModal
         modal={modal}
