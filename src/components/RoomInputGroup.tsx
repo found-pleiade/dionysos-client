@@ -62,7 +62,7 @@ const RoomInputGroup = ({
       <div className="flex space-x-1">
         <Input className="rounded-r-none" placeholder="Enter a room name" onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} />
         <LockToggle toggle={isPrivate} onClick={handleClick} onKeyPress={handleKeyPress} />
-        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={() => newRoom(send, user, room, setRoom, false)} />
+        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={() => newRoom(send, user, room, setRoom, isPrivate)} />
       </div>
 
       <div className="flex space-x-1">
