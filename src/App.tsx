@@ -30,7 +30,6 @@ const App = () => {
 
   useEffect(() => {
     setWebSocket(new WebSocket(devServer));
-    send(webSocket)(user.uuid);
   }, []);
 
   useEffect(() => {
@@ -48,6 +47,7 @@ const App = () => {
     webSocket.onopen = (event) => {
       console.log('onopen: ', event);
       setIsConnected(true);
+      send(webSocket)(user.uuid);
     };
 
     webSocket.onmessage = (event) => {
