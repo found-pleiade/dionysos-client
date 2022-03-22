@@ -89,7 +89,7 @@ const ConnectModal = ({
   const icons = {
     valid: <CheckIcon className="bg-valid h-10 p-2 rounded-r-lg" />,
     error: <XIcon className="bg-error h-10 p-2 rounded-r-lg" />,
-    pending: <DotsHorizontalIcon className="bg-pending h-10 p-2 rounded-r-lg" />,
+    pending: <DotsHorizontalIcon className="bg-pending h-10 p-2 rounded-r-lg animate-pulse-slow" />,
   };
 
   const [connectionStatus, setConnectionStatus] = useState(icons.valid);
