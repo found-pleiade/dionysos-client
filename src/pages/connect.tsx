@@ -70,10 +70,6 @@ const Connect = ({
   };
 
   useEffect(() => {
-    send(user.uuid);
-  }, []);
-
-  useEffect(() => {
     document.addEventListener('keypress', keypressCallback);
 
     return () => {

@@ -30,6 +30,7 @@ const App = () => {
 
   useEffect(() => {
     setWebSocket(new WebSocket(devServer));
+    send(webSocket)(user.uuid);
   }, []);
 
   useEffect(() => {
