@@ -1,20 +1,21 @@
 import React from 'react';
+import Button from './Button';
+import Input from './Input';
 
 type roomInputProps = {
   text: string,
   placeholder: string,
   onClick: any,
   onChange?: any,
-  groupClassName?: string,
-  buttonClassName?: string,
+  colorless?: boolean
 }
 
 const RoomInput = ({
-  text, placeholder, onClick, onChange, groupClassName, buttonClassName,
+  text, placeholder, onClick, onChange, colorless,
 }: roomInputProps) => (
-  <div className={`flex ${groupClassName}`}>
-    <input type="text" placeholder={placeholder} onChange={onChange} className="rounded-l-md px-3 py-1 text-neutral-900 w-full transition" />
-    <button type="button" onClick={onClick} className={`rounded-r-md px-3 py-1 w-24 transition-colors ${buttonClassName}`}>{text}</button>
+  <div className="flex">
+    <Input className="rounded-r-none" placeholder={placeholder} onChange={onChange} />
+    <Button colorless={colorless} className="rounded-l-none w-24 px-1" text={text} onClick={onClick} />
   </div>
 );
 
