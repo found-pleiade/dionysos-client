@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
+import { event as tauriEvent } from '@tauri-apps/api';
 import Error from './components/Error';
 import {
   codes, defaultRoom, defaultUser, devServer,
@@ -31,6 +32,10 @@ const App = () => {
 
   useEffect(() => {
     setWebSocket(new WebSocket(devServer));
+
+    tauriEvent.listen('tauri://close-requested', () => {
+      webSocket?.close();
+    });
   }, []);
 
   useEffect(() => {
