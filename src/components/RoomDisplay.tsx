@@ -4,7 +4,7 @@ import Id from './Id';
 
 const RoomDisplay = ({ room, className }: { room: Room, className?: string }) => (
   <div className={className}>
-    <h1 className="text-2xl font-medium">{room.name}</h1>
+    <h1 className="text-2xl font-black">{room.name}</h1>
     <Id id={room.id} />
   </div>
 );

@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react';
-import * as R from 'ramda';
-import { window as tauriWindow } from '@tauri-apps/api';
 import Userlist from '../components/Userlist';
 import Videojs from '../components/Videojs';
 import { translate, visibility } from '../utils';
@@ -58,15 +56,10 @@ const Home = ({
   const [panel, setPanel] = useState(true);
   const [chat, setChat] = useState(false);
 
-  // document.querySelector('.vjs-fullscreen-control')?.addEventListener('click', async (event) => {
-  //   const current = tauriWindow.getCurrent();
-  //   if (R.not(R.isNil(current))) current.setFullscreen(!(await current.isFullscreen()));
-  // });
-
   return (
     <div className="h-screen w-screen truncate bg-black flex">
       {/* Panel */}
-      <div className={`flex flex-col justify-between bg-neutral-900 relative transition-all py-3 ${translate(panel)}`}>
+      <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-3 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
         <RoomInputGroup
           send={send}
@@ -83,7 +76,7 @@ const Home = ({
       </div>
 
       {/* Chat */}
-      <div className={`w-[500px] flex flex-col justify-between bg-neutral-800 relative transition-all py-3 ${translate(chat)}`}>
+      <div className={`w-[500px] flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat)}`}>
         <MinimizeIcon func={setChat} />
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
       </div>

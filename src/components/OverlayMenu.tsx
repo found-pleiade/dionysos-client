@@ -12,7 +12,7 @@ type OverlayMenuProps = {
 const OverlayMenu = ({
   panel, setPanel, chat, setChat,
 }: OverlayMenuProps) => {
-  const iconStyle = 'block p-2 h-8 w-8 bg-neutral-700 rounded-full cursor-pointer text-center opacity-60 hover:opacity-100 transition-opacity';
+  const iconStyle = 'block p-2 h-8 w-8 bg-background-600 rounded-full cursor-pointer text-center opacity-60 hover:opacity-100 transition-opacity';
   const iconMarge = !panel && !chat ? 'mb-3 last:mb-0' : '';
 
   return (
