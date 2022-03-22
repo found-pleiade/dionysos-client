@@ -64,11 +64,14 @@ const Connect = ({
 
   const keypressCallback = (event: KeyboardEvent) => {
     if (event.code === 'Enter' && valid && isConnected) {
-      send(user.uuid);
       sendUsername(validAndConnected, send, username, user, setUser)();
       navigate('/home');
     }
   };
+
+  useEffect(() => {
+    send(user.uuid);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('keypress', keypressCallback);
