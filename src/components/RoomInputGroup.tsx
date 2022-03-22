@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { codes } from '../constants';
 import { requestData } from '../utils';
 import {
   Room, SendFunction, SetRoom, User,
 } from '../utils/types';
-import RoomInput from './RoomInput';
+import Button from './Button';
+import LockToggle from './LockToggle';
+import Input from './Input';
 
 const newRoom = (
   send: SendFunction,
@@ -49,12 +51,26 @@ type RoomInputGroupProps = {
 
 const RoomInputGroup = ({
   send, user, room, setRoom, className,
-}: RoomInputGroupProps) => (
-  <div className={`flex flex-col gap-3 ${className}`}>
-    <RoomInput text="Create" colorless placeholder="Enter a room name" onClick={() => newRoom(send, user, room, setRoom, false)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} />
+}: RoomInputGroupProps) => {
+  const [isPrivate, setIsPrivate] = useState(false);
 
-    <RoomInput text="Join" placeholder="Enter a room ID" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} />
-  </div>
-);
+  const handleClick = () => setIsPrivate(!isPrivate);
+  const handleKeyPress = (event: any) => { if (event.code === 'Enter') setIsPrivate(!isPrivate); };
+
+  return (
+    <div className={`flex flex-col gap-3 ${className}`}>
+      <div className="flex space-x-1">
+        <Input className="rounded-r-none" placeholder="Enter a room name" onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} />
+        <LockToggle toggle={isPrivate} onClick={handleClick} onKeyPress={handleKeyPress} />
+        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={() => newRoom(send, user, room, setRoom, false)} />
+      </div>
+
+      <div className="flex space-x-1">
+        <Input className="rounded-r-none" placeholder="Enter a room ID" />
+        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} />
+      </div>
+    </div>
+  );
+};
 
 export default RoomInputGroup;
