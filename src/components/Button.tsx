@@ -15,15 +15,22 @@ type buttonProps = {
 const Button = ({
   className = '', to = '', text, colorless = false, hidden = false, onClick, disabled = false,
 }: buttonProps) => {
-  const style = 'px-8 py-2 rounded-md ease-out transition-all font-medium text-foreground';
+  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground';
   const visibility = hidden ? 'hidden' : 'visible';
-  const cursor = disabled ? 'cursor-not-allowed bg-accent/40 hover:bg-accent/40' : 'cursor-pointer';
-  const buttonStyle = colorless ? 'bg-accent/40' : 'bg-accent hover:bg-accent/80 transition-colors';
+
+  const colorsAndCursor = () => {
+    if (disabled && colorless) return 'bg-background-500/40 hover:bg-background-500/40 cursor-not-allowed';
+    if (colorless) return 'bg-background-500 hover:bg-background-400 cursor-pointer';
+    if (disabled) return 'bg-accent-500/40 hover:bg-accent-500/40 cursor-not-allowed';
+    return 'bg-accent-500 hover:bg-accent-400';
+  };
+
+  const style = `${base} ${visibility} ${colorsAndCursor()}`;
 
   const buttonProp = (
     <button
       type="button"
-      className={`${style} ${buttonStyle} ${visibility} ${cursor} ${className}`}
+      className={`${style} ${className}`}
       onClick={onClick}
     >
       {text}
@@ -33,7 +40,7 @@ const Button = ({
   const linkProp = (
     <Link
       to={to}
-      className={`${style} ${buttonStyle} ${visibility} ${className}`}
+      className={`${style} ${className}`}
       onClick={onClick}
     >
       {text}
