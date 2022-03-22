@@ -2,7 +2,7 @@ import React from 'react';
 
 export type User = {
   id: string,
-  salt: string,
+  uuid: string,
   name: string,
 }
 

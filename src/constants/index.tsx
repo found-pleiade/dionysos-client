@@ -1,10 +1,10 @@
-import { v4 as salt } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export const devServer = 'wss://dionysos-test.yannlacroix.fr';
 
 export const defaultUser = {
   id: '',
-  salt: salt(),
+  uuid: uuidv4(),
   name: '',
 };
 

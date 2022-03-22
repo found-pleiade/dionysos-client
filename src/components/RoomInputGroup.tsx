@@ -10,7 +10,6 @@ import Input from './Input';
 
 const newRoom = (
   send: SendFunction,
-  user: User,
   room: Room,
   setRoom: SetRoom,
   isPrivate: boolean,
@@ -18,18 +17,17 @@ const newRoom = (
   setRoom(room);
   send(requestData(
     codes.request.roomCreation,
-    { roomname: room.name, salt: user.salt, isPrivate },
+    { roomname: room.name, isPrivate },
   ));
 };
 
 const joinRoom = (
   send: SendFunction,
-  user: User,
   roomidEl: HTMLInputElement,
 ) => {
   send(requestData(
     codes.request.joinRoom,
-    { salt: user.salt, roomid: roomidEl.value },
+    { roomid: roomidEl.value },
   ));
 };
 
@@ -62,12 +60,12 @@ const RoomInputGroup = ({
       <div className="flex space-x-1">
         <Input className="rounded-r-none" placeholder="Enter a room name" onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} />
         <LockToggle toggle={isPrivate} onClick={handleClick} onKeyPress={handleKeyPress} />
-        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={() => newRoom(send, user, room, setRoom, isPrivate)} />
+        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={() => newRoom(send, room, setRoom, isPrivate)} />
       </div>
 
       <div className="flex space-x-1">
         <Input className="rounded-r-none" placeholder="Enter a room ID" />
-        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, user, event.target.parentElement?.firstElementChild as HTMLInputElement)} />
+        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoom(send, event.target.parentElement?.firstElementChild as HTMLInputElement)} />
       </div>
     </div>
   );
