@@ -13,9 +13,9 @@ import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
 
-const requestNCO = (username: string, user: User) => requestData(
+const requestNCO = (username: string) => requestData(
   codes.request.connection,
-  { username, salt: user.salt },
+  { username },
 );
 
 const sendUsername = (
@@ -27,7 +27,7 @@ const sendUsername = (
 ) => R.ifElse(
   () => isValidUsername,
   () => {
-    send(requestNCO(username, user));
+    send(requestNCO(username));
     setUser({ ...user, name: username });
   },
   () => null,
@@ -64,6 +64,7 @@ const Connect = ({
 
   const keypressCallback = (event: KeyboardEvent) => {
     if (event.code === 'Enter' && valid && isConnected) {
+      send(user.uuid);
       sendUsername(validAndConnected, send, username, user, setUser)();
       navigate('/home');
     }
