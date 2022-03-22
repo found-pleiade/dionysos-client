@@ -67,7 +67,6 @@ const Home = ({
         <MinimizeIcon func={setPanel} />
         <RoomInputGroup
           send={send}
-          user={user}
           room={room}
           setRoom={setRoom}
           className={visibility(!roomNotEmpty)}
@@ -76,7 +75,7 @@ const Home = ({
         <Separator className={visibility(!emptyUserList)} />
         <Userlist users={users} room={room} className={visibility(!emptyUserList)} />
         <Separator className={visibility(!emptyUserList)} />
-        <UserDisplay user={user} modal={modal} send={send} />
+        <UserDisplay user={user} modal={modal} />
         <ChangeNameModal modal={modal} user={user} setUser={setUser} send={send} />
       </div>
 
