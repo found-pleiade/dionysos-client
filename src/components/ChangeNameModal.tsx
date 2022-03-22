@@ -9,17 +9,6 @@ import Input from './Input';
 
 type ClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
 
-const changeUsername = (
-  send: SendFunction,
-  user: User,
-  newUserName: string,
-) => {
-  send(requestData(
-    codes.request.changeUserName,
-    { newUserName, salt: user.salt },
-  ));
-};
-
 const cancelModal = (
   modal: ModalType,
   user: User,
@@ -34,10 +23,10 @@ const saveModal = (
   newUserName: string,
   user: User,
   setUser: SetUser,
-  changeName: any,
+  changeUsername: (send: SendFunction, username: string) => void,
   send: SendFunction,
 ) => {
-  changeName(send, user, newUserName);
+  changeUsername(send, newUserName);
   setUser({ ...user, name: newUserName });
   modal.toggle();
 };
@@ -50,6 +39,16 @@ const clickBackground = (
 ) => {
   const el = event.target as HTMLDivElement;
   if (el.classList.contains('modalBackground')) cancelModal(modal, user, setNewUserName);
+};
+
+const changeUsername = (
+  send: SendFunction,
+  username: string,
+) => {
+  send(requestData(
+    codes.request.changeUserName,
+    { newUserName: username },
+  ));
 };
 
 type ConnectModalProps = {
