@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
-import { event as tauriEvent } from '@tauri-apps/api';
+import { appWindow } from '@tauri-apps/api/window';
 import Error from './components/Error';
 import {
   codes, defaultRoom, defaultUser, devServer,
@@ -32,14 +32,19 @@ const App = () => {
 
   useEffect(() => {
     setWebSocket(new WebSocket(devServer));
-
-    tauriEvent.listen('tauri://close-requested', () => {
-      webSocket?.close();
-    });
   }, []);
 
   useEffect(() => {
     if (R.isNil(webSocket)) return () => { };
+
+    appWindow.listen('tauri://close-requested', () => {
+      try {
+        webSocket.close(1000);
+        appWindow.close();
+      } catch (e) {
+        console.error(e);
+      }
+    });
 
     webSocket.onopen = (event) => {
       console.log('onopen: ', event);
