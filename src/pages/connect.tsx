@@ -13,9 +13,9 @@ import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
 
-const requestNCO = (username: string) => requestData(
-  codes.request.connection,
-  { username },
+const requestCHU = (username: string) => requestData(
+  codes.request.changeUserName,
+  { newUsername: username },
 );
 
 const sendUsername = (
@@ -27,7 +27,7 @@ const sendUsername = (
 ) => R.ifElse(
   () => isValidUsername,
   () => {
-    send(requestNCO(username));
+    send(requestCHU(username));
     setUser({ ...user, name: username });
   },
   () => null,
