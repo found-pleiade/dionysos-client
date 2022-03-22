@@ -96,6 +96,10 @@ const App = () => {
     webSocket.onclose = (event) => {
       console.log('onclose: ', event);
       setIsConnected(false);
+
+      if (user.id.length > 0) {
+        errors.add('Connection lost');
+      }
     };
 
     return () => {
@@ -131,7 +135,7 @@ const App = () => {
 
   return (
     <div className="text-foreground bg-background-800 h-screen cursor-default relative">
-      <div className="z-20 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
+      <div className="z-50 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
         {errors.get.map((error) => <Error error={error} />)}
       </div>
 
