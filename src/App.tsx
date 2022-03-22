@@ -7,7 +7,6 @@ import {
   codes, defaultRoom, defaultUser, devServer,
 } from './constants';
 import useUrl from './hooks/url';
-import useModal from './hooks/modal';
 import Connect from './pages/connect';
 import Home from './pages/home';
 import { Room, User, DataType } from './utils/types';
@@ -28,7 +27,6 @@ const App = () => {
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
   const errors = useErrors();
-  const connectModal = useModal();
 
   useEffect(() => {
     setWebSocket(new WebSocket(devServer));
@@ -115,7 +113,6 @@ const App = () => {
       send={send(webSocket)}
       user={user}
       setUser={setUser}
-      modal={connectModal}
       isConnected={isConnected}
       setIsConnected={setIsConnected}
       url={url}
@@ -126,6 +123,7 @@ const App = () => {
   const home = (
     <Home
       user={user}
+      setUser={setUser}
       users={users}
       room={room}
       setRoom={setRoom}

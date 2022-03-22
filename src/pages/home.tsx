@@ -4,16 +4,19 @@ import Videojs from '../components/Videojs';
 import { translate, visibility } from '../utils';
 import Separator from '../components/Separator';
 import {
-  Room, User, SendFunction, SetRoom,
+  Room, User, SendFunction, SetRoom, SetUser,
 } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
 import UserDisplay from '../components/UserDisplay';
 import RoomDisplay from '../components/RoomDisplay';
 import MinimizeIcon from '../components/MinimizeIcon';
 import RoomInputGroup from '../components/RoomInputGroup';
+import useModal from '../hooks/modal';
+import ChangeNameModal from '../components/ChangeNameModal';
 
 type homeProps = {
   user: User,
+  setUser: SetUser,
   users: Array<User>,
   room: Room,
   setRoom: SetRoom,
@@ -21,7 +24,7 @@ type homeProps = {
 }
 
 const Home = ({
-  user, users, room, setRoom, send,
+  user, setUser, users, room, setRoom, send,
 }: homeProps) => {
   const playerRef = useRef(null);
 
@@ -55,6 +58,7 @@ const Home = ({
 
   const [panel, setPanel] = useState(true);
   const [chat, setChat] = useState(false);
+  const modal = useModal();
 
   return (
     <div className="h-screen w-screen truncate bg-black flex">
@@ -72,7 +76,8 @@ const Home = ({
         <Separator className={visibility(!emptyUserList)} />
         <Userlist users={users} room={room} className={visibility(!emptyUserList)} />
         <Separator className={visibility(!emptyUserList)} />
-        <UserDisplay user={user} send={send} />
+        <UserDisplay user={user} modal={modal} send={send} />
+        <ChangeNameModal modal={modal} user={user} setUser={setUser} send={send} />
       </div>
 
       {/* Chat */}

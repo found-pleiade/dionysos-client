@@ -7,10 +7,11 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { isValid, requestData } from '../utils';
 import {
-  SetUser, User, SendFunction, ModalType, UrlType, ErrorsType,
+  SetUser, User, SendFunction, UrlType, ErrorsType,
 } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
+import useModal from '../hooks/modal';
 
 const requestNCO = (username: string, user: User) => requestData(
   codes.request.connection,
@@ -36,7 +37,6 @@ type connectProps = {
   send: SendFunction,
   user: User,
   setUser: SetUser,
-  modal: ModalType,
   isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   url: UrlType,
@@ -48,13 +48,13 @@ const Connect = ({
   send,
   user,
   setUser,
-  modal,
   isConnected,
   setIsConnected,
   url,
   setWebSocket,
   errors,
 }: connectProps) => {
+  const modal = useModal();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [valid, setValid] = useState(false);
