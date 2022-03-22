@@ -6,13 +6,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        vin: {
-          300: '#CD88AF',
-          400: '#AA5585',
-          500: '#882D60',
-          600: '#661141',
-          700: '#440026',
+        foreground: '#fbfbfb',
+        background: {
+          600: '#202031',
+          700: '#181825',
+          800: '#101019',
+          900: '#08080d',
         },
+        accent: '#9D2B84',
+        valid: '#72b01d',
+        error: '#d62839',
       },
     },
   },
