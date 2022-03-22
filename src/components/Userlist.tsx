@@ -9,7 +9,6 @@ const Userlist = ({ users, room, className }: userListProps) => {
 
   return (
     <div className={`h-full ${className}`}>
-      <h2 className="text-xl pb-3 font-bold">Members</h2>
       <ul className="h-fit">
         {users.map((user) => (
           <li key={user.id} className="pb-1 font-medium flex align-middle" title={user.id}>
