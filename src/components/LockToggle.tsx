@@ -14,7 +14,7 @@ const LockToggle = ({ toggle, onClick, onKeyPress }: EyeToggleProps) => {
       tabIndex={0}
       role="button"
     >
-      {toggle ? <LockOpenIcon className="text-accent-400" /> : <LockClosedIcon />}
+      {toggle ? <LockClosedIcon /> : <LockOpenIcon className="text-accent-400" />}
     </div>
   );
 };
