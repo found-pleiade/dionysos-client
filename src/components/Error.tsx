@@ -5,7 +5,6 @@ const Error = ({
 }: { error: string }) => (
   <p className="first-letter:uppercase bg-error font-medium p-2 last:rounded-b-md error w-full text-center">
     {error}
-    .
   </p>
 );
 

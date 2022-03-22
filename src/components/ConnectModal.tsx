@@ -53,7 +53,8 @@ const saveModal = (
       setConnectionStatus(icons.error);
     };
   } catch (error) {
-    errors.add(error as string);
+    const knownError = error as unknown as Error;
+    errors.add(knownError.message);
     setConnectionStatus(icons.error);
   }
 };
