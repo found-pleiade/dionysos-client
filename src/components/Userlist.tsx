@@ -12,7 +12,7 @@ const Userlist = ({ users, room, className }: userListProps) => {
     <div className={`h-full ${className}`}>
       <ul className="h-fit">
         {users.map((user) => (
-          <li key={user.id} className="pb-1 font-medium flex align-middle" title={user.id}>
+          <li key={user.id} className="pb-1 font-medium flex align-middle">
             {`${user.name}`}
             <Id id={user.id} short inline className="px-1" />
             {star(user)}
