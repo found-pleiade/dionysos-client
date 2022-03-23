@@ -21,7 +21,7 @@ const RoomDisplay = ({
   <div className={className}>
     <h1 className="text-2xl font-black mb-3 mt-3">{room.name}</h1>
     <LogoutIcon className="h-11 w-11 p-3 absolute right-0 top-3 bg-background-500 hover:bg-background-400 rounded-l-lg cursor-pointer transition-colors" onClick={() => quitRoom(send, user)} tabIndex={0} onKeyPress={(event) => { if (event.code === 'Enter') quitRoom(send, user); }} />
-    <Id id={room.id} />
+    <Id id={room.id} copy />
   </div>
 );
 
