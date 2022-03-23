@@ -1,5 +1,6 @@
 import { StarIcon } from '@heroicons/react/solid';
 import React from 'react';
+import { idLength } from '../constants';
 import { Room, User } from '../utils/types';
 
 type userListProps = { users: Array<User>, room: Room, className: string };
@@ -13,7 +14,7 @@ const Userlist = ({ users, room, className }: userListProps) => {
         {users.map((user) => (
           <li key={user.id} className="pb-1 font-medium flex align-middle" title={user.id}>
             {`${user.name}`}
-            <span className="text-foreground/40 font-normal">{`#${user.id.substring(0, 4)}`}</span>
+            <span className="text-foreground/40 font-normal">{`#${user.id.substring(0, idLength)}`}</span>
             {star(user)}
           </li>
         ))}

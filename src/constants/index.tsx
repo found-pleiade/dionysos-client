@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const devServer = 'wss://dionysos-test.yannlacroix.fr';
 
+export const idLength = 5;
+
 export const defaultUser = {
   id: '',
   uuid: uuidv4(),
