@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as R from 'ramda';
 import { codes } from '../constants';
-import { requestData, testActiveElementById } from '../utils';
+import { isValid, requestData, testActiveElementById } from '../utils';
 import {
   Room, SendFunction, SetRoom,
 } from '../utils/types';
@@ -76,7 +76,7 @@ const RoomInputGroup = ({
   };
 
   const newRoomHandler = () => {
-    if (R.length(room.name) <= 0) return;
+    if (R.not(isValid(room.name))) return;
     newRoom(send, room, setRoom, isPrivate);
   };
 
