@@ -75,7 +75,7 @@ const ChangeNameModal = ({
 
         <div className="flex justify-between">
           <Button text="Cancel" colorless onClick={() => cancelModal(modal, user, setNewUserName)} />
-          <Button text="Save" onClick={() => saveModal(modal, newUserName, user, setUser, changeUsername, send)} />
+          <Button text="Save" onClick={() => saveModal(modal, newUserName, user, setUser, changeUsername, send)} disabled={!isValid(newUserName)} />
         </div>
       </div>
     </div>

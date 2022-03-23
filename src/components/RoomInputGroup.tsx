@@ -89,14 +89,14 @@ const RoomInputGroup = ({
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
       <div className="flex space-x-1">
-        <Input id="join" className="rounded-r-none" placeholder="Enter a room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler(event))} value={joinInput} setValue={setJoinInput} />
+        <Input noHelper id="join" className="rounded-r-none" placeholder="Enter a room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler(event))} value={joinInput} setValue={setJoinInput} />
         <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoomHandler(event)} />
       </div>
 
       <div className="flex space-x-1">
         <Input id="create" className="rounded-r-none" placeholder="Enter a room name" onKeyPress={handleKeyPressInput('create', newRoomHandler)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} value={createInput} setValue={setCreateInput} />
         <LockToggle toggle={isPrivate} onClick={handleClick} onKeyPress={handleKeyPress} />
-        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={newRoomHandler} />
+        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={newRoomHandler} disabled={!isValid(createInput)} />
       </div>
     </div>
   );
