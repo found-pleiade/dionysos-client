@@ -62,7 +62,7 @@ const RoomInputGroup = ({
   }, [room]);
 
   const handleClick = () => setIsPrivate(!isPrivate);
-  const handleKeyPress = () => (event: any) => {
+  const handleKeyPress = (event: any) => {
     if (event.code === 'Enter') setIsPrivate(!isPrivate);
   };
 
