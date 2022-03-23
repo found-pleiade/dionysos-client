@@ -14,7 +14,9 @@ const Userlist = ({ users, room, className }: userListProps) => {
         {users.map((user) => (
           <li key={user.id} className="pb-1 font-medium flex align-middle" title={user.id}>
             {`${user.name}`}
-            <span className="text-foreground/40 font-normal">{`#${user.id.substring(0, idLength)}`}</span>
+            <span className="text-foreground/40 font-normal ml-1">
+              {`${user.id.substring(0, idLength)}`}
+            </span>
             {star(user)}
           </li>
         ))}
