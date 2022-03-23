@@ -21,8 +21,10 @@ export const codes = {
     roomCreation: 'NRO',
     joinRoom: 'JRO',
     changeUserName: 'CHU',
+    quitRoom: 'QRO',
   },
   response: {
+    success: 'SUC',
     error: 'ERR',
     connection: 'COS',
     roomCreation: 'RCS',

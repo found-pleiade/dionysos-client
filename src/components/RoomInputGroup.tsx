@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as R from 'ramda';
 import { codes } from '../constants';
 import { requestData, testActiveElementById } from '../utils';
@@ -24,11 +24,11 @@ const newRoom = (
 
 const joinRoom = (
   send: SendFunction,
-  roomidEl: HTMLInputElement,
+  roomid: string,
 ) => {
   send(requestData(
     codes.request.joinRoom,
-    { roomid: roomidEl.value },
+    { roomid },
   ));
 };
 
@@ -51,15 +51,28 @@ const RoomInputGroup = ({
   send, room, setRoom, className,
 }: RoomInputGroupProps) => {
   const [isPrivate, setIsPrivate] = useState(false);
+  const [joinInput, setJoinInput] = useState('');
+  const [createInput, setCreateInput] = useState('');
+
+  useEffect(() => {
+    if (R.length(room.name) <= 0) {
+      setJoinInput('');
+      setCreateInput('');
+    }
+  }, [room]);
 
   const handleClick = () => setIsPrivate(!isPrivate);
   const handleKeyPress = () => (event: any) => {
     if (event.code === 'Enter') setIsPrivate(!isPrivate);
   };
 
-  const joinRoomHandler = (event: React.ChangeEvent<HTMLInputElement>) => () => {
+  const joinRoomHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (R.isNil(event.target.parentElement)) return;
-    joinRoom(send, event.target.parentElement?.firstElementChild as HTMLInputElement);
+    const inputEl = event.target.parentElement.firstElementChild as HTMLInputElement;
+    const roomId = inputEl.value;
+    if (R.length(roomId) === 40) {
+      joinRoom(send, inputEl.value);
+    }
   };
 
   const newRoomHandler = () => {
@@ -67,7 +80,7 @@ const RoomInputGroup = ({
     newRoom(send, room, setRoom, isPrivate);
   };
 
-  const handleKeyPressInput = (id: string, func: Function) => (event: any) => {
+  const handleKeyPressInput = (id: string, func: any) => (event: any) => {
     if (event.code === 'Enter' && testActiveElementById(id)) {
       func();
     }
@@ -76,12 +89,12 @@ const RoomInputGroup = ({
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
       <div className="flex space-x-1">
-        <Input id="join" className="rounded-r-none" placeholder="Enter a room ID" onKeyPress={handleKeyPressInput('join', joinRoomHandler)} />
+        <Input id="join" className="rounded-r-none" placeholder="Enter a room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler(event))} value={joinInput} setValue={setJoinInput} />
         <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoomHandler(event)} />
       </div>
 
       <div className="flex space-x-1">
-        <Input id="create" className="rounded-r-none" placeholder="Enter a room name" onKeyPress={handleKeyPressInput('create', newRoomHandler)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} />
+        <Input id="create" className="rounded-r-none" placeholder="Enter a room name" onKeyPress={handleKeyPressInput('create', newRoomHandler)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} value={createInput} setValue={setCreateInput} />
         <LockToggle toggle={isPrivate} onClick={handleClick} onKeyPress={handleKeyPress} />
         <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={newRoomHandler} />
       </div>

@@ -77,6 +77,13 @@ const App = () => {
         });
       }
 
+      if (code === codes.response.success) {
+        if (payload.requestCode === 'QRO') {
+          setRoom(defaultRoom);
+          setUsers([]);
+        }
+      }
+
       if (code === codes.response.changeUserName) {
         setUser({ ...user, name: payload.username });
       }
