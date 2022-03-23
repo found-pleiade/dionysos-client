@@ -3,7 +3,7 @@ import { ClipboardIcon } from '@heroicons/react/solid';
 import * as R from 'ramda';
 import { idLength } from '../constants';
 
-const handleCopy = (id: string, copy: boolean | undefined) => () => {
+const handleCopy = (id: string, copy: boolean | undefined) => {
   if (R.not(R.isNil(copy)) && copy) {
     navigator.clipboard.writeText(id);
   }
@@ -22,10 +22,10 @@ const Id = ({
   const tabIndex = copy ? 0 : -1;
 
   return (
-    <button className={`text-md text-foreground/40 ${buttonStyle} flex transition-colors ${inlineClass} ${className}`} title={title} onClick={handleCopy(id, copy)} type="button" tabIndex={tabIndex}>
+    <div className={`text-md text-foreground/40 ${buttonStyle} flex transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyPress={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
       {idToDisplay}
       {iconEl}
-    </button>
+    </div>
   );
 };
 
