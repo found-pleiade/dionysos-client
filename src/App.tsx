@@ -11,6 +11,7 @@ import Connect from './pages/connect';
 import Home from './pages/home';
 import { Room, User, DataType } from './utils/types';
 import useErrors from './hooks/errors';
+import { isValid } from './utils';
 
 const send = (socket: WebSocket | undefined) => (data: DataType) => {
   if (R.not(R.isNil(socket))) {
@@ -84,7 +85,7 @@ const App = () => {
         }
       }
 
-      if (code === codes.response.changeUserName) {
+      if (code === codes.response.changeUserName && isValid(room.name)) {
         setUser({ ...user, name: payload.username });
       }
 
