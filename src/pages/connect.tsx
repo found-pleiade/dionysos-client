@@ -5,7 +5,7 @@ import { GlobeAltIcon } from '@heroicons/react/solid';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { isValid, requestData } from '../utils';
+import { testActiveElementById, isValid, requestData } from '../utils';
 import {
   SetUser, User, SendFunction, UrlType, ErrorsType,
 } from '../utils/types';
@@ -63,7 +63,7 @@ const Connect = ({
   const buttonText = isConnected ? 'Join' : 'Connecting...';
 
   const keypressCallback = (event: KeyboardEvent) => {
-    if (event.code === 'Enter' && valid && isConnected) {
+    if (event.code === 'Enter' && valid && isConnected && testActiveElementById('connect')) {
       sendUsername(validAndConnected, send, username, user, setUser)();
       navigate('/home');
     }
@@ -83,7 +83,7 @@ const Connect = ({
     <div>
       <div className="w-[600px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
         <div className="flex space-x-1">
-          <Input className="rounded-r-none" placeholder="Enter your username" value={username} setValue={setUsername} />
+          <Input id="connect" className="rounded-r-none" placeholder="Enter your username" value={username} setValue={setUsername} />
           <Button className="rounded-l-none" to="/home" text={buttonText} disabled={!validAndConnected} onClick={sendUsername(validAndConnected, send, username, user, setUser)} />
         </div>
       </div>
