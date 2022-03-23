@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import * as R from 'ramda';
 import { codes } from '../constants';
-import { requestData, visibility } from '../utils';
+import { isValid, requestData, visibility } from '../utils';
 import {
   ModalType, SendFunction, SetUser, User,
 } from '../utils/types';
@@ -26,6 +27,7 @@ const saveModal = (
   changeUsername: (send: SendFunction, username: string) => void,
   send: SendFunction,
 ) => {
+  if (R.not(isValid(newUserName))) return;
   changeUsername(send, newUserName);
   setUser({ ...user, name: newUserName });
   modal.toggle();
