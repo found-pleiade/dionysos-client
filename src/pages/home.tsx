@@ -32,7 +32,7 @@ const Home = ({
     autoplay: false,
     controls: true,
     fullscreen: true,
-    height: window.innerHeight,
+    fluid: true,
     techOrder: ['youtube'],
     sources: [{
       src: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -61,7 +61,7 @@ const Home = ({
   const modal = useModal();
 
   return (
-    <div className="h-screen w-screen truncate bg-black flex">
+    <div className="h-screen w-screen truncate bg-black flex justify-center">
       {/* Panel */}
       <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-3 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
@@ -80,13 +80,13 @@ const Home = ({
       </div>
 
       {/* Chat */}
-      <div className={`w-[500px] flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat)}`}>
+      <div className={`flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat)}`}>
         <MinimizeIcon func={setChat} />
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+        <p>Ceci est un chat</p>
       </div>
 
       {/* Video */}
-      <div className="relative">
+      <div className="relative w-[inherit] max-w-[calc(100%-128px)] h-screen flex items-center justify-center">
         {/* Menus */}
         <OverlayMenu panel={panel} setPanel={setPanel} chat={chat} setChat={setChat} />
 
