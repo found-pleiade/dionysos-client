@@ -79,7 +79,7 @@ const ChangeNameModal = ({
   const saveModalHandler = () => saveModal(modal, newUserName, user, setUser, changeUsername, send);
 
   return (
-    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-40 flex justify-center items-center`} onClick={(event: ClickEvent) => clickBackground(event, modal, user, setNewUserName)}>
+    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-40 flex justify-center items-center`} onMouseDown={(event: ClickEvent) => clickBackground(event, modal, user, setNewUserName)}>
       <div className="w-[450px] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
         <Input id="nameChange" placeholder="Username" value={newUserName} setValue={setNewUserName} onKeyPress={handleKeyPressInput('nameChange', saveModalHandler)} />
 

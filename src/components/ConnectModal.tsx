@@ -95,7 +95,7 @@ const ConnectModal = ({
   const [connectionStatus, setConnectionStatus] = useState(icons.valid);
 
   return (
-    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-10 flex justify-center items-center`} onClick={(event: ClickEvent) => clickBackground(event, modal, url, setIsConnected, setConnectionStatus, icons)}>
+    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-10 flex justify-center items-center`} onMouseDown={(event: ClickEvent) => clickBackground(event, modal, url, setIsConnected, setConnectionStatus, icons)}>
       <div className="w-[450px] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
         <div>
           <h2 className="mb-2 font-medium">WebSocket server</h2>
