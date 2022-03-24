@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  user-select: none;
+}
+
 .unclickable {
   pointer-events: none;
 }
