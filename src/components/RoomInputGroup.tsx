@@ -87,7 +87,7 @@ const RoomInputGroup = ({
   };
 
   return (
-    <div className={`flex flex-col gap-6 m-3 ${className}`}>
+    <div className={`flex flex-col gap-6 ${className}`}>
       <div className="flex space-x-1">
         <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler(event))} value={joinInput} setValue={setJoinInput} />
         <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoomHandler(event)} />

@@ -35,6 +35,7 @@
   --min: 386px;
   --max: 386px;
   --duration: 200ms;
+  --padding: theme('spacing.6');
 }
 
 .openSideMenus  {
@@ -54,15 +55,15 @@
     min-width: var(--min);
     max-width: var(--max);
     overflow: hidden;
-    padding-left: theme('spacing.3');
-    padding-right: theme('spacing.3');
+    padding-left: var(--padding);
+    padding-right: var(--padding);
   }
 
   100% {
     min-width: var(--min);
     max-width: var(--max);
-    padding-left: theme('spacing.3');
-    padding-right: theme('spacing.3');
+    padding-left: var(--padding);
+    padding-right: var(--padding);
     overflow: visible;
   }
 }
@@ -76,16 +77,16 @@
     min-width: var(--min);
     max-width: var(--max);
     overflow: visible;
-    padding-left: theme('spacing.3');
-    padding-right: theme('spacing.3');
+    padding-left: var(--padding);
+    padding-right: var(--padding);
   }
 
   1% {
     min-width: var(--min);
     max-width: var(--max);
     overflow: hidden;
-    padding-left: theme('spacing.3');
-    padding-right: theme('spacing.3');
+    padding-left: var(--padding);
+    padding-right: var(--padding);
   }
 
   100% {
