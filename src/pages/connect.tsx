@@ -83,7 +83,7 @@ const Connect = ({
     <div>
       <div className="w-[600px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
         <div className="flex space-x-1">
-          <Input id="connect" className="rounded-r-none" placeholder="Enter your username" value={username} setValue={setUsername} />
+          <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} />
           <Button className="rounded-l-none" to="/home" text={buttonText} disabled={!validAndConnected} onClick={sendUsername(validAndConnected, send, username, user, setUser)} />
         </div>
       </div>

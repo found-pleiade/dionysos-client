@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.unclickable {
+  pointer-events: none;
+}
+
+.input:focus+p, .input:not(:placeholder-shown)+p {
+  transform: translateY(-140%);
+  color: theme('colors.foreground');
+  font-size: theme('fontSize.sm');
+}
+
 .error {
   animation: error 10s forwards;
   overflow: hidden;
