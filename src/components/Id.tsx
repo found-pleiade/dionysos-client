@@ -16,7 +16,7 @@ const Id = ({
   const idToDisplay = short ? id.substring(0, idLength) : id;
   const inlineClass = inline ? 'inline' : 'block';
   const title = copy ? 'Click to copy' : id;
-  const buttonStyle = copy ? 'cursor-pointer hover:text-foreground/60' : 'cursor-default';
+  const buttonStyle = copy ? 'cursor-pointer hover:text-foreground/60' : 'focus:outline-none cursor-default';
   const tabIndex = copy ? 0 : -1;
 
   return (

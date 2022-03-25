@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*:focus {
+  --outline: 2px;
+  outline-width: var(--outline);
+  outline-style: solid;
+  outline-color: theme('colors.accent.500');
+  outline-offset: calc(0px - var(--outline));
+}
+
 html {
   user-select: none;
 }

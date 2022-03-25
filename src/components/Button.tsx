@@ -22,7 +22,7 @@ const Button = ({
     if (disabled && colorless) return 'bg-background-500/40 hover:bg-background-500/40 cursor-not-allowed';
     if (colorless) return 'bg-background-500 hover:bg-background-400 cursor-pointer';
     if (disabled) return 'bg-accent-500/40 hover:bg-accent-500/40 cursor-not-allowed';
-    return 'bg-accent-500 hover:bg-accent-400 cursor-pointer';
+    return 'bg-accent-500 hover:bg-accent-400 focus:outline-pending cursor-pointer';
   };
 
   const style = `${base} ${visibility} ${colorsAndCursor()}`;
