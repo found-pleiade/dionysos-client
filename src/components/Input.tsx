@@ -36,9 +36,9 @@ const Input = ({
         onKeyPress={onKeyPress}
         placeholder={' '}
       />
-      <p className="absolute top-2 left-3 font-medium cursor-text text-background-400/70 unclickable transition-all placeholder">{placeholder}</p>
+      <p className="absolute top-2 left-3 font-medium cursor-text text-background-400/70 unclickable transition-all duration-200 placeholder">{placeholder}</p>
 
-      <div className={`absolute z-10 bg-foreground text-background-900 w-full rounded-b-lg px-3 py-2 flex flex-col space-y-1 border-t-2 mt-1 font-medium text-sm ${visibility(showHelper)}`}>
+      <div className={`absolute z-10 bg-background-600 w-full rounded-b-lg px-3 py-2 flex flex-col space-y-1 mt-1 font-medium text-sm ${visibility(showHelper)}`}>
         <p className={`text-error ${visibility(!gteThree)}`}>At least 3 characters</p>
         <p className={`text-error ${visibility(!lteTwenty)}`}>Over 20 characters</p>
       </div>
