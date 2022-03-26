@@ -48,8 +48,8 @@ html {
 }
 
 .openSideMenus, .closeSideMenus {
-  --min: calc(40ch + theme('spacing.3'));
-  --max: calc(40ch + theme('spacing.3'));
+  --min: calc(41ch + theme('spacing.3'));
+  --max: calc(41ch + theme('spacing.3'));
   --duration: 200ms;
   --padding: theme('spacing.3');
 }
