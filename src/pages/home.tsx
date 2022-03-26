@@ -63,13 +63,13 @@ const Home = ({
   return (
     <div className="h-screen w-screen truncate bg-black flex">
       {/* Panel */}
-      <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-6 ${translate(panel)}`}>
+      <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-3 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
         <RoomInputGroup
           send={send}
           room={room}
           setRoom={setRoom}
-          className={visibility(!roomNotEmpty)}
+          className={`${visibility(!roomNotEmpty)} space-y-1 pt-4`}
         />
         <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} user={user} />
         <Separator className={visibility(!emptyUserList)} />
@@ -80,7 +80,7 @@ const Home = ({
       </div>
 
       {/* Chat */}
-      <div className={`flex flex-col justify-between bg-background-700 relative transition-all py-6 ${translate(chat)}`}>
+      <div className={`flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat)}`}>
         <MinimizeIcon func={setChat} />
         <p>Ceci est un chat</p>
       </div>

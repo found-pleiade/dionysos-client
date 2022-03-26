@@ -48,10 +48,10 @@ html {
 }
 
 .openSideMenus, .closeSideMenus {
-  --min: 386px;
-  --max: 386px;
+  --min: calc(40ch + theme('spacing.3'));
+  --max: calc(40ch + theme('spacing.3'));
   --duration: 200ms;
-  --padding: theme('spacing.6');
+  --padding: theme('spacing.3');
 }
 
 .openSideMenus  {
