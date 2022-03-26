@@ -71,12 +71,9 @@ const RoomInputGroup = ({
     if (event.code === 'Enter') setIsPrivate(!isPrivate);
   };
 
-  const joinRoomHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (R.isNil(event.target.parentElement)) return;
-    const inputEl = event.target.parentElement.firstElementChild as HTMLInputElement;
-    const roomId = inputEl.value;
-    if (R.length(roomId) === 40) {
-      joinRoom(send, inputEl.value);
+  const joinRoomHandler = () => {
+    if (R.length(joinInput) === 40) {
+      joinRoom(send, joinInput);
     }
   };
 
@@ -101,8 +98,8 @@ const RoomInputGroup = ({
       </div>
 
       <div className="flex space-x-1">
-        <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler(event))} value={joinInput} setValue={setJoinInput} />
-        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoomHandler(event)} disabled={!(R.length(joinInput) === 40)} />
+        <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler())} value={joinInput} setValue={setJoinInput} />
+        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoomHandler()} disabled={!(R.length(joinInput) === 40)} />
       </div>
 
       <div className="flex space-x-1">
