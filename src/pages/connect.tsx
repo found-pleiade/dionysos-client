@@ -81,8 +81,13 @@ const Connect = ({
 
   return (
     <div>
-      <div className="w-[600px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-        <div className="flex space-x-1">
+      <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
+        <div className="mb-52 absolute bottom-0">
+          <h1 className="text-[6rem] mb-12 font-black uppercase">Dyonisos</h1>
+          <h2 className="text-[2rem] font-semibold">Share cinematic experiences.</h2>
+        </div>
+
+        <div className="flex space-x-1 w-[50ch]">
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} />
           <Button className="rounded-l-none" to="/home" text={buttonText} disabled={!validAndConnected} onClick={sendUsername(validAndConnected, send, username, user, setUser)} />
         </div>
