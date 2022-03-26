@@ -86,17 +86,19 @@ const ConnectModal = ({
   setIsConnected,
   errors,
 }: ConnectModalProps) => {
+  const iconStyle = 'h-10 p-2 rounded-r-lg';
+
   const icons = {
-    valid: <CheckIcon className="bg-valid h-10 p-2 rounded-r-lg" />,
-    error: <XIcon className="bg-error h-10 p-2 rounded-r-lg" />,
-    pending: <DotsHorizontalIcon className="bg-pending h-10 p-2 rounded-r-lg animate-pulse-slow" />,
+    valid: <CheckIcon className={`${iconStyle} bg-valid`} />,
+    error: <XIcon className={`${iconStyle} bg-error`} />,
+    pending: <DotsHorizontalIcon className={`${iconStyle} bg-pending animate-pulse-slow`} />,
   };
 
   const [connectionStatus, setConnectionStatus] = useState(icons.valid);
 
   return (
     <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-10 flex justify-center items-center`} onMouseDown={(event: ClickEvent) => clickBackground(event, modal, url, setIsConnected, setConnectionStatus, icons)}>
-      <div className="w-[450px] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
+      <div className="w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
         <div>
           <h2 className="mb-2 font-medium">WebSocket server</h2>
           <div className="flex space-x-1">

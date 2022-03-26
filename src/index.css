@@ -24,6 +24,10 @@ html {
   font-size: theme('fontSize.sm');
 }
 
+.video-max-width {
+  max-width: calc(16 / 9 * 100 * 1vh);
+}
+
 .error {
   animation: error 10s forwards;
   overflow: hidden;

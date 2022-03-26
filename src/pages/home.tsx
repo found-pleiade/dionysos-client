@@ -35,7 +35,7 @@ const Home = ({
     fluid: true,
     techOrder: ['youtube'],
     sources: [{
-      src: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      src: 'https://www.youtube.com/watch?v=_VjPDGdUIDI',
       type: 'video/youtube',
     }],
   };
@@ -61,7 +61,7 @@ const Home = ({
   const modal = useModal();
 
   return (
-    <div className="h-screen w-screen truncate bg-black flex justify-center">
+    <div className="h-screen w-screen truncate bg-black flex">
       {/* Panel */}
       <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-6 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
@@ -86,15 +86,17 @@ const Home = ({
       </div>
 
       {/* Video */}
-      <div className="relative w-[inherit] max-w-[calc(100%-128px)] h-screen flex items-center justify-center">
+      <div className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center">
+        {/* Player */}
+        <div className="video-max-width mx-auto w-[inherit]">
+          <Videojs
+            options={videoJsOptions}
+            onReady={handlePlayerReady}
+          />
+        </div>
+
         {/* Menus */}
         <OverlayMenu panel={panel} setPanel={setPanel} chat={chat} setChat={setChat} />
-
-        {/* Player */}
-        <Videojs
-          options={videoJsOptions}
-          onReady={handlePlayerReady}
-        />
       </div>
     </div>
   );
