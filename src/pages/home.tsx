@@ -69,7 +69,7 @@ const Home = ({
           send={send}
           room={room}
           setRoom={setRoom}
-          className={`${visibility(!roomNotEmpty)} space-y-1 pt-4`}
+          className={`${visibility(!roomNotEmpty)}`}
         />
         <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} user={user} />
         <Separator className={visibility(!emptyUserList)} />
