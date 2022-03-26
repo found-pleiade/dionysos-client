@@ -13,6 +13,7 @@ import MinimizeIcon from '../components/MinimizeIcon';
 import RoomInputGroup from '../components/RoomInputGroup';
 import useModal from '../hooks/modal';
 import ChangeNameModal from '../components/ChangeNameModal';
+import Help from '../components/Help';
 
 type homeProps = {
   user: User,
@@ -57,6 +58,7 @@ const Home = ({
   const emptyUserList = users.length <= 0;
 
   const [panel, setPanel] = useState(true);
+  const [help, setHelp] = useState(false);
   const [chat, setChat] = useState(false);
   const modal = useModal();
 
@@ -70,7 +72,10 @@ const Home = ({
           room={room}
           setRoom={setRoom}
           className={`${visibility(!roomNotEmpty)}`}
+          help={help}
+          setHelp={setHelp}
         />
+        <Help shown={help} />
         <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} user={user} />
         <Separator className={visibility(!emptyUserList)} />
         <Userlist users={users} room={room} className={visibility(!emptyUserList)} />
