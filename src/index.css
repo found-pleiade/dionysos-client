@@ -1,13 +1,115 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*:focus {
+  --outline: 2px;
+  outline-width: var(--outline);
+  outline-style: solid;
+  outline-color: theme('colors.accent.500');
+  outline-offset: calc(0px - var(--outline));
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  user-select: none;
+}
+
+.unclickable {
+  pointer-events: none;
+}
+
+.input:focus+.placeholder, .input:not(:placeholder-shown)+.placeholder {
+  transform: translateY(-140%);
+  color: theme('colors.foreground');
+  font-size: theme('fontSize.sm');
+}
+
+.video-max-width {
+  max-width: calc(16 / 9 * 100 * 1vh);
+}
+
+.error {
+  animation: error 10s forwards;
+  overflow: hidden;
+}
+
+@keyframes error {
+  0% {
+    max-height: theme('spacing.24');
+  }
+  90% {
+    max-height: theme('spacing.24');
+    padding: theme('spacing.2') theme('spacing.5');
+  }
+  100% {
+    max-height: 0;
+    padding: 0 theme('spacing.5');
+  }
+}
+
+.openSideMenus, .closeSideMenus {
+  --min: calc(41ch + theme('spacing.3'));
+  --max: calc(41ch + theme('spacing.3'));
+  --duration: 200ms;
+  --padding: theme('spacing.3');
+}
+
+.openSideMenus  {
+  animation: openSideMenus var(--duration) forwards;
+}
+
+@keyframes openSideMenus {
+  0% {
+    min-width: 0;
+    max-width: 0;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  99% {
+    min-width: var(--min);
+    max-width: var(--max);
+    overflow: hidden;
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+  }
+
+  100% {
+    min-width: var(--min);
+    max-width: var(--max);
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+    overflow: visible;
+  }
+}
+
+.closeSideMenus  {
+  animation: closeSideMenus var(--duration) forwards;
+}
+
+@keyframes closeSideMenus {
+  0% {
+    min-width: var(--min);
+    max-width: var(--max);
+    overflow: visible;
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+  }
+
+  1% {
+    min-width: var(--min);
+    max-width: var(--max);
+    overflow: hidden;
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+  }
+
+  100% {
+    min-width: 0;
+    max-width: 0;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
