@@ -15,10 +15,20 @@ type inputProps = {
 const Input = ({
   id, className, placeholder, value, setValue, onChange, onKeyPress, noHelper,
 }: inputProps) => {
+  /**
+   * Differents conditions for the helper.
+   */
   const gteThree = isValidConditions.gteThree(value);
   const lteTwenty = isValidConditions.lteTwenty(value);
 
+  /**
+   * Helper visibility boolean.
+   */
   const showHelper = (!isValid(value) && !noHelper) && value.length > 0;
+
+  /**
+   * Adapt input style to the helper visibility.
+   */
   const inputWithHelperStyle = showHelper ? 'rounded-b-none' : '';
 
   return (

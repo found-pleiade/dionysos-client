@@ -1,11 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
-import * as R from 'ramda';
 import { GlobeAltIcon } from '@heroicons/react/solid';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { testActiveElementById, isValid, requestData } from '../utils';
+import {
+  isValid, requestData, unvalidInput,
+} from '../utils';
 import {
   SetUser, User, SendFunction, UrlType, ErrorsType,
 } from '../utils/types';
@@ -13,24 +14,13 @@ import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
 
+/**
+ * Setup the request for changing username, which here allow to set your username
+ * for the first time.
+ */
 const requestCHU = (username: string) => requestData(
   codes.request.changeUserName,
   { newUsername: username },
-);
-
-const sendUsername = (
-  isValidUsername: boolean,
-  send: SendFunction,
-  username: string,
-  user: User,
-  setUser: SetUser,
-) => R.ifElse(
-  () => isValidUsername,
-  () => {
-    send(requestCHU(username));
-    setUser({ ...user, name: username });
-  },
-  () => null,
 );
 
 type connectProps = {
@@ -54,30 +44,38 @@ const Connect = ({
   setWebSocket,
   errors,
 }: connectProps) => {
-  const modal = useModal();
+  /**
+   * React Router hook to navigate to the home page.
+   */
   const navigate = useNavigate();
+  /**
+   * Hook to open and close the connect modal.
+   */
+  const modal = useModal();
   const [username, setUsername] = useState('');
   const [valid, setValid] = useState(false);
-
   const validAndConnected = valid && isConnected;
   const buttonText = isConnected ? 'Join' : 'Connecting...';
 
-  const keypressCallback = (event: KeyboardEvent) => {
-    if (event.code === 'Enter' && valid && isConnected && testActiveElementById('connect')) {
-      sendUsername(validAndConnected, send, username, user, setUser)();
-      navigate('/home');
-    }
+  /**
+   * Send the username to the server and set the username in the app.
+   * Handles both click and keyboard inputs.
+   */
+  const connectionHandler = (event?: any) => {
+    if (unvalidInput(event, 'connect')) return;
+    if (!validAndConnected) return;
+
+    send(requestCHU(username));
+    setUser({ ...user, name: username });
+    navigate('/home');
   };
 
+  /**
+   * Update the username state validity on username updates.
+   */
   useEffect(() => {
-    document.addEventListener('keypress', keypressCallback);
-
-    return () => {
-      document.removeEventListener('keypress', keypressCallback);
-    };
-  }, [username, valid, isConnected]);
-
-  useEffect(() => (isValid(username) ? setValid(true) : setValid(false)), [username]);
+    setValid(isValid(username));
+  }, [username]);
 
   return (
     <div>
@@ -88,8 +86,8 @@ const Connect = ({
         </div>
 
         <div className="flex space-x-1 w-[50ch]">
-          <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} />
-          <Button className="rounded-l-none" to="/home" text={buttonText} disabled={!validAndConnected} onClick={sendUsername(validAndConnected, send, username, user, setUser)} />
+          <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
+          <Button className="rounded-l-none" text={buttonText} disabled={!validAndConnected} onClick={connectionHandler} />
         </div>
       </div>
 

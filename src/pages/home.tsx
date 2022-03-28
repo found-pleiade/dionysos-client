@@ -57,6 +57,9 @@ const Home = ({
   const roomNotEmpty = room.name !== '' && room.id !== '';
   const emptyUserList = users.length <= 0;
 
+  /**
+   * State of the visibility of the panel, help, chat and modal.
+   */
   const [panel, setPanel] = useState(true);
   const [help, setHelp] = useState(false);
   const [chat, setChat] = useState(false);

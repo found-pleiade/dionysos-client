@@ -6,6 +6,9 @@ import Id from './Id';
 type userListProps = { users: Array<User>, room: Room, className: string };
 
 const Userlist = ({ users, room, className }: userListProps) => {
+  /**
+   * Return a star icon if the user is the room owner. Return a span otherwise.
+   */
   const star = (user: User) => (user.id === room.ownerId ? <StarIcon className="py-1 h-6 w-4" /> : <span />);
 
   return (

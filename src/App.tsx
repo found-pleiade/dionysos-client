@@ -9,17 +9,27 @@ import {
 import useUrl from './hooks/url';
 import Connect from './pages/connect';
 import Home from './pages/home';
-import { Room, User, DataType } from './utils/types';
+import {
+  Room, User, DataType, SendFunction,
+} from './utils/types';
 import useErrors from './hooks/errors';
-import { isValid } from './utils';
+import { isValid, notNil } from './utils';
 
-const send = (socket: WebSocket | undefined) => (data: DataType) => {
-  if (R.not(R.isNil(socket))) {
+/**
+ * Two use function that first set the WebSocket to use then the data to send
+ * to the WebSocket.
+ */
+const send = (socket: WebSocket | undefined): SendFunction => (data: DataType): void => {
+  if (notNil(socket)) {
     const definedSocket = socket as WebSocket;
     definedSocket.send(data);
   }
 };
 
+/**
+ * App main function, here lies most states and every WebSocket listeners.
+ * Returns the shell style, app router and errors.
+ */
 const App = () => {
   const [webSocket, setWebSocket] = useState<WebSocket>();
   const url = useUrl(devServer);
@@ -29,28 +39,38 @@ const App = () => {
   const [users, setUsers] = useState<Array<User>>([]);
   const errors = useErrors();
 
+  // Set the WebSocket to use on app start.
+  // Listen for the app closing to close the WebSocket.
   useEffect(() => {
-    setWebSocket(new WebSocket(devServer));
+    try {
+      const socket = new WebSocket(devServer);
+      setWebSocket(socket);
+
+      appWindow.listen('tauri://close-requested', () => {
+        if (notNil(webSocket)) {
+          const definedSocket = webSocket as WebSocket;
+          definedSocket.close(1000);
+        }
+        appWindow.close();
+      });
+    } catch (e: unknown) {
+      const knowError = e as Error;
+      errors.add(knowError.message);
+    }
   }, []);
 
+  // Every WebSocket listeners, only refreshed with key app state change.
   useEffect(() => {
     if (R.isNil(webSocket)) return () => { };
 
-    appWindow.listen('tauri://close-requested', () => {
-      try {
-        webSocket.close(1000);
-        appWindow.close();
-      } catch (e) {
-        console.error(e);
-      }
-    });
-
+    // Connection is up.
     webSocket.onopen = (event) => {
       console.log('onopen: ', event);
       setIsConnected(true);
       send(webSocket)(user.uuid);
     };
 
+    // Server is sending data.
     webSocket.onmessage = (event) => {
       const { data } = event;
       const { code, payload } = JSON.parse(data);
@@ -79,7 +99,7 @@ const App = () => {
       }
 
       if (code === codes.response.success) {
-        if (payload.requestCode === 'QRO') {
+        if (payload.requestCode === codes.response.quitRoom) {
           setRoom(defaultRoom);
           setUsers([]);
         }
@@ -95,11 +115,12 @@ const App = () => {
       }
     };
 
+    // Connection errors.
     webSocket.onerror = (event) => {
       console.log('onerror: ', event);
-      errors.add(event as unknown as string);
     };
 
+    // Connection is closed.
     webSocket.onclose = (event) => {
       console.log('onclose: ', event);
       setIsConnected(false);
@@ -109,6 +130,7 @@ const App = () => {
       }
     };
 
+    // Reset listeners on unmount.
     return () => {
       webSocket.onopen = null;
       webSocket.onmessage = null;
@@ -129,6 +151,7 @@ const App = () => {
       errors={errors}
     />
   );
+
   const home = (
     <Home
       user={user}

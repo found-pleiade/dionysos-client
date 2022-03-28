@@ -12,6 +12,10 @@ type buttonProps = {
   disabled?: boolean,
 }
 
+/**
+ * Basic button component, 'text' is the text inside the button,
+ * 'to' is a React Router Link used to navigate to a new page.
+ */
 const Button = ({
   className = '', to = '', text, colorless = false, hidden = false, onClick, disabled = false,
 }: buttonProps) => {

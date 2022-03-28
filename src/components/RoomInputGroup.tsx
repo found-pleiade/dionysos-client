@@ -3,7 +3,8 @@ import * as R from 'ramda';
 import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
 import { codes } from '../constants';
 import {
-  isValid, requestData, testActiveElementById,
+  equalsForty,
+  isValid, requestData, unvalidInput,
 } from '../utils';
 import {
   Room, SendFunction, SetRoom,
@@ -12,36 +13,21 @@ import Button from './Button';
 import LockToggle from './LockToggle';
 import Input from './Input';
 
-const newRoom = (
-  send: SendFunction,
-  room: Room,
-  setRoom: SetRoom,
-  isPrivate: boolean,
-) => {
-  setRoom(room);
-  send(requestData(
-    codes.request.roomCreation,
-    { roomname: room.name, isPrivate },
-  ));
-};
+/**
+ * Setup the request for joining a room.
+ */
+const requestJRO = (roomid: string) => requestData(
+  codes.request.joinRoom,
+  { roomid },
+);
 
-const joinRoom = (
-  send: SendFunction,
-  roomid: string,
-) => {
-  send(requestData(
-    codes.request.joinRoom,
-    { roomid },
-  ));
-};
-
-const onRoomInputChange = (
-  event: React.ChangeEvent<HTMLInputElement>,
-  room: Room,
-  setRoom: SetRoom,
-) => {
-  setRoom({ ...room, name: event.target.value });
-};
+/**
+ * Setup the request for creating a room.
+ */
+const requestNRO = (roomname: string, isPrivate: boolean) => requestData(
+  codes.request.roomCreation,
+  { roomname, isPrivate },
+);
 
 type RoomInputGroupProps = {
   send: SendFunction,
@@ -66,26 +52,33 @@ const RoomInputGroup = ({
     }
   }, [room]);
 
-  const handleClick = () => setIsPrivate(!isPrivate);
-  const handleKeyPress = (event: any) => {
-    if (event.code === 'Enter') setIsPrivate(!isPrivate);
+  /**
+   * Toggle the private room state.
+   */
+  const keyLockHandler = (event?: React.KeyboardEvent) => {
+    if (event && event.code !== 'Enter') return;
+    setIsPrivate(!isPrivate);
   };
 
-  const joinRoomHandler = () => {
-    if (R.length(joinInput) === 40) {
-      joinRoom(send, joinInput);
-    }
+  /**
+   * If checks passes, send the request to join a room.
+   */
+  const joinRoomHandler = (event?: any) => {
+    if (unvalidInput(event, 'join')) return;
+    if (!equalsForty(joinInput)) return;
+
+    send(requestJRO(joinInput));
   };
 
-  const newRoomHandler = () => {
-    if (R.not(isValid(room.name))) return;
-    newRoom(send, room, setRoom, isPrivate);
-  };
+  /**
+   * If checks passes, send the request to create a room and set the room state of the app.
+   */
+  const createRoomHandler = (event?: any) => {
+    if (unvalidInput(event, 'create')) return;
+    if (!isValid(createInput)) return;
 
-  const handleKeyPressInput = (id: string, func: any) => (event: any) => {
-    if (event.code === 'Enter' && testActiveElementById(id)) {
-      func();
-    }
+    setRoom({ ...room, name: createInput });
+    send(requestNRO(createInput, isPrivate));
   };
 
   return (
@@ -98,14 +91,14 @@ const RoomInputGroup = ({
       </div>
 
       <div className="flex space-x-1">
-        <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={(event: any) => handleKeyPressInput('join', joinRoomHandler())} value={joinInput} setValue={setJoinInput} />
-        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={(event: React.ChangeEvent<HTMLInputElement>) => joinRoomHandler()} disabled={!(R.length(joinInput) === 40)} />
+        <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={joinRoomHandler} value={joinInput} setValue={setJoinInput} />
+        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={joinRoomHandler} disabled={!equalsForty(joinInput)} />
       </div>
 
       <div className="flex space-x-1">
-        <Input id="create" className="rounded-r-none" placeholder="Room name" onKeyPress={handleKeyPressInput('create', newRoomHandler)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => onRoomInputChange(event, room, setRoom)} value={createInput} setValue={setCreateInput} />
-        <LockToggle toggle={isPrivate} onClick={handleClick} onKeyPress={handleKeyPress} />
-        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={newRoomHandler} disabled={!isValid(createInput)} />
+        <Input id="create" className="rounded-r-none" placeholder="Room name" onKeyPress={createRoomHandler} value={createInput} setValue={setCreateInput} />
+        <LockToggle toggle={isPrivate} onClick={keyLockHandler} onKeyPress={keyLockHandler} />
+        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={createRoomHandler} disabled={!isValid(createInput)} />
       </div>
     </div>
   );

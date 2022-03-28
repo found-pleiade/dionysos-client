@@ -5,6 +5,9 @@ import Id from './Id';
 
 type UserDisplayProps = { user: User, modal: ModalType };
 
+/**
+ * Display the user's name and id.
+ */
 const UserDisplay = ({ user, modal }: UserDisplayProps) => (
   <div>
     <button className="text-md font-medium flex items-center" onClick={() => modal.toggle()} type="button" title="Change your username">

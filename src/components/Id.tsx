@@ -1,15 +1,24 @@
 import React from 'react';
-import * as R from 'ramda';
 import { idLength } from '../constants';
+import { notNil } from '../utils';
 
 const handleCopy = (id: string, copy: boolean | undefined) => {
-  if (R.not(R.isNil(copy)) && copy) {
+  if (notNil(copy) && copy) {
     navigator.clipboard.writeText(id);
   }
 };
 
-type IdProps = { id: string, className?: string, inline?: boolean, short?: boolean, copy?: boolean }
+type IdProps = {
+  id: string,
+  className?: string,
+  inline?: boolean,
+  short?: boolean,
+  copy?: boolean
+}
 
+/**
+ * Display an ID.
+ */
 const Id = ({
   id, className, inline, short, copy,
 }: IdProps) => {

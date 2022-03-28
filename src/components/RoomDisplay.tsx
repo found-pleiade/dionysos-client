@@ -14,6 +14,9 @@ const quitRoom = (
 
 type RoomDisplayProps = { room: Room, className?: string, send: SendFunction, user: User };
 
+/**
+ * Display the room name, it's id and the leave button.
+ */
 const RoomDisplay = ({
   room, className, send, user,
 }: RoomDisplayProps) => (
