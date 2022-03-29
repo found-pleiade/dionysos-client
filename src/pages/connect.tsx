@@ -80,7 +80,7 @@ const Connect = ({
   return (
     <div>
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
-        <div className="mb-52 absolute bottom-0">
+        <div className="xl:mb-52 md:mb-32 mb-20 absolute bottom-0">
           <h1 className="text-[6rem] -mb-6 font-black uppercase">Dyonisos</h1>
           <h2 className="text-[2rem] font-semibold">Share cinematic experiences.</h2>
         </div>
