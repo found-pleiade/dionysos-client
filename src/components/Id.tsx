@@ -29,7 +29,7 @@ const Id = ({
   const tabIndex = copy ? 0 : -1;
 
   return (
-    <div className={`text-md text-foreground/40 ${buttonStyle} flex transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyPress={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
+    <div className={`text-md text-foreground/40 ${buttonStyle} transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyPress={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
       {idToDisplay}
     </div>
   );

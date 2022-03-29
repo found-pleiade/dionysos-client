@@ -37,3 +37,9 @@ export type ErrorsType = {
 export type DataType = string | ArrayBufferLike | Blob | ArrayBufferView;
 
 export type SendFunction = (data: DataType) => void;
+
+export type JoinRequest = {
+  requesterId: string,
+  requesterUsername: string,
+  roomId: string,
+}
