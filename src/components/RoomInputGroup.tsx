@@ -85,7 +85,7 @@ const RoomInputGroup = ({
     <div className={`flex flex-col gap-8 ${className}`}>
       <div className="flex justify-between items-center -mb-2">
         <h1 className="text-xl font-bold">Join or create a room</h1>
-        <button type="button" className="h-8 w-8 p-1 hover:text-accent-400 hover:brightness-[1.2]" title="Need some help ?" onClick={() => setHelp(!help)}>
+        <button type="button" className="h-8 w-8 p-1 hover:text-accent-400 hover:brightness-[1.2] rounded-full" title="Need some help ?" onClick={() => setHelp(!help)}>
           <QuestionMarkCircleIcon />
         </button>
       </div>
