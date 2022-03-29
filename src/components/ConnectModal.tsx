@@ -73,7 +73,7 @@ const ConnectModal = ({
       };
 
       socket.onclose = (event) => {
-        errors.add(`${event.code} : Probably a wrong Web Socket address or a mistake server side (wss://subdomain.domain.extension)`);
+        errors.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`);
         setConnectionStatus(icons.error);
       };
     } catch (error) {
