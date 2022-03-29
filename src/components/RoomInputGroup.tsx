@@ -55,8 +55,8 @@ const RoomInputGroup = ({
   /**
    * Toggle the private room state.
    */
-  const keyLockHandler = (event?: React.KeyboardEvent) => {
-    if (event && event.code !== 'Enter') return;
+  const keyLockHandler = (event?: any) => {
+    if (unvalidInput(event, 'lock')) return;
     setIsPrivate(!isPrivate);
   };
 

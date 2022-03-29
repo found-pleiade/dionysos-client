@@ -12,6 +12,7 @@ const LockToggle = ({ toggle, onClick, onKeyPress }: EyeToggleProps) => {
 
   return (
     <div
+      id="lock"
       className={style}
       onClick={onClick}
       onKeyPress={onKeyPress}
