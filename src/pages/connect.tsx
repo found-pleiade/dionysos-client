@@ -101,6 +101,7 @@ const Connect = ({
         setWebSocket={setWebSocket}
         setIsConnected={setIsConnected}
         errors={errors}
+        isConnected={isConnected}
       />
     </div>
   );

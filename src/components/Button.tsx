@@ -3,6 +3,7 @@ import { Link, To } from 'react-router-dom';
 import { isValid } from '../utils';
 
 type buttonProps = {
+  id?: string,
   className?: string,
   to?: To,
   text: string,
@@ -17,7 +18,14 @@ type buttonProps = {
  * 'to' is a React Router Link used to navigate to a new page.
  */
 const Button = ({
-  className = '', to = '', text, colorless = false, hidden = false, onClick, disabled = false,
+  id = '',
+  className = '',
+  to = '',
+  text,
+  colorless = false,
+  hidden = false,
+  onClick,
+  disabled = false,
 }: buttonProps) => {
   const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground';
   const visibility = hidden ? 'hidden' : 'visible';
@@ -33,6 +41,7 @@ const Button = ({
 
   const buttonProp = (
     <button
+      id={id}
       type="button"
       className={`${style} ${className}`}
       onClick={onClick}
@@ -43,6 +52,7 @@ const Button = ({
 
   const linkProp = (
     <Link
+      id={id}
       to={to}
       className={`${style} ${className}`}
       onClick={onClick}
