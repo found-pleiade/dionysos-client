@@ -62,7 +62,7 @@ const Connect = ({
    * Handles both click and keyboard inputs.
    */
   const connectionHandler = (event?: any) => {
-    if (unvalidInput(event, 'connect')) return;
+    if (unvalidInput(event)) return;
     if (!validAndConnected) return;
 
     send(requestCHU(username));
