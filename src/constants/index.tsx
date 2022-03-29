@@ -39,15 +39,16 @@ export const codes = {
     joinRoom: 'JRO',
     changeUserName: 'CHU',
     quitRoom: 'QRO',
+    joinRoomAnswer: 'JRA',
   },
   response: {
-    success: 'SUC',
-    error: 'ERR',
     connection: 'COS',
     roomCreation: 'RCS',
     joinRoom: 'JRO',
     changeUserName: 'CHU',
     quitRoom: 'QRO',
+    error: 'ERR',
+    joinRequest: 'JRP',
     newPeers: 'NEP',
   },
 };

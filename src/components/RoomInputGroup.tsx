@@ -79,7 +79,7 @@ const RoomInputGroup = ({
     if (!isValid(createInput)) return;
 
     setHelp(false);
-    setRoom({ ...room, name: createInput });
+    setRoom({ ...room, name: createInput, isPrivate });
     send(requestNRO(createInput, isPrivate));
   };
 

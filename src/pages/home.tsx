@@ -4,7 +4,7 @@ import Videojs from '../components/Videojs';
 import { translate, visibility } from '../utils';
 import Separator from '../components/Separator';
 import {
-  Room, User, SendFunction, SetRoom, SetUser,
+  Room, User, SendFunction, SetRoom, SetUser, ModalType, JoinRequest,
 } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
 import UserDisplay from '../components/UserDisplay';
@@ -14,6 +14,7 @@ import RoomInputGroup from '../components/RoomInputGroup';
 import useModal from '../hooks/modal';
 import ChangeNameModal from '../components/ChangeNameModal';
 import Help from '../components/Help';
+import JoinRequestModal from '../components/JoinRequestModal';
 
 type homeProps = {
   user: User,
@@ -22,10 +23,13 @@ type homeProps = {
   room: Room,
   setRoom: SetRoom,
   send: SendFunction,
+  joinRequestModal: ModalType,
+  joinRequests: Array<JoinRequest>,
+  setJoinRequests: React.Dispatch<React.SetStateAction<Array<JoinRequest>>>,
 }
 
 const Home = ({
-  user, setUser, users, room, setRoom, send,
+  user, setUser, users, room, setRoom, send, joinRequestModal, joinRequests, setJoinRequests,
 }: homeProps) => {
   const playerRef = useRef(null);
 
@@ -63,7 +67,7 @@ const Home = ({
   const [panel, setPanel] = useState(true);
   const [help, setHelp] = useState(false);
   const [chat, setChat] = useState(false);
-  const modal = useModal();
+  const changeNameModal = useModal();
 
   return (
     <div className="h-screen w-screen truncate bg-black flex">
@@ -80,11 +84,18 @@ const Home = ({
         />
         <Help shown={help} />
         <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} user={user} />
+        <JoinRequestModal
+          modal={joinRequestModal}
+          room={room}
+          requests={joinRequests}
+          setRequests={setJoinRequests}
+          send={send}
+        />
         <Separator className={visibility(!emptyUserList)} />
         <Userlist users={users} room={room} className={visibility(!emptyUserList)} />
         <Separator className={visibility(!emptyUserList)} />
-        <UserDisplay user={user} modal={modal} />
-        <ChangeNameModal modal={modal} user={user} setUser={setUser} send={send} />
+        <UserDisplay user={user} modal={changeNameModal} />
+        <ChangeNameModal modal={changeNameModal} user={user} setUser={setUser} send={send} />
       </div>
 
       {/* Chat */}

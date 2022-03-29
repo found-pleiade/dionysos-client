@@ -10,10 +10,11 @@ import useUrl from './hooks/url';
 import Connect from './pages/connect';
 import Home from './pages/home';
 import {
-  Room, User, DataType, SendFunction,
+  Room, User, DataType, SendFunction, JoinRequest,
 } from './utils/types';
 import useErrors from './hooks/errors';
 import { isValid, notNil } from './utils';
+import useModal from './hooks/modal';
 
 /**
  * Two use function that first set the WebSocket to use then the data to send
@@ -38,6 +39,8 @@ const App = () => {
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
   const errors = useErrors();
+  const joinRequestModal = useModal();
+  const [joinRequests, setJoinRequests] = useState<Array<JoinRequest>>([]);
 
   // Set the WebSocket to use on app start.
   // Listen for the app closing to close the WebSocket.
@@ -85,7 +88,11 @@ const App = () => {
       }
 
       if (code === codes.response.roomCreation) {
-        setRoom({ ...room, id: payload.roomId, ownerId: user.id });
+        setRoom({
+          ...room,
+          id: payload.roomId,
+          ownerId: user.id,
+        });
         setUsers([user]);
       }
 
@@ -98,11 +105,9 @@ const App = () => {
         });
       }
 
-      if (code === codes.response.success) {
-        if (payload.requestCode === codes.response.quitRoom) {
-          setRoom(defaultRoom);
-          setUsers([]);
-        }
+      if (code === codes.response.quitRoom) {
+        setRoom(defaultRoom);
+        setUsers([]);
       }
 
       if (code === codes.response.changeUserName && isValid(room.name)) {
@@ -112,6 +117,17 @@ const App = () => {
       if (code === codes.response.newPeers) {
         setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
+      }
+
+      if (code === codes.response.joinRequest) {
+        if (joinRequests.length === 0) {
+          joinRequestModal.toggle();
+        }
+        setJoinRequests(joinRequests.concat({
+          requesterId: payload.requesterId,
+          requesterUsername: payload.requesterUsername,
+          roomId: payload.roomId,
+        }));
       }
     };
 
@@ -160,6 +176,9 @@ const App = () => {
       room={room}
       setRoom={setRoom}
       send={send(webSocket)}
+      joinRequestModal={joinRequestModal}
+      joinRequests={joinRequests}
+      setJoinRequests={setJoinRequests}
     />
   );
 
