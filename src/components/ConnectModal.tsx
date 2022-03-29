@@ -1,80 +1,15 @@
 import { CheckIcon, DotsHorizontalIcon, XIcon } from '@heroicons/react/solid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { visibility } from '../utils';
 import { ErrorsType, ModalType, UrlType } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
 
-type ClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
-
-const cancelModal = (
-  modal: ModalType,
-  url: UrlType,
-  setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  setConnectionStatus: React.Dispatch<React.SetStateAction<JSX.Element>>,
-  icons: any,
-) => {
-  url.setCurrent(url.backup);
-  setIsConnected(true);
-  setConnectionStatus(icons.valid);
-  modal.toggle();
-};
-
-const saveModal = (
-  modal: ModalType,
-  url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
-  setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  setConnectionStatus: React.Dispatch<React.SetStateAction<JSX.Element>>,
-  errors: ErrorsType,
-  icons: any,
-) => {
-  if (url.current === url.backup && errors.get.length === 0) {
-    modal.toggle();
-    return;
-  }
-
-  setIsConnected(false);
-  setConnectionStatus(icons.pending);
-
-  try {
-    const socket = new WebSocket(url.current);
-
-    socket.onopen = () => {
-      setWebSocket(socket);
-      url.setBackup(url.current);
-      setIsConnected(true);
-      setConnectionStatus(icons.valid);
-      modal.toggle();
-    };
-
-    socket.onclose = (event) => {
-      errors.add(`${event.code} : Probably a wrong Web Socket address or a mistake server side (wss://subdomain.domain.extension)`);
-      setConnectionStatus(icons.error);
-    };
-  } catch (error) {
-    const knownError = error as unknown as Error;
-    errors.add(knownError.message);
-    setConnectionStatus(icons.error);
-  }
-};
-
-const clickBackground = (
-  event: ClickEvent,
-  modal: ModalType,
-  url: UrlType,
-  setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  setConnectionStatus: React.Dispatch<React.SetStateAction<JSX.Element>>,
-  icons: any,
-) => {
-  const el = event.target as HTMLDivElement;
-  if (el.classList.contains('modalBackground')) cancelModal(modal, url, setIsConnected, setConnectionStatus, icons);
-};
-
 type ConnectModalProps = {
   modal: ModalType,
   url: UrlType,
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
+  isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   errors: ErrorsType,
 }
@@ -83,6 +18,7 @@ const ConnectModal = ({
   modal,
   url,
   setWebSocket,
+  isConnected,
   setIsConnected,
   errors,
 }: ConnectModalProps) => {
@@ -94,10 +30,61 @@ const ConnectModal = ({
     pending: <DotsHorizontalIcon className={`${iconStyle} bg-pending animate-pulse-slow`} />,
   };
 
-  const [connectionStatus, setConnectionStatus] = useState(icons.valid);
+  const [connectionStatus, setConnectionStatus] = useState(isConnected ? icons.valid : icons.error);
+
+  useEffect(() => {
+    setConnectionStatus(isConnected ? icons.valid : icons.error);
+  }, [isConnected]);
+
+  /**
+   * Cancel user interractions with the modal then close it.
+   */
+  const cancelModal = (event?: any) => {
+    const isBackground = event.target.classList.contains('modalBackground');
+    const isCancelButton = event.target.id === 'cancelConnection';
+
+    if (!isBackground && !isCancelButton) return;
+    if (!isConnected && url.current === url.backup) { modal.toggle(); return; }
+
+    url.setCurrent(url.backup);
+    setIsConnected(true);
+    setConnectionStatus(icons.valid);
+    modal.toggle();
+  };
+
+  /**
+   * Try to connect to the WebSocket and update the app only if it's valid.
+   */
+  const saveModal = () => {
+    if (url.current === url.backup && isConnected) { modal.toggle(); return; }
+
+    setIsConnected(false);
+    setConnectionStatus(icons.pending);
+
+    try {
+      const socket = new WebSocket(url.current);
+
+      socket.onopen = () => {
+        setWebSocket(socket);
+        url.setBackup(url.current);
+        setIsConnected(true);
+        setConnectionStatus(icons.valid);
+        modal.toggle();
+      };
+
+      socket.onclose = (event) => {
+        errors.add(`${event.code} : Probably a wrong Web Socket address or a mistake server side (wss://subdomain.domain.extension)`);
+        setConnectionStatus(icons.error);
+      };
+    } catch (error) {
+      const knownError = error as Error;
+      errors.add(knownError.message);
+      setConnectionStatus(icons.error);
+    }
+  };
 
   return (
-    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-10 flex justify-center items-center`} onMouseDown={(event: ClickEvent) => clickBackground(event, modal, url, setIsConnected, setConnectionStatus, icons)}>
+    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-10 flex justify-center items-center`} onMouseDown={cancelModal}>
       <div className="w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
         <div>
           <h2 className="mb-2 font-medium">WebSocket server</h2>
@@ -108,8 +95,8 @@ const ConnectModal = ({
         </div>
 
         <div className="flex justify-between">
-          <Button text="Cancel" colorless onClick={() => cancelModal(modal, url, setIsConnected, setConnectionStatus, icons)} />
-          <Button text="Save" onClick={() => saveModal(modal, url, setWebSocket, setIsConnected, setConnectionStatus, errors, icons)} />
+          <Button id="cancelConnection" text="Cancel" colorless onClick={cancelModal} />
+          <Button id="saveConnection" text="Save" onClick={saveModal} />
         </div>
       </div>
     </div>
