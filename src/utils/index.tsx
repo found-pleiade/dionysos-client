@@ -42,6 +42,7 @@ export const translate = (condition: boolean) => (condition ? 'openSideMenus' : 
 export const testActiveElementById = (id: string) => document.activeElement?.id === id;
 
 /**
- * Check if the input is focused, and the key pressed is enter. Ignore clicks.
+ * Check if the input is focused, and the key pressed is enter.
+ * The element needs an ID. Ignore clicks.
  */
-export const unvalidInput = (event: any, id: string) => event.type === 'keypress' && ((event && event.code !== 'Enter') || !testActiveElementById(id));
+export const unvalidInput = (event: any) => event.type === 'keypress' && ((event.code !== 'Enter') || !testActiveElementById(event.target.id));

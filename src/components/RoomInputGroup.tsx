@@ -56,7 +56,7 @@ const RoomInputGroup = ({
    * Toggle the private room state.
    */
   const keyLockHandler = (event?: any) => {
-    if (unvalidInput(event, 'lock')) return;
+    if (unvalidInput(event)) return;
     setIsPrivate(!isPrivate);
   };
 
@@ -64,9 +64,10 @@ const RoomInputGroup = ({
    * If checks passes, send the request to join a room.
    */
   const joinRoomHandler = (event?: any) => {
-    if (unvalidInput(event, 'join')) return;
+    if (unvalidInput(event)) return;
     if (!equalsForty(joinInput)) return;
 
+    setHelp(false);
     send(requestJRO(joinInput));
   };
 
@@ -74,9 +75,10 @@ const RoomInputGroup = ({
    * If checks passes, send the request to create a room and set the room state of the app.
    */
   const createRoomHandler = (event?: any) => {
-    if (unvalidInput(event, 'create')) return;
+    if (unvalidInput(event)) return;
     if (!isValid(createInput)) return;
 
+    setHelp(false);
     setRoom({ ...room, name: createInput });
     send(requestNRO(createInput, isPrivate));
   };
