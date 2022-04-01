@@ -1,7 +1,7 @@
 import { CheckIcon, DotsHorizontalIcon, XIcon } from '@heroicons/react/solid';
 import React, { useEffect, useState } from 'react';
 import { visibility } from '../utils';
-import { ErrorsType, ModalType, UrlType } from '../utils/types';
+import { MessagesType, ModalType, UrlType } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
 
@@ -11,7 +11,7 @@ type ConnectModalProps = {
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
   isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  errors: ErrorsType,
+  errors: MessagesType,
 }
 
 const ConnectModal = ({
@@ -73,12 +73,12 @@ const ConnectModal = ({
       };
 
       socket.onclose = (event) => {
-        errors.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`);
+        errors.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`, 'error');
         setConnectionStatus(icons.error);
       };
     } catch (error) {
       const knownError = error as Error;
-      errors.add(knownError.message);
+      errors.add(knownError.message, 'error');
       setConnectionStatus(icons.error);
     }
   };

@@ -8,7 +8,7 @@ import {
   isValid, requestData, unvalidInput,
 } from '../utils';
 import {
-  SetUser, User, SendFunction, UrlType, ErrorsType,
+  SetUser, User, SendFunction, UrlType, MessagesType,
 } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
@@ -31,7 +31,7 @@ type connectProps = {
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   url: UrlType,
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
-  errors: ErrorsType,
+  errors: MessagesType,
 }
 
 const Connect = ({
