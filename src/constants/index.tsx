@@ -50,5 +50,6 @@ export const codes = {
     error: 'ERR',
     joinRequest: 'JRP',
     newPeers: 'NEP',
+    denied: 'DEN',
   },
 };

@@ -41,6 +41,7 @@ const App = () => {
   const errors = useErrors();
   const joinRequestModal = useModal();
   const [joinRequests, setJoinRequests] = useState<Array<JoinRequest>>([]);
+  const [pendingRoom, setPendingRoom] = useState<Room>(defaultRoom);
 
   // Set the WebSocket to use on app start.
   // Listen for the app closing to close the WebSocket.
@@ -97,12 +98,31 @@ const App = () => {
       }
 
       if (code === codes.response.joinRoom) {
-        setRoom({
-          ...room,
-          name: payload.roomName,
-          id: payload.roomId,
-          isPrivate: payload.isPrivate,
-        });
+        if (!payload.isPrivate) {
+          setRoom({
+            ...room,
+            name: payload.roomName,
+            id: payload.roomId,
+            isPrivate: payload.isPrivate,
+          });
+        }
+
+        if (payload.isPrivate) {
+          errors.add('Waiting for the host...');
+
+          setPendingRoom({
+            ...room,
+            name: payload.roomName,
+            id: payload.roomId,
+            isPrivate: payload.isPrivate,
+          });
+        }
+      }
+
+      if (code === codes.response.denied) {
+        if (payload.requestCode === codes.request.joinRoom) {
+          errors.add('Connection to the room denied by the host.');
+        }
       }
 
       if (code === codes.response.quitRoom) {
@@ -117,6 +137,11 @@ const App = () => {
       if (code === codes.response.newPeers) {
         setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
+
+        if (pendingRoom.isPrivate) {
+          setRoom(pendingRoom);
+          setPendingRoom(defaultRoom);
+        }
       }
 
       if (code === codes.response.joinRequest) {
