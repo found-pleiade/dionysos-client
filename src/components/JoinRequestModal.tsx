@@ -48,7 +48,7 @@ const JoinRequestModal = ({
 
   return (
     <div role="none" className={`${visibility(modal.isShowing && room.isPrivate)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-[100] flex justify-center items-center`}>
-      <div className="w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
+      <div className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
         <p className="font-medium">
           {currentRequest.requesterUsername}
           {' '}
