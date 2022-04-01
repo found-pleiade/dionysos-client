@@ -29,7 +29,9 @@ html {
 }
 
 .error {
-  animation: error 10s forwards;
+  animation-name: error;
+  animation-duration: 10s;
+  animation-fill-mode: forwards;
   overflow: hidden;
 }
 
