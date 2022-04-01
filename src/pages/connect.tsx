@@ -31,7 +31,7 @@ type connectProps = {
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   url: UrlType,
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
-  errors: MessagesType,
+  messages: MessagesType,
 }
 
 const Connect = ({
@@ -42,7 +42,7 @@ const Connect = ({
   setIsConnected,
   url,
   setWebSocket,
-  errors,
+  messages: errors,
 }: connectProps) => {
   /**
    * React Router hook to navigate to the home page.
@@ -100,7 +100,7 @@ const Connect = ({
         url={url}
         setWebSocket={setWebSocket}
         setIsConnected={setIsConnected}
-        errors={errors}
+        messages={errors}
         isConnected={isConnected}
       />
     </div>

@@ -143,7 +143,7 @@ const App = () => {
         setUsers(payload.peers);
 
         if (pendingRoom.isPrivate) {
-          setRoom(pendingRoom);
+          setRoom({ ...pendingRoom, ownerId: payload.ownerId });
           setPendingRoom(defaultRoom);
         }
       }
@@ -193,7 +193,7 @@ const App = () => {
       setIsConnected={setIsConnected}
       url={url}
       setWebSocket={setWebSocket}
-      errors={messages}
+      messages={messages}
     />
   );
 
