@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { v4 } from 'uuid';
 import { notNil } from '../utils';
 import { MessageType } from '../utils/types';
 
@@ -12,7 +11,7 @@ const getColor = (type: string | undefined) => {
 
 const Message = ({
   message,
-}: { message: MessageType }) => {
+}: { message: MessageType, }) => {
   const { text, type, duration } = message;
 
   if (R.isNil(text)) return <div />;
@@ -20,7 +19,7 @@ const Message = ({
   const animationDuration = notNil(duration) ? duration : (text.length / 5);
 
   return (
-    <p key={v4()} className={`first-letter:uppercase ${getColor(type)} font-medium p-2 last:rounded-b-md message w-full text-center`} style={{ animationDuration: `${animationDuration}s` }}>
+    <p className={`first-letter:uppercase ${getColor(type)} font-medium p-2 last:rounded-b-md message w-full text-center`} style={{ animationDuration: `${animationDuration}s` }}>
       {text}
     </p>
   );

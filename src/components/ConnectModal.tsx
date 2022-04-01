@@ -11,7 +11,7 @@ type ConnectModalProps = {
   setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
   isConnected: boolean,
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  errors: MessagesType,
+  messages: MessagesType,
 }
 
 const ConnectModal = ({
@@ -20,7 +20,7 @@ const ConnectModal = ({
   setWebSocket,
   isConnected,
   setIsConnected,
-  errors,
+  messages: errors,
 }: ConnectModalProps) => {
   const iconStyle = 'h-10 p-2 rounded-r-lg';
 
