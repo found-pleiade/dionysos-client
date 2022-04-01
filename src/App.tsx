@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
 import { appWindow } from '@tauri-apps/api/window';
-import Error from './components/Error';
+import Message from './components/Message';
 import {
   codes, defaultRoom, defaultUser, devServer,
 } from './constants';
@@ -12,7 +12,7 @@ import Home from './pages/home';
 import {
   Room, User, DataType, SendFunction, JoinRequest,
 } from './utils/types';
-import useErrors from './hooks/errors';
+import useMessages from './hooks/messages';
 import { isValid, notNil } from './utils';
 import useModal from './hooks/modal';
 
@@ -29,7 +29,7 @@ const send = (socket: WebSocket | undefined): SendFunction => (data: DataType): 
 
 /**
  * App main function, here lies most states and every WebSocket listeners.
- * Returns the shell style, app router and errors.
+ * Returns the shell style, app router and messages.
  */
 const App = () => {
   const [webSocket, setWebSocket] = useState<WebSocket>();
@@ -38,7 +38,7 @@ const App = () => {
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
-  const errors = useErrors();
+  const messages = useMessages();
   const joinRequestModal = useModal();
   const [joinRequests, setJoinRequests] = useState<Array<JoinRequest>>([]);
   const [pendingRoom, setPendingRoom] = useState<Room>(defaultRoom);
@@ -59,7 +59,7 @@ const App = () => {
       });
     } catch (e: unknown) {
       const knowError = e as Error;
-      errors.add(knowError.message);
+      messages.add(knowError.message, 'error');
     }
   }, []);
 
@@ -81,7 +81,7 @@ const App = () => {
       console.log(code, payload);
 
       if (code === codes.response.error) {
-        errors.add(payload.error);
+        messages.add(payload.error, 'error');
       }
 
       if (code === codes.response.connection) {
@@ -89,7 +89,7 @@ const App = () => {
       }
 
       if (code === codes.response.roomCreation) {
-        errors.clear();
+        messages.clear();
         setRoom({
           ...room,
           id: payload.roomId,
@@ -109,7 +109,7 @@ const App = () => {
         }
 
         if (payload.isPrivate) {
-          errors.add('Waiting for the host...', 9999);
+          messages.clear('Waiting for the host...', 'info', 9999);
 
           setPendingRoom({
             ...room,
@@ -122,23 +122,23 @@ const App = () => {
 
       if (code === codes.response.denied) {
         if (payload.requestCode === codes.request.joinRoom) {
-          errors.clear('Connection to the room denied by the host.');
+          messages.clear('Connection to the room denied by the host.', 'error');
         }
       }
 
       if (code === codes.response.quitRoom) {
-        errors.clear();
+        messages.clear();
         setRoom(defaultRoom);
         setUsers([]);
       }
 
       if (code === codes.response.changeUserName && isValid(room.name)) {
-        errors.clear();
+        messages.clear();
         setUser({ ...user, name: payload.username });
       }
 
       if (code === codes.response.newPeers) {
-        errors.clear();
+        messages.clear();
         setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
 
@@ -171,7 +171,7 @@ const App = () => {
       setIsConnected(false);
 
       if (user.id.length > 0) {
-        errors.add('Connection lost');
+        messages.add('Connection lost', 'error');
       }
     };
 
@@ -182,7 +182,7 @@ const App = () => {
       webSocket.onerror = null;
       webSocket.onclose = null;
     };
-  }, [user, room, errors, webSocket]);
+  }, [user, room, messages, webSocket]);
 
   const connect = (
     <Connect
@@ -193,7 +193,7 @@ const App = () => {
       setIsConnected={setIsConnected}
       url={url}
       setWebSocket={setWebSocket}
-      errors={errors}
+      errors={messages}
     />
   );
 
@@ -214,7 +214,7 @@ const App = () => {
   return (
     <div className="text-foreground bg-background-800 h-screen cursor-default relative">
       <div className="z-50 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
-        {errors.get.map((error) => <Error error={error.message} duration={error.duration} />)}
+        {messages.get.map((message) => <Message message={message} />)}
       </div>
 
       <MemoryRouter>
