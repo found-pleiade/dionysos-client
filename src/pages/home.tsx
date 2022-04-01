@@ -83,7 +83,7 @@ const Home = ({
           setHelp={setHelp}
         />
         <Help shown={help} />
-        <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} user={user} />
+        <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} />
         <JoinRequestModal
           modal={joinRequestModal}
           room={room}
