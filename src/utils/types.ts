@@ -29,9 +29,12 @@ export type UrlType = {
   setBackup: React.Dispatch<React.SetStateAction<string>>,
 }
 
+export type ErrorType = { message: string | undefined, duration: number | undefined };
+
 export type ErrorsType = {
-  get: string[];
-  add: (message: string) => void;
+  get: ErrorType[];
+  add: (message: string | undefined, duration?: number | undefined) => void;
+  clear: (message?: string | undefined, duration?: number | undefined) => void;
 }
 
 export type DataType = string | ArrayBufferLike | Blob | ArrayBufferView;

@@ -89,6 +89,7 @@ const App = () => {
       }
 
       if (code === codes.response.roomCreation) {
+        errors.clear();
         setRoom({
           ...room,
           id: payload.roomId,
@@ -108,7 +109,7 @@ const App = () => {
         }
 
         if (payload.isPrivate) {
-          errors.add('Waiting for the host...');
+          errors.add('Waiting for the host...', 9999);
 
           setPendingRoom({
             ...room,
@@ -121,20 +122,23 @@ const App = () => {
 
       if (code === codes.response.denied) {
         if (payload.requestCode === codes.request.joinRoom) {
-          errors.add('Connection to the room denied by the host.');
+          errors.clear('Connection to the room denied by the host.');
         }
       }
 
       if (code === codes.response.quitRoom) {
+        errors.clear();
         setRoom(defaultRoom);
         setUsers([]);
       }
 
       if (code === codes.response.changeUserName && isValid(room.name)) {
+        errors.clear();
         setUser({ ...user, name: payload.username });
       }
 
       if (code === codes.response.newPeers) {
+        errors.clear();
         setRoom({ ...room, ownerId: payload.ownerId });
         setUsers(payload.peers);
 
@@ -210,7 +214,7 @@ const App = () => {
   return (
     <div className="text-foreground bg-background-800 h-screen cursor-default relative">
       <div className="z-50 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
-        {errors.get.map((error) => <Error error={error} />)}
+        {errors.get.map((error) => <Error error={error.message} duration={error.duration} />)}
       </div>
 
       <MemoryRouter>
