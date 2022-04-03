@@ -99,7 +99,7 @@ const ConnectModal = ({
   return (
     <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
       <div>
-        <h2 className="mb-2 font-medium">WebSocket server</h2>
+        <h3 className="mb-2 font-medium">WebSocket server</h3>
         <div className="flex space-x-1">
           <Input noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
           {inputStatusIcon.current}

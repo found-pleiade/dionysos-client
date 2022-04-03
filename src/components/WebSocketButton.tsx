@@ -15,9 +15,9 @@ const WebSocketButton = ({ modal }: { modal: ModalType }) => {
   const corners = 'rounded-bl-lg';
 
   return (
-    <div title="Change WebSocket server" onClick={handleInput(modal)} onKeyPress={handleInput(modal)} tabIndex={0} role="button" className={`${position} ${dimensions} ${corners} ${colors} transition-colors grid place-items-center cursor-pointer`}>
+    <button type="button" title="Change WebSocket server" onClick={handleInput(modal)} onKeyPress={handleInput(modal)} tabIndex={0} className={`${position} ${dimensions} ${corners} ${colors} transition-colors grid place-items-center cursor-pointer`}>
       <GlobeAltIcon />
-    </div>
+    </button>
   );
 };
 
