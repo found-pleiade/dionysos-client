@@ -17,11 +17,6 @@ export type Room = {
 
 export type SetRoom = React.Dispatch<React.SetStateAction<Room>>
 
-export type ModalType = {
-  isShowing: boolean,
-  toggle: () => void,
-}
-
 export type UrlType = {
   current: string,
   setCurrent: React.Dispatch<React.SetStateAction<string>>,

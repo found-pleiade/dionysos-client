@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { ModalType } from '../utils/types';
+
+export type ModalType = {
+  isOpen: boolean,
+  toggle: () => void,
+}
 
 const useModal = (): ModalType => {
-  const [isShowing, setIsShowing] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   function toggle() {
-    setIsShowing(!isShowing);
+    setIsOpen(!isOpen);
   }
 
   return {
-    isShowing,
+    isOpen,
     toggle,
   };
 };
