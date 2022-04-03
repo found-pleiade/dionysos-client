@@ -64,14 +64,14 @@ const Connect = ({
   };
 
   return (
-    <div>
+    <>
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
         <BigTitle title="Dyonisos" subtitle="Share cinematic experences." className="xl:mb-52 md:mb-32 mb-20 absolute bottom-0" />
 
-        <div className="flex space-x-1 w-[50ch]">
+        <form className="flex space-x-1 w-[50ch]">
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
           <Button className="rounded-l-none" text={buttonText} disabled={!validAndConnected} onClick={connectionHandler} />
-        </div>
+        </form>
       </div>
 
       <WebSocketButton modal={modal} />
@@ -81,7 +81,7 @@ const Connect = ({
         modal={modal}
         messages={messages}
       />
-    </div>
+    </>
   );
 };
 
