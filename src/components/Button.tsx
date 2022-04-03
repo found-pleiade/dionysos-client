@@ -27,7 +27,7 @@ const Button = ({
   onClick,
   disabled = false,
 }: buttonProps) => {
-  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground';
+  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground whitespace-nowrap';
   const visibility = hidden ? 'hidden' : 'visible';
 
   const colorsAndCursor = () => {
