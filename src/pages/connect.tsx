@@ -6,15 +6,14 @@ import Input from '../components/Input';
 import {
   isValid, requestData, unvalidInput,
 } from '../utils';
-import {
-  SetUser, User, MessagesType,
-} from '../utils/types';
+import { MessagesType } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
 import BigTitle from '../components/BigTitle';
 import WebSocketButton from '../components/WebSocketButton';
-import { Connection } from '../hooks/connection';
+import useConnection from '../hooks/connection';
+import useUsers from '../hooks/users';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -26,16 +25,14 @@ const requestCHU = (username: string) => requestData(
 );
 
 type connectProps = {
-  connection: Connection,
-  user: User,
-  setUser: SetUser,
+  connection: ReturnType<typeof useConnection>,
+  users: ReturnType<typeof useUsers>,
   messages: MessagesType,
 }
 
 const Connect = ({
   connection,
-  user,
-  setUser,
+  users,
   messages,
 }: connectProps) => {
   /**
@@ -59,7 +56,7 @@ const Connect = ({
     if (!validAndConnected) return;
 
     connection.send(requestCHU(username));
-    setUser({ ...user, name: username });
+    users.setCurrent({ ...users.current, name: username });
     navigate('/home');
   };
 
@@ -68,10 +65,10 @@ const Connect = ({
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
         <BigTitle title="Dyonisos" subtitle="Share cinematic experences." className="xl:mb-52 md:mb-32 mb-20 absolute bottom-0" />
 
-        <form className="flex space-x-1 w-[50ch]">
+        <div className="flex space-x-1 w-[50ch]">
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
           <Button className="rounded-l-none" text={buttonText} disabled={!validAndConnected} onClick={connectionHandler} />
-        </form>
+        </div>
       </div>
 
       <WebSocketButton modal={modal} />

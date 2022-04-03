@@ -1,9 +1,9 @@
 import React, {
   useEffect, useRef,
 } from 'react';
-import { Connection } from '../hooks/connection';
+import useConnection from '../hooks/connection';
 import useInputStatusIcon from '../hooks/inputStatusIcon';
-import { ModalType } from '../hooks/modal';
+import useModal from '../hooks/modal';
 import { preventDialogEscape, toggleDialog } from '../utils';
 import { MessagesType } from '../utils/types';
 import Button from './Button';
@@ -13,8 +13,8 @@ import Input from './Input';
  * Cancel user interractions with the modal then close it.
  */
 const cancelModal = (
-  connection: Connection,
-  modal: ModalType,
+  connection: ReturnType<typeof useConnection>,
+  modal: ReturnType<typeof useModal>,
   messages: MessagesType,
   inputStatusIcon: ReturnType<typeof useInputStatusIcon>,
 ) => () => {
@@ -31,8 +31,8 @@ const cancelModal = (
  * Try to connect to the WebSocket and update the app only if it's valid.
  */
 const saveModal = (
-  connection: Connection,
-  modal: ModalType,
+  connection: ReturnType<typeof useConnection>,
+  modal: ReturnType<typeof useModal>,
   messages: MessagesType,
   inputStatusIcon: ReturnType<typeof useInputStatusIcon>,
 ) => () => {
@@ -65,8 +65,8 @@ const saveModal = (
 };
 
 type ConnectModalProps = {
-  connection: Connection,
-  modal: ModalType,
+  connection: ReturnType<typeof useConnection>,
+  modal: ReturnType<typeof useModal>,
   messages: MessagesType,
 }
 

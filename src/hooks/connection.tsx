@@ -13,19 +13,6 @@ const send = (socket: WebSocket | undefined): SendFunction => (data: DataType): 
   }
 };
 
-export type Connection = {
-  webSocket: WebSocket | undefined,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
-  currentUrl: string,
-  setCurrentUrl: React.Dispatch<React.SetStateAction<string>>,
-  backupUrl: string,
-  setBackupUrl: React.Dispatch<React.SetStateAction<string>>,
-  isUrlDifferent: boolean,
-  isUp: boolean,
-  setIsUp: React.Dispatch<React.SetStateAction<boolean>>,
-  send: SendFunction,
-};
-
 const useConnection = (devServer: string) => {
   const [webSocket, setWebSocket] = useState<WebSocket>();
   const [currentUrl, setCurrentUrl] = useState(devServer);

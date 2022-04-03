@@ -6,12 +6,12 @@ import {
   equalsForty,
   isValid, requestData, unvalidInput,
 } from '../utils';
-import {
-  Room, SendFunction, SetRoom,
-} from '../utils/types';
 import Button from './Button';
 import LockToggle from './LockToggle';
 import Input from './Input';
+import useRoom from '../hooks/room';
+import useConnection from '../hooks/connection';
+import useHelp from '../hooks/help';
 
 /**
  * Setup the request for joining a room.
@@ -30,23 +30,21 @@ const requestNRO = (roomname: string, isPrivate: boolean) => requestData(
 );
 
 type RoomInputGroupProps = {
-  send: SendFunction,
-  room: Room,
-  setRoom: SetRoom,
+  connection: ReturnType<typeof useConnection>,
+  room: ReturnType<typeof useRoom>,
   className: string,
-  help: boolean,
-  setHelp: React.Dispatch<React.SetStateAction<boolean>>,
+  help: ReturnType<typeof useHelp>,
 }
 
 const RoomInputGroup = ({
-  send, room, setRoom, className, help, setHelp,
+  connection, room, className, help,
 }: RoomInputGroupProps) => {
   const [isPrivate, setIsPrivate] = useState(false);
   const [joinInput, setJoinInput] = useState('');
   const [createInput, setCreateInput] = useState('');
 
   useEffect(() => {
-    if (R.length(room.name) <= 0) {
+    if (R.length(room.current.name) <= 0) {
       setJoinInput('');
       setCreateInput('');
     }
@@ -67,8 +65,8 @@ const RoomInputGroup = ({
     if (unvalidInput(event)) return;
     if (!equalsForty(joinInput)) return;
 
-    setHelp(false);
-    send(requestJRO(joinInput));
+    help.setIsOpen(false);
+    connection.send(requestJRO(joinInput));
   };
 
   /**
@@ -78,16 +76,16 @@ const RoomInputGroup = ({
     if (unvalidInput(event)) return;
     if (!isValid(createInput)) return;
 
-    setHelp(false);
-    setRoom({ ...room, name: createInput, isPrivate });
-    send(requestNRO(createInput, isPrivate));
+    help.setIsOpen(false);
+    room.setCurrent({ ...room.current, name: createInput, isPrivate });
+    connection.send(requestNRO(createInput, isPrivate));
   };
 
   return (
     <div className={`flex flex-col gap-8 ${className}`}>
       <div className="flex justify-between items-center -mb-2">
         <h1 className="text-xl font-bold">Join or create a room</h1>
-        <button type="button" className="h-8 w-8 p-1 hover:text-accent-400 hover:brightness-[1.2] rounded-full" title="Need some help ?" onClick={() => setHelp(!help)}>
+        <button type="button" className="h-8 w-8 p-1 hover:text-accent-400 hover:brightness-[1.2] rounded-full" title="Need some help ?" onClick={() => help.setIsOpen(!help.isOpen)}>
           <QuestionMarkCircleIcon />
         </button>
       </div>

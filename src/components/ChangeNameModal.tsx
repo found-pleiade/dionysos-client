@@ -5,14 +5,16 @@ import {
   isValid, preventDialogEscape, requestData, testActiveElementById, toggleDialog,
 } from '../utils';
 import {
-  SendFunction, SetUser, User,
+  SendFunction, User,
 } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
-import { ModalType } from '../hooks/modal';
+import useModal from '../hooks/modal';
+import useConnection from '../hooks/connection';
+import useUsers from '../hooks/users';
 
 const cancelModal = (
-  modal: ModalType,
+  modal: ReturnType<typeof useModal>,
   user: User,
   setNewUserName: React.Dispatch<React.SetStateAction<string>>,
 ) => () => {
@@ -21,16 +23,15 @@ const cancelModal = (
 };
 
 const saveModal = (
-  modal: ModalType,
+  modal: ReturnType<typeof useModal>,
   newUserName: string,
-  user: User,
-  setUser: SetUser,
+  users: ReturnType<typeof useUsers>,
   changeUsername: (send: SendFunction, username: string) => void,
-  send: SendFunction,
+  connection: ReturnType<typeof useConnection>,
 ) => {
   if (R.not(isValid(newUserName))) return;
-  changeUsername(send, newUserName);
-  setUser({ ...user, name: newUserName });
+  changeUsername(connection.send, newUserName);
+  users.setCurrent({ ...users.current, name: newUserName });
   modal.toggle();
 };
 
@@ -51,20 +52,18 @@ const handleKeyPressInput = (id: string, func: any) => (event: any) => {
 };
 
 type ConnectModalProps = {
-  modal: ModalType,
-  user: User,
-  setUser: SetUser,
-  send: SendFunction
+  modal: ReturnType<typeof useModal>,
+  users: ReturnType<typeof useUsers>,
+  connection: ReturnType<typeof useConnection>,
 }
 
 const ChangeNameModal = ({
   modal,
-  user,
-  setUser,
-  send,
+  users,
+  connection,
 }: ConnectModalProps) => {
-  const [newUserName, setNewUserName] = useState(user.name);
-  const saveModalHandler = () => saveModal(modal, newUserName, user, setUser, changeUsername, send);
+  const [newUserName, setNewUserName] = useState(users.current.name);
+  const saveModalHandler = () => saveModal(modal, newUserName, users, changeUsername, connection);
 
   const dialogRef = useRef() as any;
   useEffect(() => {
@@ -77,7 +76,7 @@ const ChangeNameModal = ({
       <Input id="nameChange" placeholder="Username" value={newUserName} setValue={setNewUserName} onKeyPress={handleKeyPressInput('nameChange', saveModalHandler)} />
 
       <div className="flex justify-between">
-        <Button text="Cancel" colorless onClick={cancelModal(modal, user, setNewUserName)} />
+        <Button text="Cancel" colorless onClick={cancelModal(modal, users.current, setNewUserName)} />
         <Button text="Save" onClick={saveModalHandler} disabled={!isValid(newUserName)} />
       </div>
     </dialog>
