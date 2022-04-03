@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { codes } from '../constants';
-import { requestData, visibility } from '../utils';
+import { ModalType } from '../hooks/modal';
 import {
-  JoinRequest, ModalType, Room, SendFunction,
+  preventDialogEscape, requestData, toggleDialog,
+} from '../utils';
+import {
+  JoinRequest, Room, SendFunction,
 } from '../utils/types';
 import Button from './Button';
 import Id from './Id';
@@ -46,23 +49,27 @@ const JoinRequestModal = ({
     }
   }, [requests]);
 
-  return (
-    <div role="none" className={`${visibility(modal.isShowing && room.isPrivate)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-[100] flex justify-center items-center`}>
-      <div className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
-        <p className="font-medium">
-          {currentRequest.requesterUsername}
-          {' '}
-          <Id id={currentRequest.requesterId} short inline />
-          {' '}
-          wants to join your room.
-        </p>
+  const dialogRef = useRef() as any;
+  useEffect(() => {
+    preventDialogEscape(dialogRef);
+    toggleDialog(modal.isOpen && room.isPrivate, dialogRef);
+  }, [modal]);
 
-        <div className="flex justify-between">
-          <Button id="refuseJoinRequest" text="Refuse" onClick={handleRequest(false)} />
-          <Button id="acceptJoinRequest" text="Accept" onClick={handleRequest(true)} />
-        </div>
+  return (
+    <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
+      <p className="font-medium">
+        {currentRequest.requesterUsername}
+        {' '}
+        <Id id={currentRequest.requesterId} short inline />
+        {' '}
+        wants to join your room.
+      </p>
+
+      <div className="flex justify-between">
+        <Button id="refuseJoinRequest" text="Refuse" colorless onClick={handleRequest(false)} />
+        <Button id="acceptJoinRequest" text="Accept" colorless onClick={handleRequest(true)} />
       </div>
-    </div>
+    </dialog>
   );
 };
 

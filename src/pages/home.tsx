@@ -4,14 +4,14 @@ import Videojs from '../components/Videojs';
 import { translate, visibility } from '../utils';
 import Separator from '../components/Separator';
 import {
-  Room, User, SendFunction, SetRoom, SetUser, ModalType, JoinRequest,
+  Room, User, SendFunction, SetRoom, SetUser, JoinRequest,
 } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
 import UserDisplay from '../components/UserDisplay';
 import RoomDisplay from '../components/RoomDisplay';
 import MinimizeIcon from '../components/MinimizeIcon';
 import RoomInputGroup from '../components/RoomInputGroup';
-import useModal from '../hooks/modal';
+import useModal, { ModalType } from '../hooks/modal';
 import ChangeNameModal from '../components/ChangeNameModal';
 import Help from '../components/Help';
 import JoinRequestModal from '../components/JoinRequestModal';

@@ -1,9 +1,21 @@
 import { CheckIcon, DotsHorizontalIcon, XIcon } from '@heroicons/react/solid';
-import React, { useEffect, useState } from 'react';
-import { visibility } from '../utils';
-import { MessagesType, ModalType, UrlType } from '../utils/types';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
+import { ModalType } from '../hooks/modal';
+import { preventDialogEscape, toggleDialog } from '../utils';
+import { MessagesType, UrlType } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
+
+/**
+ * Return icons for the connect modal, using the icon style provided.
+ */
+const formatIcons = (iconStyle: string) => ({
+  valid: <CheckIcon className={`${iconStyle} bg-valid`} />,
+  error: <XIcon className={`${iconStyle} bg-error`} />,
+  pending: <DotsHorizontalIcon className={`${iconStyle} bg-pending animate-pulse-slow`} />,
+});
 
 type ConnectModalProps = {
   modal: ModalType,
@@ -20,18 +32,24 @@ const ConnectModal = ({
   setWebSocket,
   isConnected,
   setIsConnected,
-  messages: errors,
+  messages,
 }: ConnectModalProps) => {
-  const iconStyle = 'h-10 p-2 rounded-r-lg';
-
-  const icons = {
-    valid: <CheckIcon className={`${iconStyle} bg-valid`} />,
-    error: <XIcon className={`${iconStyle} bg-error`} />,
-    pending: <DotsHorizontalIcon className={`${iconStyle} bg-pending animate-pulse-slow`} />,
-  };
-
+  /**
+   * HTMLDialogElement is not support by TypeScript, but that's what
+   * the type is.
+   */
+  const icons = formatIcons('h-10 p-2 rounded-r-lg');
   const [connectionStatus, setConnectionStatus] = useState(isConnected ? icons.valid : icons.error);
 
+  const dialogRef = useRef() as any;
+  useEffect(() => {
+    preventDialogEscape(dialogRef);
+    toggleDialog(modal.isOpen, dialogRef);
+  }, [modal]);
+
+  /**
+   * Set the icon depending of the connection status.
+   */
   useEffect(() => {
     setConnectionStatus(isConnected ? icons.valid : icons.error);
   }, [isConnected]);
@@ -39,16 +57,13 @@ const ConnectModal = ({
   /**
    * Cancel user interractions with the modal then close it.
    */
-  const cancelModal = (event?: any) => {
-    const isBackground = event.target.classList.contains('modalBackground');
-    const isCancelButton = event.target.id === 'cancelConnection';
-
-    if (!isBackground && !isCancelButton) return;
+  const cancelModal = () => {
     if (!isConnected && url.current === url.backup) { modal.toggle(); return; }
 
-    url.setCurrent(url.backup);
     setIsConnected(true);
     setConnectionStatus(icons.valid);
+    messages.clear();
+    url.setCurrent(url.backup);
     modal.toggle();
   };
 
@@ -66,40 +81,39 @@ const ConnectModal = ({
 
       socket.onopen = () => {
         setWebSocket(socket);
-        url.setBackup(url.current);
         setIsConnected(true);
         setConnectionStatus(icons.valid);
+        messages.clear();
+        url.setBackup(url.current);
         modal.toggle();
       };
 
       socket.onclose = (event) => {
-        errors.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`, 'error');
         setConnectionStatus(icons.error);
+        messages.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`, 'error');
       };
     } catch (error) {
       const knownError = error as Error;
-      errors.add(knownError.message, 'error');
       setConnectionStatus(icons.error);
+      messages.add(knownError.message, 'error');
     }
   };
 
   return (
-    <div role="none" className={`${visibility(modal.isShowing)} modalBackground absolute left-0 top-0 h-screen w-screen bg-background-900/60 z-10 flex justify-center items-center`} onMouseDown={cancelModal}>
-      <div className="w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6">
-        <div>
-          <h2 className="mb-2 font-medium">WebSocket server</h2>
-          <div className="flex space-x-1">
-            <Input noHelper className="rounded-r-none" value={url.current} setValue={url.setCurrent} />
-            {connectionStatus}
-          </div>
-        </div>
-
-        <div className="flex justify-between">
-          <Button id="cancelConnection" text="Cancel" colorless onClick={cancelModal} />
-          <Button id="saveConnection" text="Save" onClick={saveModal} />
+    <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
+      <div>
+        <h2 className="mb-2 font-medium">WebSocket server</h2>
+        <div className="flex space-x-1">
+          <Input noHelper className="rounded-r-none" value={url.current} setValue={url.setCurrent} />
+          {connectionStatus}
         </div>
       </div>
-    </div>
+
+      <div className="flex justify-between">
+        <Button text="Cancel" colorless onClick={cancelModal} />
+        <Button text="Save" onClick={saveModal} />
+      </div>
+    </dialog>
   );
 };
 

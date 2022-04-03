@@ -46,3 +46,23 @@ export const testActiveElementById = (id: string) => document.activeElement?.id 
  * The element needs an ID. Ignore clicks.
  */
 export const unvalidInput = (event: any) => event.type === 'keypress' && ((event.code !== 'Enter') || !testActiveElementById(event.target.id));
+
+/**
+ * Toggle the dialog element depending of the modal isOpen state.
+ * Check if the dialog element is already open to prevent an app crash.
+ */
+export const toggleDialog = (condition: boolean, dialogRef: any) => {
+  const dialogElement = dialogRef.current;
+  if (!dialogElement.open && condition) dialogElement.showModal();
+  if (dialogElement.open && !condition) dialogElement.close();
+};
+
+/**
+ * Prevent the user from canceling the modal by pressing escape.
+ */
+export const preventDialogEscape = (dialogRef: any) => {
+  const dialogElement = dialogRef.current;
+  dialogElement.oncancel = (event: any) => {
+    event.preventDefault();
+  };
+};
