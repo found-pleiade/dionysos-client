@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { codes } from '../constants';
-import { ModalType } from '../hooks/modal';
+import useConnection from '../hooks/connection';
+import useModal from '../hooks/modal';
+import useRoom from '../hooks/room';
 import {
   preventDialogEscape, requestData, toggleDialog,
 } from '../utils';
-import {
-  JoinRequest, Room, SendFunction,
-} from '../utils/types';
+import { JoinRequest } from '../utils/types';
 import Button from './Button';
 import Id from './Id';
 
@@ -24,20 +24,20 @@ const filterAnsweredRequests = (
 ) => requests.filter((x) => x.requesterId !== id);
 
 type ConnectModalProps = {
-  modal: ModalType,
-  room: Room,
+  connection: ReturnType<typeof useConnection>,
+  modal: ReturnType<typeof useModal>,
+  room: ReturnType<typeof useRoom>,
   requests: Array<JoinRequest>,
   setRequests: React.Dispatch<React.SetStateAction<Array<JoinRequest>>>,
-  send: SendFunction,
 }
 
 const JoinRequestModal = ({
-  modal, room, requests, setRequests, send,
+  connection, modal, room, requests, setRequests,
 }: ConnectModalProps) => {
   const [currentRequest, setCurrentRequest] = useState({ requesterId: '', requesterUsername: '', roomId: '' });
 
   const handleRequest = (accepted: boolean) => () => {
-    send(requestJRA(currentRequest.requesterId, accepted));
+    connection.send(requestJRA(currentRequest.requesterId, accepted));
     const filteredRequests = filterAnsweredRequests(requests, currentRequest.requesterId);
     setRequests(filteredRequests);
     if (filteredRequests.length === 0) modal.toggle();
@@ -52,7 +52,7 @@ const JoinRequestModal = ({
   const dialogRef = useRef() as any;
   useEffect(() => {
     preventDialogEscape(dialogRef);
-    toggleDialog(modal.isOpen && room.isPrivate, dialogRef);
+    toggleDialog(modal.isOpen && room.current.isPrivate, dialogRef);
   }, [modal]);
 
   return (

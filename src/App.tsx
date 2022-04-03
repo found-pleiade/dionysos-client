@@ -3,18 +3,16 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
 import { appWindow } from '@tauri-apps/api/window';
 import Message from './components/Message';
-import {
-  codes, defaultRoom, defaultUser, devServer,
-} from './constants';
+import { codes, devServer } from './constants';
 import Connect from './pages/connect';
 import Home from './pages/home';
-import {
-  Room, User, JoinRequest,
-} from './utils/types';
+import { JoinRequest } from './utils/types';
 import useMessages from './hooks/messages';
 import { isValid, notNil } from './utils';
 import useModal from './hooks/modal';
 import useConnection from './hooks/connection';
+import useRoom from './hooks/room';
+import useUsers from './hooks/users';
 
 /**
  * App main function, here lies most states and every WebSocket listeners.
@@ -22,13 +20,11 @@ import useConnection from './hooks/connection';
  */
 const App = () => {
   const connection = useConnection(devServer);
-  const [user, setUser] = useState<User>(defaultUser);
-  const [room, setRoom] = useState<Room>(defaultRoom);
-  const [users, setUsers] = useState<Array<User>>([]);
+  const users = useUsers();
+  const room = useRoom();
   const messages = useMessages();
   const joinRequestModal = useModal();
   const [joinRequests, setJoinRequests] = useState<Array<JoinRequest>>([]);
-  const [pendingRoom, setPendingRoom] = useState<Room>(defaultRoom);
 
   // Set the WebSocket to use on app start.
   // Listen for the app closing to close the WebSocket.
@@ -58,7 +54,7 @@ const App = () => {
     connection.webSocket.onopen = (event) => {
       console.log('onopen: ', event);
       connection.setIsUp(true);
-      connection.send(user.uuid);
+      connection.send(users.current.uuid);
     };
 
     // Server is sending data.
@@ -72,23 +68,23 @@ const App = () => {
       }
 
       if (code === codes.response.connection) {
-        setUser({ ...user, id: payload.userId });
+        users.setCurrent({ ...users.current, id: payload.userId });
       }
 
       if (code === codes.response.roomCreation) {
         messages.clear();
-        setRoom({
-          ...room,
+        room.setCurrent({
+          ...room.current,
           id: payload.roomId,
-          ownerId: user.id,
+          ownerId: users.current.id,
         });
-        setUsers([user]);
+        users.set([users.current]);
       }
 
       if (code === codes.response.joinRoom) {
         if (!payload.isPrivate) {
-          setRoom({
-            ...room,
+          room.setCurrent({
+            ...room.current,
             name: payload.roomName,
             id: payload.roomId,
             isPrivate: payload.isPrivate,
@@ -98,8 +94,8 @@ const App = () => {
         if (payload.isPrivate) {
           messages.clear('Waiting for the host...', 'info', 9999);
 
-          setPendingRoom({
-            ...room,
+          room.setPending({
+            ...room.current,
             name: payload.roomName,
             id: payload.roomId,
             isPrivate: payload.isPrivate,
@@ -115,23 +111,23 @@ const App = () => {
 
       if (code === codes.response.quitRoom) {
         messages.clear();
-        setRoom(defaultRoom);
-        setUsers([]);
+        room.resetCurrent();
+        users.set([]);
       }
 
-      if (code === codes.response.changeUserName && isValid(room.name)) {
+      if (code === codes.response.changeUserName && isValid(room.current.name)) {
         messages.clear();
-        setUser({ ...user, name: payload.username });
+        users.setCurrent({ ...users.current, name: payload.username });
       }
 
       if (code === codes.response.newPeers) {
         messages.clear();
-        setRoom({ ...room, ownerId: payload.ownerId });
-        setUsers(payload.peers);
+        room.setCurrent({ ...room.current, ownerId: payload.ownerId });
+        users.set(payload.peers);
 
-        if (pendingRoom.isPrivate) {
-          setRoom({ ...pendingRoom, ownerId: payload.ownerId });
-          setPendingRoom(defaultRoom);
+        if (room.pending.isPrivate) {
+          room.setCurrent({ ...room.pending, ownerId: payload.ownerId });
+          room.resetPending();
         }
       }
 
@@ -157,7 +153,7 @@ const App = () => {
       console.log('onclose: ', event);
       connection.setIsUp(false);
 
-      if (user.id.length > 0) {
+      if (users.current.id.length > 0) {
         messages.add('Connection lost', 'error');
       }
     };
@@ -171,13 +167,12 @@ const App = () => {
       connection.webSocket.onerror = null;
       connection.webSocket.onclose = null;
     };
-  }, [user, room, messages, connection]);
+  }, [users, room, messages, connection]);
 
   const connect = (
     <Connect
       connection={connection}
-      user={user}
-      setUser={setUser}
+      users={users}
       messages={messages}
     />
   );
@@ -185,11 +180,8 @@ const App = () => {
   const home = (
     <Home
       connection={connection}
-      user={user}
-      setUser={setUser}
       users={users}
       room={room}
-      setRoom={setRoom}
       joinRequestModal={joinRequestModal}
       joinRequests={joinRequests}
       setJoinRequests={setJoinRequests}

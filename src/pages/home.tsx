@@ -1,41 +1,29 @@
-import React, { useRef, useState } from 'react';
-import Userlist from '../components/Userlist';
+import React, { useRef } from 'react';
 import Videojs from '../components/Videojs';
-import { translate, visibility } from '../utils';
-import Separator from '../components/Separator';
-import {
-  Room, User, SetRoom, SetUser, JoinRequest,
-} from '../utils/types';
+import { translate } from '../utils';
+import { JoinRequest } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
-import UserDisplay from '../components/UserDisplay';
-import RoomDisplay from '../components/RoomDisplay';
 import MinimizeIcon from '../components/MinimizeIcon';
-import RoomInputGroup from '../components/RoomInputGroup';
-import useModal, { ModalType } from '../hooks/modal';
-import ChangeNameModal from '../components/ChangeNameModal';
-import Help from '../components/Help';
-import JoinRequestModal from '../components/JoinRequestModal';
-import { Connection } from '../hooks/connection';
+import Panel from '../components/Panel';
+import useSideMenu from '../hooks/sideMenu';
+import useConnection from '../hooks/connection';
+import useModal from '../hooks/modal';
+import useRoom from '../hooks/room';
+import useUsers from '../hooks/users';
 
 type homeProps = {
-  connection: Connection,
-  user: User,
-  setUser: SetUser,
-  users: Array<User>,
-  room: Room,
-  setRoom: SetRoom,
-  joinRequestModal: ModalType,
+  connection: ReturnType<typeof useConnection>,
+  users: ReturnType<typeof useUsers>,
+  room: ReturnType<typeof useRoom>,
+  joinRequestModal: ReturnType<typeof useModal>,
   joinRequests: Array<JoinRequest>,
   setJoinRequests: React.Dispatch<React.SetStateAction<Array<JoinRequest>>>,
 }
 
 const Home = ({
   connection,
-  user,
-  setUser,
   users,
   room,
-  setRoom,
   joinRequestModal,
   joinRequests,
   setJoinRequests,
@@ -67,54 +55,28 @@ const Home = ({
     });
   };
 
-  const roomNotEmpty = room.name !== '' && room.id !== '';
-  const emptyUserList = users.length <= 0;
-
   /**
    * State of the visibility of the panel, help, chat and modal.
    */
-  const [panel, setPanel] = useState(true);
-  const [help, setHelp] = useState(false);
-  const [chat, setChat] = useState(false);
-  const changeNameModal = useModal();
+  const panel = useSideMenu(true);
+  const chat = useSideMenu(false);
 
   return (
     <div className="h-screen w-screen truncate bg-black flex">
       {/* Panel */}
-      <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-3 ${translate(panel)}`}>
-        <MinimizeIcon func={setPanel} />
-        <RoomInputGroup
-          send={connection.send}
-          room={room}
-          setRoom={setRoom}
-          className={`${visibility(!roomNotEmpty)}`}
-          help={help}
-          setHelp={setHelp}
-        />
-        <Help shown={help} />
-        <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={connection.send} />
-        <JoinRequestModal
-          modal={joinRequestModal}
-          room={room}
-          requests={joinRequests}
-          setRequests={setJoinRequests}
-          send={connection.send}
-        />
-        <Separator className={visibility(!emptyUserList)} />
-        <Userlist users={users} room={room} className={visibility(!emptyUserList)} />
-        <Separator className={visibility(!emptyUserList)} />
-        <UserDisplay user={user} modal={changeNameModal} />
-        <ChangeNameModal
-          modal={changeNameModal}
-          user={user}
-          setUser={setUser}
-          send={connection.send}
-        />
-      </div>
+      <Panel
+        connection={connection}
+        room={room}
+        users={users}
+        panel={panel}
+        joinRequests={joinRequests}
+        setJoinRequests={setJoinRequests}
+        joinRequestModal={joinRequestModal}
+      />
 
       {/* Chat */}
-      <div className={`flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat)}`}>
-        <MinimizeIcon func={setChat} />
+      <div className={`flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat.isOpen)}`}>
+        <MinimizeIcon func={chat.toggle} />
         <p>Ceci est un chat</p>
       </div>
 
@@ -129,7 +91,7 @@ const Home = ({
         </div>
 
         {/* Menus */}
-        <OverlayMenu panel={panel} setPanel={setPanel} chat={chat} setChat={setChat} />
+        <OverlayMenu panel={panel} chat={chat} />
       </div>
     </div>
   );

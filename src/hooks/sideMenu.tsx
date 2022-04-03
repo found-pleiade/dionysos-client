@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const useSideMenu = (open: boolean) => {
+  const [isOpen, setIsOpen] = useState(open);
 
   function toggle() {
     setIsOpen(!isOpen);
@@ -13,4 +13,4 @@ const useModal = () => {
   };
 };
 
-export default useModal;
+export default useSideMenu;
