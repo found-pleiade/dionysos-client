@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Default focus style
+ */
 *:focus {
   --outline: 2px;
   outline-width: var(--outline);
@@ -10,24 +13,48 @@
   outline-offset: calc(0px - var(--outline));
 }
 
+/**
+ * Prevent users from selecting text like in a browser
+ * for a more native experience.
+ */
 html {
   user-select: none;
 }
 
+/**
+ * Useful for preventing users to click on an element.
+ */
 .unclickable {
   pointer-events: none;
 }
 
-.input:focus+.placeholder, .input:not(:placeholder-shown)+.placeholder {
+/**
+ * Use the theme of the app for the background of dialogs.
+ */
+dialog::backdrop {
+  background-color: hsl(240, 24%, 4%, 0.66);
+}
+
+/**
+  * Move the placeholder to the top of the input field.
+  */
+.input:focus+.placeholder,
+.input:not(:placeholder-shown)+.placeholder {
   transform: translateY(-140%);
   color: theme('colors.foreground');
   font-size: theme('fontSize.sm');
 }
 
+/**
+  * Prevent the video to overflow in any container ratio.
+  */
 .video-max-width {
   max-width: calc(16 / 9 * 100 * 1vh);
 }
 
+/**
+  * Messages at the top of the page.
+  */
 .message {
   animation-name: message;
   animation-duration: 10s;
@@ -40,24 +67,31 @@ html {
     max-height: theme('spacing.24');
     padding: theme('spacing.2') theme('spacing.5');
   }
+
   90% {
     max-height: theme('spacing.24');
     padding: theme('spacing.2') theme('spacing.5');
   }
+
   100% {
     max-height: 0;
     padding: 0 theme('spacing.5');
   }
 }
 
-.openSideMenus, .closeSideMenus {
+/**
+  * Animation for side menus.
+  */
+
+.openSideMenus,
+.closeSideMenus {
   --min: calc(41ch + theme('spacing.3'));
   --max: calc(41ch + theme('spacing.3'));
   --duration: 200ms;
   --padding: theme('spacing.3');
 }
 
-.openSideMenus  {
+.openSideMenus {
   animation: openSideMenus var(--duration) forwards;
 }
 
@@ -87,7 +121,7 @@ html {
   }
 }
 
-.closeSideMenus  {
+.closeSideMenus {
   animation: closeSideMenus var(--duration) forwards;
 }
 
