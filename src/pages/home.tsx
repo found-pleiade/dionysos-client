@@ -4,7 +4,7 @@ import Videojs from '../components/Videojs';
 import { translate, visibility } from '../utils';
 import Separator from '../components/Separator';
 import {
-  Room, User, SendFunction, SetRoom, SetUser, JoinRequest,
+  Room, User, SetRoom, SetUser, JoinRequest,
 } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
 import UserDisplay from '../components/UserDisplay';
@@ -15,21 +15,30 @@ import useModal, { ModalType } from '../hooks/modal';
 import ChangeNameModal from '../components/ChangeNameModal';
 import Help from '../components/Help';
 import JoinRequestModal from '../components/JoinRequestModal';
+import { Connection } from '../hooks/connection';
 
 type homeProps = {
+  connection: Connection,
   user: User,
   setUser: SetUser,
   users: Array<User>,
   room: Room,
   setRoom: SetRoom,
-  send: SendFunction,
   joinRequestModal: ModalType,
   joinRequests: Array<JoinRequest>,
   setJoinRequests: React.Dispatch<React.SetStateAction<Array<JoinRequest>>>,
 }
 
 const Home = ({
-  user, setUser, users, room, setRoom, send, joinRequestModal, joinRequests, setJoinRequests,
+  connection,
+  user,
+  setUser,
+  users,
+  room,
+  setRoom,
+  joinRequestModal,
+  joinRequests,
+  setJoinRequests,
 }: homeProps) => {
   const playerRef = useRef(null);
 
@@ -75,7 +84,7 @@ const Home = ({
       <div className={`flex flex-col justify-between bg-background-800 relative transition-all py-3 ${translate(panel)}`}>
         <MinimizeIcon func={setPanel} />
         <RoomInputGroup
-          send={send}
+          send={connection.send}
           room={room}
           setRoom={setRoom}
           className={`${visibility(!roomNotEmpty)}`}
@@ -83,19 +92,24 @@ const Home = ({
           setHelp={setHelp}
         />
         <Help shown={help} />
-        <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={send} />
+        <RoomDisplay room={room} className={visibility(roomNotEmpty)} send={connection.send} />
         <JoinRequestModal
           modal={joinRequestModal}
           room={room}
           requests={joinRequests}
           setRequests={setJoinRequests}
-          send={send}
+          send={connection.send}
         />
         <Separator className={visibility(!emptyUserList)} />
         <Userlist users={users} room={room} className={visibility(!emptyUserList)} />
         <Separator className={visibility(!emptyUserList)} />
         <UserDisplay user={user} modal={changeNameModal} />
-        <ChangeNameModal modal={changeNameModal} user={user} setUser={setUser} send={send} />
+        <ChangeNameModal
+          modal={changeNameModal}
+          user={user}
+          setUser={setUser}
+          send={connection.send}
+        />
       </div>
 
       {/* Chat */}

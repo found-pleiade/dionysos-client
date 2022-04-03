@@ -1,46 +1,86 @@
-import { CheckIcon, DotsHorizontalIcon, XIcon } from '@heroicons/react/solid';
 import React, {
-  useEffect, useRef, useState,
+  useEffect, useRef,
 } from 'react';
+import { Connection } from '../hooks/connection';
+import useInputStatusIcon from '../hooks/inputStatusIcon';
 import { ModalType } from '../hooks/modal';
 import { preventDialogEscape, toggleDialog } from '../utils';
-import { MessagesType, UrlType } from '../utils/types';
+import { MessagesType } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
 
 /**
- * Return icons for the connect modal, using the icon style provided.
+ * Cancel user interractions with the modal then close it.
  */
-const formatIcons = (iconStyle: string) => ({
-  valid: <CheckIcon className={`${iconStyle} bg-valid`} />,
-  error: <XIcon className={`${iconStyle} bg-error`} />,
-  pending: <DotsHorizontalIcon className={`${iconStyle} bg-pending animate-pulse-slow`} />,
-});
+const cancelModal = (
+  connection: Connection,
+  modal: ModalType,
+  messages: MessagesType,
+  inputStatusIcon: ReturnType<typeof useInputStatusIcon>,
+) => () => {
+  if (!connection.isUp && !connection.isUrlDifferent) { modal.toggle(); return; }
+
+  connection.setIsUp(true);
+  inputStatusIcon.setCurrent(inputStatusIcon.icons.valid);
+  messages.clear();
+  connection.setCurrentUrl(connection.backupUrl);
+  modal.toggle();
+};
+
+/**
+ * Try to connect to the WebSocket and update the app only if it's valid.
+ */
+const saveModal = (
+  connection: Connection,
+  modal: ModalType,
+  messages: MessagesType,
+  inputStatusIcon: ReturnType<typeof useInputStatusIcon>,
+) => () => {
+  if (connection.currentUrl === connection.backupUrl && connection.isUp) { modal.toggle(); return; }
+
+  connection.setIsUp(false);
+  inputStatusIcon.setCurrent(inputStatusIcon.icons.pending);
+
+  try {
+    const socket = new WebSocket(connection.currentUrl);
+
+    socket.onopen = () => {
+      connection.setWebSocket(socket);
+      connection.setIsUp(true);
+      inputStatusIcon.setCurrent(inputStatusIcon.icons.valid);
+      messages.clear();
+      connection.setBackupUrl(connection.currentUrl);
+      modal.toggle();
+    };
+
+    socket.onclose = (event) => {
+      inputStatusIcon.setCurrent(inputStatusIcon.icons.error);
+      messages.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`, 'error');
+    };
+  } catch (error) {
+    const knownError = error as Error;
+    inputStatusIcon.setCurrent(inputStatusIcon.icons.error);
+    messages.add(knownError.message, 'error');
+  }
+};
 
 type ConnectModalProps = {
+  connection: Connection,
   modal: ModalType,
-  url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
-  isConnected: boolean,
-  setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
   messages: MessagesType,
 }
 
 const ConnectModal = ({
+  connection,
   modal,
-  url,
-  setWebSocket,
-  isConnected,
-  setIsConnected,
   messages,
 }: ConnectModalProps) => {
+  const inputStatusIcon = useInputStatusIcon(connection.isUp);
+
   /**
    * HTMLDialogElement is not support by TypeScript, but that's what
    * the type is.
    */
-  const icons = formatIcons('h-10 p-2 rounded-r-lg');
-  const [connectionStatus, setConnectionStatus] = useState(isConnected ? icons.valid : icons.error);
-
   const dialogRef = useRef() as any;
   useEffect(() => {
     preventDialogEscape(dialogRef);
@@ -51,67 +91,24 @@ const ConnectModal = ({
    * Set the icon depending of the connection status.
    */
   useEffect(() => {
-    setConnectionStatus(isConnected ? icons.valid : icons.error);
-  }, [isConnected]);
-
-  /**
-   * Cancel user interractions with the modal then close it.
-   */
-  const cancelModal = () => {
-    if (!isConnected && url.current === url.backup) { modal.toggle(); return; }
-
-    setIsConnected(true);
-    setConnectionStatus(icons.valid);
-    messages.clear();
-    url.setCurrent(url.backup);
-    modal.toggle();
-  };
-
-  /**
-   * Try to connect to the WebSocket and update the app only if it's valid.
-   */
-  const saveModal = () => {
-    if (url.current === url.backup && isConnected) { modal.toggle(); return; }
-
-    setIsConnected(false);
-    setConnectionStatus(icons.pending);
-
-    try {
-      const socket = new WebSocket(url.current);
-
-      socket.onopen = () => {
-        setWebSocket(socket);
-        setIsConnected(true);
-        setConnectionStatus(icons.valid);
-        messages.clear();
-        url.setBackup(url.current);
-        modal.toggle();
-      };
-
-      socket.onclose = (event) => {
-        setConnectionStatus(icons.error);
-        messages.add(`${event.code} : Maybe Wrong Web Socket address or server side mistake (wss://subdomain.domain.extension)`, 'error');
-      };
-    } catch (error) {
-      const knownError = error as Error;
-      setConnectionStatus(icons.error);
-      messages.add(knownError.message, 'error');
-    }
-  };
+    inputStatusIcon.setCurrent(
+      connection.isUp ? inputStatusIcon.icons.valid : inputStatusIcon.icons.error,
+    );
+  }, [connection]);
 
   return (
     <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
       <div>
         <h2 className="mb-2 font-medium">WebSocket server</h2>
         <div className="flex space-x-1">
-          <Input noHelper className="rounded-r-none" value={url.current} setValue={url.setCurrent} />
-          {connectionStatus}
+          <Input noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
+          {inputStatusIcon.current}
         </div>
       </div>
 
       <div className="flex justify-between">
-        <Button text="Cancel" colorless onClick={cancelModal} />
-        <Button text="Save" onClick={saveModal} />
+        <Button text="Cancel" colorless onClick={cancelModal(connection, modal, messages, inputStatusIcon)} />
+        <Button text="Save" onClick={saveModal(connection, modal, messages, inputStatusIcon)} />
       </div>
     </dialog>
   );

@@ -6,35 +6,22 @@ import Message from './components/Message';
 import {
   codes, defaultRoom, defaultUser, devServer,
 } from './constants';
-import useUrl from './hooks/url';
 import Connect from './pages/connect';
 import Home from './pages/home';
 import {
-  Room, User, DataType, SendFunction, JoinRequest,
+  Room, User, JoinRequest,
 } from './utils/types';
 import useMessages from './hooks/messages';
 import { isValid, notNil } from './utils';
 import useModal from './hooks/modal';
-
-/**
- * Two use function that first set the WebSocket to use then the data to send
- * to the WebSocket.
- */
-const send = (socket: WebSocket | undefined): SendFunction => (data: DataType): void => {
-  if (notNil(socket)) {
-    const definedSocket = socket as WebSocket;
-    definedSocket.send(data);
-  }
-};
+import useConnection from './hooks/connection';
 
 /**
  * App main function, here lies most states and every WebSocket listeners.
  * Returns the shell style, app router and messages.
  */
 const App = () => {
-  const [webSocket, setWebSocket] = useState<WebSocket>();
-  const url = useUrl(devServer);
-  const [isConnected, setIsConnected] = useState(false);
+  const connection = useConnection(devServer);
   const [user, setUser] = useState<User>(defaultUser);
   const [room, setRoom] = useState<Room>(defaultRoom);
   const [users, setUsers] = useState<Array<User>>([]);
@@ -48,11 +35,11 @@ const App = () => {
   useEffect(() => {
     try {
       const socket = new WebSocket(devServer);
-      setWebSocket(socket);
+      connection.setWebSocket(socket);
 
       appWindow.listen('tauri://close-requested', () => {
-        if (notNil(webSocket)) {
-          const definedSocket = webSocket as WebSocket;
+        if (notNil(connection.webSocket)) {
+          const definedSocket = connection.webSocket as WebSocket;
           definedSocket.close(1000);
         }
         appWindow.close();
@@ -65,17 +52,17 @@ const App = () => {
 
   // Every WebSocket listeners, only refreshed with key app state change.
   useEffect(() => {
-    if (R.isNil(webSocket)) return () => { };
+    if (R.isNil(connection.webSocket)) return () => { };
 
     // Connection is up.
-    webSocket.onopen = (event) => {
+    connection.webSocket.onopen = (event) => {
       console.log('onopen: ', event);
-      setIsConnected(true);
-      send(webSocket)(user.uuid);
+      connection.setIsUp(true);
+      connection.send(user.uuid);
     };
 
     // Server is sending data.
-    webSocket.onmessage = (event) => {
+    connection.webSocket.onmessage = (event) => {
       const { data } = event;
       const { code, payload } = JSON.parse(data);
       console.log(code, payload);
@@ -161,14 +148,14 @@ const App = () => {
     };
 
     // Connection errors.
-    webSocket.onerror = (event) => {
+    connection.webSocket.onerror = (event) => {
       console.log('onerror: ', event);
     };
 
     // Connection is closed.
-    webSocket.onclose = (event) => {
+    connection.webSocket.onclose = (event) => {
       console.log('onclose: ', event);
-      setIsConnected(false);
+      connection.setIsUp(false);
 
       if (user.id.length > 0) {
         messages.add('Connection lost', 'error');
@@ -177,34 +164,32 @@ const App = () => {
 
     // Reset listeners on unmount.
     return () => {
-      webSocket.onopen = null;
-      webSocket.onmessage = null;
-      webSocket.onerror = null;
-      webSocket.onclose = null;
+      if (R.isNil(connection.webSocket)) return;
+
+      connection.webSocket.onopen = null;
+      connection.webSocket.onmessage = null;
+      connection.webSocket.onerror = null;
+      connection.webSocket.onclose = null;
     };
-  }, [user, room, messages, webSocket]);
+  }, [user, room, messages, connection]);
 
   const connect = (
     <Connect
-      send={send(webSocket)}
+      connection={connection}
       user={user}
       setUser={setUser}
-      isConnected={isConnected}
-      setIsConnected={setIsConnected}
-      url={url}
-      setWebSocket={setWebSocket}
       messages={messages}
     />
   );
 
   const home = (
     <Home
+      connection={connection}
       user={user}
       setUser={setUser}
       users={users}
       room={room}
       setRoom={setRoom}
-      send={send(webSocket)}
       joinRequestModal={joinRequestModal}
       joinRequests={joinRequests}
       setJoinRequests={setJoinRequests}

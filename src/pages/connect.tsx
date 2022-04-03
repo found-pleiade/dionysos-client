@@ -7,13 +7,14 @@ import {
   isValid, requestData, unvalidInput,
 } from '../utils';
 import {
-  SetUser, User, SendFunction, UrlType, MessagesType,
+  SetUser, User, MessagesType,
 } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
 import BigTitle from '../components/BigTitle';
 import WebSocketButton from '../components/WebSocketButton';
+import { Connection } from '../hooks/connection';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -25,24 +26,16 @@ const requestCHU = (username: string) => requestData(
 );
 
 type connectProps = {
-  send: SendFunction,
+  connection: Connection,
   user: User,
   setUser: SetUser,
-  isConnected: boolean,
-  setIsConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  url: UrlType,
-  setWebSocket: React.Dispatch<React.SetStateAction<WebSocket | undefined>>,
   messages: MessagesType,
 }
 
 const Connect = ({
-  send,
+  connection,
   user,
   setUser,
-  isConnected,
-  setIsConnected,
-  url,
-  setWebSocket,
   messages,
 }: connectProps) => {
   /**
@@ -54,8 +47,8 @@ const Connect = ({
    */
   const modal = useModal();
   const [username, setUsername] = useState('');
-  const validAndConnected = isValid(username) && isConnected;
-  const buttonText = isConnected ? 'Next' : 'No connection';
+  const validAndConnected = isValid(username) && connection.isUp;
+  const buttonText = connection.isUp ? 'Next' : 'No connection';
 
   /**
    * Send the username to the server and set the username in the app.
@@ -65,7 +58,7 @@ const Connect = ({
     if (unvalidInput(event)) return;
     if (!validAndConnected) return;
 
-    send(requestCHU(username));
+    connection.send(requestCHU(username));
     setUser({ ...user, name: username });
     navigate('/home');
   };
@@ -84,12 +77,9 @@ const Connect = ({
       <WebSocketButton modal={modal} />
 
       <ConnectModal
-        url={url}
+        connection={connection}
         modal={modal}
         messages={messages}
-        isConnected={isConnected}
-        setIsConnected={setIsConnected}
-        setWebSocket={setWebSocket}
       />
     </div>
   );
