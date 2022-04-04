@@ -45,7 +45,7 @@ export const testActiveElementById = (id: string) => document.activeElement?.id 
  * Check if the input is focused, and the key pressed is enter.
  * The element needs an ID. Ignore clicks.
  */
-export const unvalidInput = (event: any) => event.type === 'keypress' && ((event.code !== 'Enter') || !testActiveElementById(event.target.id));
+export const invalidInput = (event: any) => event.type === 'keypress' && ((event.code !== 'Enter') || !testActiveElementById(event.target.id));
 
 /**
  * Toggle the dialog element depending of the modal isOpen state.

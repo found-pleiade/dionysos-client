@@ -4,7 +4,7 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
 import { codes } from '../constants';
 import {
   equalsForty,
-  isValid, requestData, unvalidInput,
+  isValid, requestData, invalidInput,
 } from '../utils';
 import Button from './Button';
 import LockToggle from './LockToggle';
@@ -54,7 +54,7 @@ const RoomInputGroup = ({
    * Toggle the private room state.
    */
   const keyLockHandler = (event?: any) => {
-    if (unvalidInput(event)) return;
+    if (invalidInput(event)) return;
     setIsPrivate(!isPrivate);
   };
 
@@ -62,7 +62,7 @@ const RoomInputGroup = ({
    * If checks passes, send the request to join a room.
    */
   const joinRoomHandler = (event?: any) => {
-    if (unvalidInput(event)) return;
+    if (invalidInput(event)) return;
     if (!equalsForty(joinInput)) return;
 
     help.setIsOpen(false);
@@ -73,7 +73,7 @@ const RoomInputGroup = ({
    * If checks passes, send the request to create a room and set the room state of the app.
    */
   const createRoomHandler = (event?: any) => {
-    if (unvalidInput(event)) return;
+    if (invalidInput(event)) return;
     if (!isValid(createInput)) return;
 
     help.setIsOpen(false);

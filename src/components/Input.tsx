@@ -1,20 +1,27 @@
 import React from 'react';
 import { isValid, isValidConditions, visibility } from '../utils';
 
-type inputProps = {
-  id?: string,
+const Input = ({
+  id,
+  className,
+  placeholder,
+  onChange,
+  onKeyPress,
+
+  value,
+  setValue,
+  noHelper,
+}: {
+  id: string,
   className?: string,
   placeholder?: string,
-  value?: any,
-  setValue?: React.Dispatch<React.SetStateAction<any>>,
   onChange?: any,
   onKeyPress?: any,
-  noHelper?: boolean,
-}
 
-const Input = ({
-  id, className, placeholder, value, setValue, onChange, onKeyPress, noHelper,
-}: inputProps) => {
+  value?: any,
+  setValue?: React.Dispatch<React.SetStateAction<any>>,
+  noHelper?: boolean,
+}) => {
   /**
    * Differents conditions for the helper.
    */
