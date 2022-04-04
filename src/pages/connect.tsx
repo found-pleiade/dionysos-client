@@ -10,7 +10,6 @@ import { MessagesType } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
-import BigTitle from '../components/BigTitle';
 import WebSocketButton from '../components/WebSocketButton';
 import useConnection from '../hooks/connection';
 import useUsers from '../hooks/users';
@@ -63,7 +62,10 @@ const Connect = ({
   return (
     <>
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
-        <BigTitle title="Dyonisos" subtitle="Share cinematic experences." className="xl:mb-52 md:mb-32 mb-20 absolute bottom-0" />
+        <header className="xl:mb-52 md:mb-32 mb-20 absolute bottom-0">
+          <h1 className="text-[6rem] -mb-6 font-black uppercase">Dyonisos</h1>
+          <h2 className="text-[2rem] font-semibold">Share cinematic experences.</h2>
+        </header>
 
         <div className="flex space-x-1 w-[50ch]">
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />

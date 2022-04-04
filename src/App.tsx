@@ -169,25 +169,6 @@ const App = () => {
     };
   }, [users, room, messages, connection]);
 
-  const connect = (
-    <Connect
-      connection={connection}
-      users={users}
-      messages={messages}
-    />
-  );
-
-  const home = (
-    <Home
-      connection={connection}
-      users={users}
-      room={room}
-      joinRequestModal={joinRequestModal}
-      joinRequests={joinRequests}
-      setJoinRequests={setJoinRequests}
-    />
-  );
-
   return (
     <div className="text-foreground bg-background-800 h-screen cursor-default relative">
       <div className="z-50 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
@@ -196,8 +177,29 @@ const App = () => {
 
       <MemoryRouter>
         <Routes>
-          <Route path="/" element={connect} />
-          <Route path="/home" element={home} />
+          <Route
+            path="/"
+            element={(
+              <Connect
+                connection={connection}
+                users={users}
+                messages={messages}
+              />
+            )}
+          />
+          <Route
+            path="/home"
+            element={(
+              <Home
+                connection={connection}
+                users={users}
+                room={room}
+                joinRequestModal={joinRequestModal}
+                joinRequests={joinRequests}
+                setJoinRequests={setJoinRequests}
+              />
+            )}
+          />
         </Routes>
       </MemoryRouter>
     </div>
