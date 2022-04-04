@@ -101,7 +101,7 @@ const ConnectModal = ({
       <div>
         <h3 className="mb-2 font-medium">WebSocket server</h3>
         <div className="flex space-x-1">
-          <Input noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
+          <Input id="connection" noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
           {inputStatusIcon.current}
         </div>
       </div>

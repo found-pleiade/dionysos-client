@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import {
-  isValid, requestData, unvalidInput,
+  isValid, requestData, invalidInput,
 } from '../utils';
 import { MessagesType } from '../utils/types';
 import { codes } from '../constants';
@@ -23,40 +23,31 @@ const requestCHU = (username: string) => requestData(
   { newUsername: username },
 );
 
-type connectProps = {
-  connection: ReturnType<typeof useConnection>,
-  users: ReturnType<typeof useUsers>,
-  messages: MessagesType,
-}
-
 const Connect = ({
   connection,
   users,
   messages,
-}: connectProps) => {
-  /**
-   * React Router hook to navigate to the home page.
-   */
-  const navigate = useNavigate();
-  /**
-   * Hook to open and close the connect modal.
-   */
+}: {
+  connection: ReturnType<typeof useConnection>,
+  users: ReturnType<typeof useUsers>,
+  messages: MessagesType,
+}) => {
   const modal = useModal();
   const [username, setUsername] = useState('');
-  const validAndConnected = isValid(username) && connection.isUp;
-  const buttonText = connection.isUp ? 'Next' : 'No connection';
+  const validAndConnected = () => isValid(username) && connection.isUp;
+  const buttonText = () => (connection.isUp ? 'Next' : 'No connection');
 
   /**
    * Send the username to the server and set the username in the app.
    * Handles both click and keyboard inputs.
    */
   const connectionHandler = (event?: any) => {
-    if (unvalidInput(event)) return;
-    if (!validAndConnected) return;
+    if (invalidInput(event)) return;
+    if (!validAndConnected()) return;
 
     connection.send(requestCHU(username));
     users.setCurrent({ ...users.current, name: username });
-    navigate('/home');
+    useNavigate()('/home');
   };
 
   return (
@@ -69,7 +60,7 @@ const Connect = ({
 
         <div className="flex space-x-1 w-[50ch]">
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
-          <Button className="rounded-l-none" text={buttonText} disabled={!validAndConnected} onClick={connectionHandler} />
+          <Button className="rounded-l-none" text={buttonText()} disabled={!validAndConnected()} onClick={connectionHandler} />
         </div>
       </div>
 

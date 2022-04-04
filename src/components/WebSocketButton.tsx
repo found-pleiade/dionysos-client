@@ -1,14 +1,14 @@
 import { GlobeAltIcon } from '@heroicons/react/solid';
 import React from 'react';
-import { ModalType } from '../hooks/modal';
-import { unvalidInput } from '../utils';
+import useModal from '../hooks/modal';
+import { invalidInput } from '../utils';
 
-const handleInput = (modal: ModalType) => (event?: any) => {
-  if (unvalidInput(event)) return;
+const handleInput = (modal: ReturnType<typeof useModal>) => (event?: any) => {
+  if (invalidInput(event)) return;
   modal.toggle();
 };
 
-const WebSocketButton = ({ modal }: { modal: ModalType }) => {
+const WebSocketButton = ({ modal }: { modal: ReturnType<typeof useModal> }) => {
   const colors = 'bg-accent-500 hover:bg-accent-400 focus:outline-pending text-foreground';
   const position = 'absolute top-0 right-0';
   const dimensions = 'w-10 h-10 px-2';
