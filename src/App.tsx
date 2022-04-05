@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
 import { appWindow } from '@tauri-apps/api/window';
-import Message from './components/Message';
 import { codes, devServer } from './constants';
 import { JoinRequest } from './utils/types';
 import useMessages from './hooks/messages';
@@ -11,6 +10,7 @@ import useModal from './hooks/modal';
 import useConnection from './hooks/connection';
 import useRoom from './hooks/room';
 import useUsers from './hooks/users';
+import Messages from './components/Messages';
 
 const Connect = React.lazy(() => import('./pages/connect'));
 const Home = React.lazy(() => import('./pages/home'));
@@ -172,9 +172,7 @@ const App = () => {
 
   return (
     <div className="text-foreground bg-background-800 h-screen cursor-default relative">
-      <div className="z-50 absolute left-[50%] translate-x-[-50%] flex flex-col items-center min-w-[300px]">
-        {messages.get.map((message) => <Message message={message} />)}
-      </div>
+      <Messages messages={messages} />
 
       <MemoryRouter>
         <Routes>
