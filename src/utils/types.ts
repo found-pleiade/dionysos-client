@@ -30,20 +30,6 @@ export type MessageType = {
   duration: number | undefined
 };
 
-export type MessagesType = {
-  get: MessageType[];
-  add: (
-    text: string,
-    type: string,
-    duration?: number | undefined
-  ) => void;
-  clear: (
-    text?: string | undefined,
-    type?: string | undefined,
-    duration?: number | undefined
-  ) => void;
-}
-
 export type DataType = string | ArrayBufferLike | Blob | ArrayBufferView;
 
 export type SendFunction = (data: DataType) => void;
