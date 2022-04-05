@@ -43,9 +43,7 @@ const Connect = ({
    * Handles both click and keyboard inputs.
    */
   const connectionHandler = (event?: any) => {
-    if (invalidInput(event)) return;
-    if (!validAndConnected()) return;
-
+    if (invalidInput(event) || !validAndConnected()) return;
     connection.send(requestCHU(username));
     users.setCurrent({ ...users.current, name: username });
     navigate('/home');
