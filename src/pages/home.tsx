@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import Videojs from '../components/Videojs';
-import { visibility } from '../utils';
 import { JoinRequest } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
 import Panel from '../components/Panel';
@@ -14,7 +13,6 @@ import RoomInputGroup from '../components/RoomInputGroup';
 import Help from '../components/Help';
 import RoomDisplay from '../components/RoomDisplay';
 import JoinRequestModal from '../components/JoinRequestModal';
-import Separator from '../components/Separator';
 import Userlist from '../components/Userlist';
 import UserDisplay from '../components/UserDisplay';
 import ChangeNameModal from '../components/ChangeNameModal';
