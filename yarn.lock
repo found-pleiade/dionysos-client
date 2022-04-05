@@ -596,6 +596,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/history@npm:^4.7.11":
+  version: 4.7.11
+  resolution: "@types/history@npm:4.7.11"
+  checksum: c92e2ba407dcab0581a9afdf98f533aa41b61a71133420a6d92b1ca9839f741ab1f9395b17454ba5b88cb86020b70b22d74a1950ccfbdfd9beeaa5459fdc3464
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.9":
   version: 7.0.9
   resolution: "@types/json-schema@npm:7.0.9"
@@ -624,12 +631,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.28.0":
-  version: 0.28.0
-  resolution: "@types/ramda@npm:0.28.0"
+"@types/ramda@npm:^0.28.7":
+  version: 0.28.7
+  resolution: "@types/ramda@npm:0.28.7"
   dependencies:
     ts-toolbelt: ^6.15.1
-  checksum: f0605774881fc9522d3e5ebdf4d6b3821ae2b09e7c15248295a199affce4b1b76190608b33db78f116a597cafdd4d6c809967bc190c9be7efccfb2c1739a2452
+  checksum: 0ee50cbd964d45ae75fdfc904113859d0abd7ceabd193ffaceeda3c80669a18fadc4680ea9f06f8ae2d3aa988513535dbff26fc6ee0a5b803c2106b1de8d0c4c
   languageName: node
   linkType: hard
 
@@ -642,7 +649,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17.0.33":
+"@types/react-router-dom@npm:^5.3.3":
+  version: 5.3.3
+  resolution: "@types/react-router-dom@npm:5.3.3"
+  dependencies:
+    "@types/history": ^4.7.11
+    "@types/react": "*"
+    "@types/react-router": "*"
+  checksum: 28c4ea48909803c414bf5a08502acbb8ba414669b4b43bb51297c05fe5addc4df0b8fd00e0a9d1e3535ec4073ef38aaafac2c4a2b95b787167d113bc059beff3
+  languageName: node
+  linkType: hard
+
+"@types/react-router@npm:*":
+  version: 5.1.18
+  resolution: "@types/react-router@npm:5.1.18"
+  dependencies:
+    "@types/history": ^4.7.11
+    "@types/react": "*"
+  checksum: f08b37ee822f9f9ff904ffd0778fe2bb7c717ed3ee311610382ee024d02a35169bd3301ecde863cac21aae8fdee919501e8ea22bad0260c02c10cfbdba5c71be
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:*":
   version: 17.0.39
   resolution: "@types/react@npm:17.0.39"
   dependencies:
@@ -650,6 +678,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: bf04d3c2894559012710d595553e12b422d3b91cd8f4f7e122d8cb044ba9c2ba17f6e8a4e09581359cc5509ddc59cd8c8fabd6774f3505a40a45393f074d6e6e
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^17.0.43":
+  version: 17.0.43
+  resolution: "@types/react@npm:17.0.43"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 981b0993f5b3ea9d3488b8cc883201e8ae47ba7732929f788f450a79fd72829e658080d5084e67caa008e58d989b0abc1d5f36ff0a1cda09315ea3a3c0c9dc11
   languageName: node
   linkType: hard
 
@@ -667,10 +706,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/video.js@npm:^7.3.31":
-  version: 7.3.31
-  resolution: "@types/video.js@npm:7.3.31"
-  checksum: 4f00fcce164311bcc1cfbcb50cc069bda59698b9f2adc99bd4859281f366dab95f5bfb0a829ace153939a9b2c45d154cbe109261a30de510908049a023c4b12d
+"@types/video.js@npm:^7.3.33":
+  version: 7.3.33
+  resolution: "@types/video.js@npm:7.3.33"
+  checksum: 1df94ace77539296bf1a1b915bece48ff23cfa2337c1cb47050f48dd00e3f34e2162cfb0a2bd98a1e3e678c3cae9b93959a5bba90d8d40e9656d93a5e737f460
   languageName: node
   linkType: hard
 
@@ -809,6 +848,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@videojs/http-streaming@npm:2.14.0":
+  version: 2.14.0
+  resolution: "@videojs/http-streaming@npm:2.14.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    "@videojs/vhs-utils": 3.0.4
+    aes-decrypter: 3.1.2
+    global: ^4.4.0
+    m3u8-parser: 4.7.0
+    mpd-parser: 0.21.0
+    mux.js: 6.0.1
+    video.js: ^6 || ^7
+  peerDependencies:
+    video.js: ^6 || ^7
+  checksum: 91690065a2fa45dc3308de138612eac2174b5f1736fe09d2b5a4b3d3b5d7c97ded3ee2d2e98e7a4b546699a2fcd8656279386675f59165484f9d74f4b9528f7b
+  languageName: node
+  linkType: hard
+
 "@videojs/vhs-utils@npm:3.0.4, @videojs/vhs-utils@npm:^3.0.0, @videojs/vhs-utils@npm:^3.0.2, @videojs/vhs-utils@npm:^3.0.3":
   version: 3.0.4
   resolution: "@videojs/vhs-utils@npm:3.0.4"
@@ -817,6 +874,17 @@ __metadata:
     global: ^4.4.0
     url-toolkit: ^2.2.1
   checksum: 1a709b60acdf423ddfb64453c0adc5d84e06c34d8fc44ccc99445a70e823fc5ec319999851307edd090c7a49b4d9ebc694d4fe1ebe9c523009570959b5ffa38b
+  languageName: node
+  linkType: hard
+
+"@videojs/vhs-utils@npm:^3.0.4":
+  version: 3.0.5
+  resolution: "@videojs/vhs-utils@npm:3.0.5"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    global: ^4.4.0
+    url-toolkit: ^2.2.1
+  checksum: 637dc9a8848027eab4213d6e85439d216577d0cb0346767c15bbb07a5a730aa30545f0b5d7bfd636f40212e490f34bf103e331f0bc180b4d3c245e77f30b437f
   languageName: node
   linkType: hard
 
@@ -1507,11 +1575,12 @@ __metadata:
     "@heroicons/react": ^1.0.6
     "@tauri-apps/api": ^1.0.0-rc.1
     "@tauri-apps/cli": ^1.0.0-rc.5
-    "@types/ramda": ^0.28.0
-    "@types/react": ^17.0.33
+    "@types/ramda": ^0.28.7
+    "@types/react": ^17.0.43
     "@types/react-dom": ^17.0.14
+    "@types/react-router-dom": ^5.3.3
     "@types/uuid": ^8.3.4
-    "@types/video.js": ^7.3.31
+    "@types/video.js": ^7.3.33
     "@typescript-eslint/eslint-plugin": ^5.12.1
     "@typescript-eslint/parser": ^5.12.1
     "@vitejs/plugin-react": ^1.3.0
@@ -1526,11 +1595,11 @@ __metadata:
     ramda: ^0.28.0
     react: ^18.0.0
     react-dom: ^18.0.0
-    react-router-dom: 6
+    react-router-dom: ^6.3.0
     tailwindcss: ^3.0.23
     typescript: ^4.5.4
     uuid: ^8.3.2
-    video.js: ^7.17.0
+    video.js: ^7.18.1
     videojs-youtube: ^2.6.1
     vite: ^2.9.1
   languageName: unknown
@@ -3151,6 +3220,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mpd-parser@npm:0.21.0":
+  version: 0.21.0
+  resolution: "mpd-parser@npm:0.21.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    "@videojs/vhs-utils": ^3.0.2
+    "@xmldom/xmldom": ^0.7.2
+    global: ^4.4.0
+  bin:
+    mpd-to-m3u8-json: bin/parse.js
+  checksum: 2b9e9215ca65cfff5ef0931594652faa3d0302c740bbace55eb9c6bb6a8aaa44c0101769743fb9ba9b39a188ff35be8166488212c7cea2c4bd2a2a4afbc10f72
+  languageName: node
+  linkType: hard
+
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -3180,6 +3263,18 @@ __metadata:
   bin:
     muxjs-transmux: bin/transmux.js
   checksum: eb86b35ee283a8e26e7f199f1d738ad8be8de22c81d573d96b5175a8188a6b9bc84b8181f930bbdb476b6a5a289394e792ebd269406b8f573ca545406b607bfd
+  languageName: node
+  linkType: hard
+
+"mux.js@npm:6.0.1":
+  version: 6.0.1
+  resolution: "mux.js@npm:6.0.1"
+  dependencies:
+    "@babel/runtime": ^7.11.2
+    global: ^4.4.0
+  bin:
+    muxjs-transmux: bin/transmux.js
+  checksum: dcf6fb7a3ea5bce741268480fe5ed43ae75c82403ebcaddb2f6d1bd83364e3c70359feea9348112cb7ddd88b02e9c2f9fa0c0a5de9eaf32e8f246a53c6ed8f8a
   languageName: node
   linkType: hard
 
@@ -3663,27 +3758,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6":
-  version: 6.2.1
-  resolution: "react-router-dom@npm:6.2.1"
+"react-router-dom@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "react-router-dom@npm:6.3.0"
   dependencies:
     history: ^5.2.0
-    react-router: 6.2.1
+    react-router: 6.3.0
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: fa0edc69fddf0cb1313bcb3dbd5eb2b2ff24a75ee03ba928995e16a6a251585750f91d966612e868eb68a5aebc4a5240be40fd96c4acf1d8d48d33f54ad3f4e2
+  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
   languageName: node
   linkType: hard
 
-"react-router@npm:6.2.1":
-  version: 6.2.1
-  resolution: "react-router@npm:6.2.1"
+"react-router@npm:6.3.0":
+  version: 6.3.0
+  resolution: "react-router@npm:6.3.0"
   dependencies:
     history: ^5.2.0
   peerDependencies:
     react: ">=16.8"
-  checksum: 081a89237ab4f32195d1f2173bc4b3d95637cd6942a4d1a9e90d4ac8c80faa95528255ca2ec44c1e88c1b369e712c4ca74cba5ae3acef6fc30a51a62805b95a4
+  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
   languageName: node
   linkType: hard
 
@@ -4333,7 +4428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"video.js@npm:^5.6.0 || ^6.2.8 || ^7.0.2, video.js@npm:^6 || ^7, video.js@npm:^7.17.0":
+"video.js@npm:^5.6.0 || ^6.2.8 || ^7.0.2, video.js@npm:^6 || ^7":
   version: 7.17.0
   resolution: "video.js@npm:7.17.0"
   dependencies:
@@ -4351,6 +4446,27 @@ __metadata:
     videojs-font: 3.2.0
     videojs-vtt.js: ^0.15.3
   checksum: bffbb9e64d5ef0ef119aad56d3e9e017b1cd406a7aa53ad98880f69e560545012c8eab95d7266d242cd6d673ad8bda80f56f58844444c4216c7179dabeae4e22
+  languageName: node
+  linkType: hard
+
+"video.js@npm:^7.18.1":
+  version: 7.19.0
+  resolution: "video.js@npm:7.19.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    "@videojs/http-streaming": 2.14.0
+    "@videojs/vhs-utils": ^3.0.4
+    "@videojs/xhr": 2.6.0
+    aes-decrypter: 3.1.2
+    global: ^4.4.0
+    keycode: ^2.2.0
+    m3u8-parser: 4.7.0
+    mpd-parser: 0.21.0
+    mux.js: 6.0.1
+    safe-json-parse: 4.0.0
+    videojs-font: 3.2.0
+    videojs-vtt.js: ^0.15.3
+  checksum: 7d4e5fe93a92e72d778a9c48fccff8d4b6cfffc4c039bfcb0dce63ae0586fa8a86eb065c7d90471a5f34cfa4286f4d587804df10547efb80b75d3a80b4732433
   languageName: node
   linkType: hard
 
