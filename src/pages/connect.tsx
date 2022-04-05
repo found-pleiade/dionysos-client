@@ -7,12 +7,12 @@ import Input from '../components/Input';
 import {
   isValid, requestData, invalidInput,
 } from '../utils';
-import { MessagesType } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
 import useConnection from '../hooks/connection';
 import useUsers from '../hooks/users';
+import useMessages from '../hooks/messages';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -30,7 +30,7 @@ const Connect = ({
 }: {
   connection: ReturnType<typeof useConnection>,
   users: ReturnType<typeof useUsers>,
-  messages: MessagesType,
+  messages: ReturnType<typeof useMessages>,
 }) => {
   const navigate = useNavigate();
   const modal = useModal();
