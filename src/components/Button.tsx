@@ -6,11 +6,11 @@ type buttonProps = {
   id?: string,
   className?: string,
   to?: To,
-  text: string,
   colorless?: boolean,
   hidden?: boolean,
   onClick?: any,
   disabled?: boolean,
+  children: React.ReactNode,
 }
 
 /**
@@ -18,14 +18,14 @@ type buttonProps = {
  * 'to' is a React Router Link used to navigate to a new page.
  */
 const Button = ({
-  id = '',
-  className = '',
+  id,
+  className,
   to = '',
-  text,
-  colorless = false,
-  hidden = false,
+  colorless,
+  hidden,
   onClick,
-  disabled = false,
+  disabled,
+  children,
 }: buttonProps) => {
   const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground whitespace-nowrap';
   const visibility = hidden ? 'hidden' : 'visible';
@@ -46,7 +46,7 @@ const Button = ({
       className={`${style} ${className}`}
       onClick={onClick}
     >
-      {text}
+      {children}
     </button>
   );
 
@@ -57,7 +57,7 @@ const Button = ({
       className={`${style} ${className}`}
       onClick={onClick}
     >
-      {text}
+      {children}
     </Link>
   );
 
