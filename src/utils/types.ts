@@ -25,8 +25,9 @@ export type UrlType = {
 }
 
 export type MessageType = {
-  text: string | undefined,
-  type: string | undefined,
+  id: string,
+  text: string,
+  type: string,
   duration: number | undefined
 };
 
