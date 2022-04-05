@@ -8,20 +8,18 @@ const handleCopy = (id: string, copy: boolean | undefined) => {
   }
 };
 
-type IdProps = {
-  id: string,
-  className?: string,
-  inline?: boolean,
-  short?: boolean,
-  copy?: boolean
-}
-
 /**
  * Display an ID.
  */
 const Id = ({
   id, className, inline, short, copy,
-}: IdProps) => {
+}: {
+  id: string,
+  className?: string,
+  inline?: boolean,
+  short?: boolean,
+  copy?: boolean
+}) => {
   const idToDisplay = short ? id.substring(0, idLength) : id;
   const inlineClass = inline ? 'inline' : 'block';
   const title = copy ? 'Click to copy' : id;

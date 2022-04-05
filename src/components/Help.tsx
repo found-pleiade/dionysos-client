@@ -1,8 +1,8 @@
 import React from 'react';
 import { visibility } from '../utils';
 
-const Help = ({ shown }: { shown: boolean }) => (
-  <div className={`z-10 absolute right-0 top-3 font-medium bg-background-600 text-foreground p-3 rounded-r-lg w-[44ch] whitespace-normal translate-x-[100%] ${visibility(shown)}`}>
+const Help = ({ visible }: { visible: boolean }) => (
+  <div className={`z-10 absolute right-0 top-3 font-medium bg-background-600 text-foreground p-3 rounded-r-lg w-[44ch] whitespace-normal translate-x-[100%] ${visibility(visible)}`}>
     <h1 className="font-black text-xl">Basics</h1>
     <p className="font-bold">
       The person owning the film need to create the room

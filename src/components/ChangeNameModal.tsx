@@ -12,12 +12,13 @@ import Input from './Input';
 import useModal from '../hooks/modal';
 import useConnection from '../hooks/connection';
 import useUsers from '../hooks/users';
+import SpaceBetween from './SpaceBetween';
 
 const cancelModal = (
   modal: ReturnType<typeof useModal>,
   user: User,
   setNewUserName: React.Dispatch<React.SetStateAction<string>>,
-) => () => {
+) => {
   setNewUserName(user.name);
   modal.toggle();
 };
@@ -64,6 +65,7 @@ const ChangeNameModal = ({
 }: ConnectModalProps) => {
   const [newUserName, setNewUserName] = useState(users.current.name);
   const saveModalHandler = () => saveModal(modal, newUserName, users, changeUsername, connection);
+  const cancelModalHandler = () => cancelModal(modal, users.current, setNewUserName);
 
   const dialogRef = useRef() as any;
   useEffect(() => {
@@ -75,15 +77,10 @@ const ChangeNameModal = ({
     <dialog ref={dialogRef} className="pt-9 min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
       <Input id="nameChange" placeholder="Username" value={newUserName} setValue={setNewUserName} onKeyPress={handleKeyPressInput('nameChange', saveModalHandler)} />
 
-      <div className="flex justify-between">
-        <Button colorless onClick={cancelModal(modal, users.current, setNewUserName)}>
-          Cancel
-        </Button>
-
-        <Button onClick={saveModalHandler} disabled={!isValid(newUserName)}>
-          Save
-        </Button>
-      </div>
+      <SpaceBetween>
+        <Button onClick={cancelModalHandler} colorless>Cancel</Button>
+        <Button onClick={saveModalHandler} disabled={!isValid(newUserName)}>Save</Button>
+      </SpaceBetween>
     </dialog>
   );
 };

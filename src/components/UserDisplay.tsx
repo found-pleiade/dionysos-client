@@ -13,13 +13,11 @@ type UserDisplayProps = {
  * Display the user's name and id.
  */
 const UserDisplay = ({ users, modal }: UserDisplayProps) => (
-  <div>
-    <button className="text-md font-medium flex items-center -translate-x-2 translate-y-1 px-2 py-1 rounded-lg" onClick={() => modal.toggle()} type="button" title="Change your username">
-      {users.current.name}
-      <Id id={users.current.id} short inline className="px-1 cursor-pointer" />
-      <PencilAltIcon className="h-5 w-4" />
-    </button>
-  </div>
+  <button className="text-md font-medium flex items-center w-min" onClick={() => modal.toggle()} type="button" title="Change your username">
+    {users.current.name}
+    <Id id={users.current.id} short inline className="px-1 cursor-pointer" />
+    <PencilAltIcon className="h-5 w-4" />
+  </button>
 );
 
 export default UserDisplay;

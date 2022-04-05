@@ -1,17 +1,6 @@
 import React from 'react';
 import { Link, To } from 'react-router-dom';
-import { isValid } from '../utils';
-
-type buttonProps = {
-  id?: string,
-  className?: string,
-  to?: To,
-  colorless?: boolean,
-  hidden?: boolean,
-  onClick?: any,
-  disabled?: boolean,
-  children: React.ReactNode,
-}
+import * as R from 'ramda';
 
 /**
  * Basic button component, 'text' is the text inside the button,
@@ -20,14 +9,28 @@ type buttonProps = {
 const Button = ({
   id,
   className,
+  title,
   to = '',
   colorless,
   hidden,
   onClick,
+  onKeyPress,
   disabled,
   children,
-}: buttonProps) => {
+}: {
+  id?: string,
+  className?: string,
+  title?: string,
+  to?: To,
+  colorless?: boolean,
+  hidden?: boolean,
+  onClick?: any,
+  onKeyPress?: any,
+  disabled?: boolean,
+  children: React.ReactNode,
+}) => {
   const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground whitespace-nowrap';
+
   const visibility = hidden ? 'hidden' : 'visible';
 
   const colorsAndCursor = () => {
@@ -45,6 +48,9 @@ const Button = ({
       type="button"
       className={`${style} ${className}`}
       onClick={onClick}
+      onKeyPress={onKeyPress}
+      title={title}
+      tabIndex={0}
     >
       {children}
     </button>
@@ -56,12 +62,15 @@ const Button = ({
       to={to}
       className={`${style} ${className}`}
       onClick={onClick}
+      onKeyPress={onKeyPress}
+      title={title}
+      tabIndex={0}
     >
       {children}
     </Link>
   );
 
-  return !isValid(to as string) || disabled ? buttonProp : linkProp;
+  return R.equals(R.length(to as string), 0) || disabled ? buttonProp : linkProp;
 };
 
 export default Button;
