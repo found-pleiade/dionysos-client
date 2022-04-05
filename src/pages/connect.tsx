@@ -32,6 +32,7 @@ const Connect = ({
   users: ReturnType<typeof useUsers>,
   messages: MessagesType,
 }) => {
+  const navigate = useNavigate();
   const modal = useModal();
   const [username, setUsername] = useState('');
   const validAndConnected = () => isValid(username) && connection.isUp;
@@ -47,7 +48,7 @@ const Connect = ({
 
     connection.send(requestCHU(username));
     users.setCurrent({ ...users.current, name: username });
-    useNavigate()('/home');
+    navigate('/home');
   };
 
   return (
