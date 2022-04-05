@@ -92,13 +92,17 @@ const RoomInputGroup = ({
 
       <div className="flex space-x-1">
         <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={joinRoomHandler} value={joinInput} setValue={setJoinInput} />
-        <Button className="rounded-l-none w-24 px-1" text="Join" onClick={joinRoomHandler} disabled={!equalsForty(joinInput)} />
+        <Button className="rounded-l-none w-24 px-1" onClick={joinRoomHandler} disabled={!equalsForty(joinInput)}>
+          Join
+        </Button>
       </div>
 
       <div className="flex space-x-1">
         <Input id="create" className="rounded-r-none" placeholder="Room name" onKeyPress={createRoomHandler} value={createInput} setValue={setCreateInput} />
         <LockToggle toggle={isPrivate} onClick={keyLockHandler} onKeyPress={keyLockHandler} />
-        <Button colorless className="rounded-l-none w-28 px-1" text="Create" onClick={createRoomHandler} disabled={!isValid(createInput)} />
+        <Button colorless className="rounded-l-none w-28 px-1" onClick={createRoomHandler} disabled={!isValid(createInput)}>
+          Create
+        </Button>
       </div>
     </div>
   );

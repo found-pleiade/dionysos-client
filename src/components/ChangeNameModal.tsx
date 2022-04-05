@@ -76,8 +76,13 @@ const ChangeNameModal = ({
       <Input id="nameChange" placeholder="Username" value={newUserName} setValue={setNewUserName} onKeyPress={handleKeyPressInput('nameChange', saveModalHandler)} />
 
       <div className="flex justify-between">
-        <Button text="Cancel" colorless onClick={cancelModal(modal, users.current, setNewUserName)} />
-        <Button text="Save" onClick={saveModalHandler} disabled={!isValid(newUserName)} />
+        <Button colorless onClick={cancelModal(modal, users.current, setNewUserName)}>
+          Cancel
+        </Button>
+
+        <Button onClick={saveModalHandler} disabled={!isValid(newUserName)}>
+          Save
+        </Button>
       </div>
     </dialog>
   );

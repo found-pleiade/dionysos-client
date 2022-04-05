@@ -107,8 +107,13 @@ const ConnectModal = ({
       </div>
 
       <div className="flex justify-between">
-        <Button text="Cancel" colorless onClick={cancelModal(connection, modal, messages, inputStatusIcon)} />
-        <Button text="Save" onClick={saveModal(connection, modal, messages, inputStatusIcon)} />
+        <Button colorless onClick={cancelModal(connection, modal, messages, inputStatusIcon)}>
+          Cancel
+        </Button>
+
+        <Button onClick={saveModal(connection, modal, messages, inputStatusIcon)}>
+          Save
+        </Button>
       </div>
     </dialog>
   );

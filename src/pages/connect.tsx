@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GlobeAltIcon } from '@heroicons/react/solid';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import {
@@ -10,7 +11,6 @@ import { MessagesType } from '../utils/types';
 import { codes } from '../constants';
 import ConnectModal from '../components/ConnectModal';
 import useModal from '../hooks/modal';
-import WebSocketButton from '../components/WebSocketButton';
 import useConnection from '../hooks/connection';
 import useUsers from '../hooks/users';
 
@@ -61,11 +61,18 @@ const Connect = ({
 
         <div className="flex space-x-1 w-[50ch]">
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
-          <Button className="rounded-l-none" text={buttonText()} disabled={!validAndConnected()} onClick={connectionHandler} />
+          <Button className="rounded-l-none" disabled={!validAndConnected()} onClick={connectionHandler}>
+            {buttonText()}
+          </Button>
         </div>
       </div>
 
-      <WebSocketButton modal={modal} />
+      <Button
+        className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg"
+        onClick={() => modal.toggle()}
+      >
+        <GlobeAltIcon />
+      </Button>
 
       <ConnectModal
         connection={connection}

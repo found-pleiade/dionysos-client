@@ -66,8 +66,13 @@ const JoinRequestModal = ({
       </p>
 
       <div className="flex justify-between">
-        <Button id="refuseJoinRequest" text="Refuse" colorless onClick={handleRequest(false)} />
-        <Button id="acceptJoinRequest" text="Accept" colorless onClick={handleRequest(true)} />
+        <Button id="refuseJoinRequest" colorless onClick={handleRequest(false)}>
+          Refuse
+        </Button>
+
+        <Button id="acceptJoinRequest" colorless onClick={handleRequest(true)}>
+          Accept
+        </Button>
       </div>
     </dialog>
   );
