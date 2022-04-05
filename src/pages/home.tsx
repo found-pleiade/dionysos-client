@@ -1,15 +1,24 @@
 import React, { useRef } from 'react';
 import Videojs from '../components/Videojs';
-import { translate } from '../utils';
+import { visibility } from '../utils';
 import { JoinRequest } from '../utils/types';
 import OverlayMenu from '../components/OverlayMenu';
-import MinimizeIcon from '../components/MinimizeIcon';
 import Panel from '../components/Panel';
 import useSideMenu from '../hooks/sideMenu';
 import useConnection from '../hooks/connection';
 import useModal from '../hooks/modal';
 import useRoom from '../hooks/room';
 import useUsers from '../hooks/users';
+import useHelp from '../hooks/help';
+import RoomInputGroup from '../components/RoomInputGroup';
+import Help from '../components/Help';
+import RoomDisplay from '../components/RoomDisplay';
+import JoinRequestModal from '../components/JoinRequestModal';
+import Separator from '../components/Separator';
+import Userlist from '../components/Userlist';
+import UserDisplay from '../components/UserDisplay';
+import ChangeNameModal from '../components/ChangeNameModal';
+import Chat from '../components/Chat';
 
 type homeProps = {
   connection: ReturnType<typeof useConnection>,
@@ -60,40 +69,73 @@ const Home = ({
    */
   const panel = useSideMenu(true);
   const chat = useSideMenu(false);
+  const help = useHelp(false);
+  const changeNameModal = useModal();
+
+  const roomNotEmpty = room.current.name !== '' && room.current.id !== '';
+  const emptyUserList = users.get.length <= 0;
 
   return (
-    <div className="h-screen w-screen truncate bg-black flex">
-      {/* Panel */}
-      <Panel
+    <>
+      <JoinRequestModal
         connection={connection}
+        modal={joinRequestModal}
         room={room}
-        users={users}
-        panel={panel}
-        joinRequests={joinRequests}
-        setJoinRequests={setJoinRequests}
-        joinRequestModal={joinRequestModal}
+        requests={joinRequests}
+        setRequests={setJoinRequests}
       />
 
-      {/* Chat */}
-      <div className={`flex flex-col justify-between bg-background-700 relative transition-all py-3 ${translate(chat.isOpen)}`}>
-        <MinimizeIcon func={chat.toggle} />
-        <p>Ceci est un chat</p>
-      </div>
+      <ChangeNameModal
+        modal={changeNameModal}
+        users={users}
+        connection={connection}
+      />
 
-      {/* Video */}
-      <div className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center">
-        {/* Player */}
-        <div className="video-max-width mx-auto w-[inherit]">
-          <Videojs
-            options={videoJsOptions}
-            onReady={handlePlayerReady}
+      <div className="h-screen w-screen truncate bg-black flex">
+        <Panel state={panel}>
+          <RoomInputGroup
+            connection={connection}
+            room={room}
+            visible={!roomNotEmpty}
+            help={help}
           />
-        </div>
 
-        {/* Menus */}
-        <OverlayMenu panel={panel} chat={chat} />
+          <Help visible={help.isOpen} />
+
+          <RoomDisplay
+            room={room}
+            connection={connection}
+            visible={roomNotEmpty}
+          />
+
+          <Userlist
+            users={users}
+            room={room}
+            visible={!emptyUserList}
+          />
+
+          <UserDisplay users={users} modal={changeNameModal} />
+        </Panel>
+
+        <Chat state={chat}>
+          <p>Ceci est un chat</p>
+        </Chat>
+
+        {/* Video */}
+        <div className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center">
+          {/* Player */}
+          <div className="video-max-width mx-auto w-[inherit]">
+            <Videojs
+              options={videoJsOptions}
+              onReady={handlePlayerReady}
+            />
+          </div>
+
+          {/* Menus */}
+          <OverlayMenu panel={panel} chat={chat} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

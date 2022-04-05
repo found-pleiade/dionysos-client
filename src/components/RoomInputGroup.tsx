@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import * as R from 'ramda';
-import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
+import { LockClosedIcon, LockOpenIcon, QuestionMarkCircleIcon } from '@heroicons/react/solid';
 import { codes } from '../constants';
 import {
   equalsForty,
-  isValid, requestData, invalidInput,
+  isValid, requestData, invalidInput, visibility,
 } from '../utils';
 import Button from './Button';
-import LockToggle from './LockToggle';
 import Input from './Input';
 import useRoom from '../hooks/room';
 import useConnection from '../hooks/connection';
 import useHelp from '../hooks/help';
+import InputButtonGroup from './InputButtonGroup';
+import SpaceBetween from './SpaceBetween';
 
 /**
  * Setup the request for joining a room.
@@ -29,19 +30,19 @@ const requestNRO = (roomname: string, isPrivate: boolean) => requestData(
   { roomname, isPrivate },
 );
 
-type RoomInputGroupProps = {
+const RoomInputGroup = ({
+  connection, room, visible, help,
+}: {
   connection: ReturnType<typeof useConnection>,
   room: ReturnType<typeof useRoom>,
-  className: string,
+  visible: boolean,
   help: ReturnType<typeof useHelp>,
-}
-
-const RoomInputGroup = ({
-  connection, room, className, help,
-}: RoomInputGroupProps) => {
+}) => {
   const [isPrivate, setIsPrivate] = useState(false);
   const [joinInput, setJoinInput] = useState('');
   const [createInput, setCreateInput] = useState('');
+  const lockIcon = isPrivate ? <LockClosedIcon /> : <LockOpenIcon className="text-valid" />;
+  const lockTitle = isPrivate ? 'Private Room' : 'Public Room';
 
   useEffect(() => {
     if (R.length(room.current.name) <= 0) {
@@ -82,28 +83,22 @@ const RoomInputGroup = ({
   };
 
   return (
-    <div className={`flex flex-col gap-8 ${className}`}>
-      <div className="flex justify-between items-center -mb-2">
+    <div className={`flex flex-col gap-8 ${visibility(visible)}`}>
+      <SpaceBetween>
         <h1 className="text-xl font-bold">Join or create a room</h1>
-        <button type="button" className="h-8 w-8 p-1 hover:text-accent-400 hover:brightness-[1.2] rounded-full" title="Need some help ?" onClick={() => help.setIsOpen(!help.isOpen)}>
-          <QuestionMarkCircleIcon />
-        </button>
-      </div>
+        <Button colorless className="h-7 w-7 px-0 py-0 rounded-full" title="Need some help ?" onClick={() => help.setIsOpen(!help.isOpen)}><QuestionMarkCircleIcon /></Button>
+      </SpaceBetween>
 
-      <div className="flex space-x-1">
+      <InputButtonGroup>
         <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={joinRoomHandler} value={joinInput} setValue={setJoinInput} />
-        <Button className="rounded-l-none w-24 px-1" onClick={joinRoomHandler} disabled={!equalsForty(joinInput)}>
-          Join
-        </Button>
-      </div>
+        <Button className="rounded-l-none w-24 px-1" onClick={joinRoomHandler} disabled={!equalsForty(joinInput)}>Join</Button>
+      </InputButtonGroup>
 
-      <div className="flex space-x-1">
+      <InputButtonGroup>
         <Input id="create" className="rounded-r-none" placeholder="Room name" onKeyPress={createRoomHandler} value={createInput} setValue={setCreateInput} />
-        <LockToggle toggle={isPrivate} onClick={keyLockHandler} onKeyPress={keyLockHandler} />
-        <Button colorless className="rounded-l-none w-28 px-1" onClick={createRoomHandler} disabled={!isValid(createInput)}>
-          Create
-        </Button>
-      </div>
+        <Button className="px-2 h-10 w-11 rounded-none" colorless onClick={keyLockHandler} onKeyPress={keyLockHandler} title={lockTitle}>{lockIcon}</Button>
+        <Button colorless className="rounded-l-none w-28 px-1" onClick={createRoomHandler} disabled={!isValid(createInput)}>Create</Button>
+      </InputButtonGroup>
     </div>
   );
 };

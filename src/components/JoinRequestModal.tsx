@@ -9,6 +9,7 @@ import {
 import { JoinRequest } from '../utils/types';
 import Button from './Button';
 import Id from './Id';
+import SpaceBetween from './SpaceBetween';
 
 /**
  * Setup the request for accepting or refusing a user joining a private room.
@@ -57,23 +58,16 @@ const JoinRequestModal = ({
 
   return (
     <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
-      <p className="font-medium">
+      <p className="font-medium text-lg">
         {currentRequest.requesterUsername}
-        {' '}
-        <Id id={currentRequest.requesterId} short inline />
-        {' '}
+        <Id id={currentRequest.requesterId} className="px-1" short inline />
         wants to join your room.
       </p>
 
-      <div className="flex justify-between">
-        <Button id="refuseJoinRequest" colorless onClick={handleRequest(false)}>
-          Refuse
-        </Button>
-
-        <Button id="acceptJoinRequest" colorless onClick={handleRequest(true)}>
-          Accept
-        </Button>
-      </div>
+      <SpaceBetween>
+        <Button id="refuseJoinRequest" colorless onClick={handleRequest(false)}>Refuse</Button>
+        <Button id="acceptJoinRequest" colorless onClick={handleRequest(true)}>Accept</Button>
+      </SpaceBetween>
     </dialog>
   );
 };

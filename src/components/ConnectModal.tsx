@@ -3,11 +3,13 @@ import React, {
 } from 'react';
 import useConnection from '../hooks/connection';
 import useInputStatusIcon from '../hooks/inputStatusIcon';
+import useMessages from '../hooks/messages';
 import useModal from '../hooks/modal';
 import { preventDialogEscape, toggleDialog } from '../utils';
-import { MessagesType } from '../utils/types';
 import Button from './Button';
 import Input from './Input';
+import InputButtonGroup from './InputButtonGroup';
+import SpaceBetween from './SpaceBetween';
 
 /**
  * Cancel user interractions with the modal then close it.
@@ -15,7 +17,7 @@ import Input from './Input';
 const cancelModal = (
   connection: ReturnType<typeof useConnection>,
   modal: ReturnType<typeof useModal>,
-  messages: MessagesType,
+  messages: ReturnType<typeof useMessages>,
   inputStatusIcon: ReturnType<typeof useInputStatusIcon>,
 ) => () => {
   if (!connection.isUp && !connection.isUrlDifferent) { modal.toggle(); return; }
@@ -33,7 +35,7 @@ const cancelModal = (
 const saveModal = (
   connection: ReturnType<typeof useConnection>,
   modal: ReturnType<typeof useModal>,
-  messages: MessagesType,
+  messages: ReturnType<typeof useMessages>,
   inputStatusIcon: ReturnType<typeof useInputStatusIcon>,
 ) => () => {
   if (connection.currentUrl === connection.backupUrl && connection.isUp) { modal.toggle(); return; }
@@ -64,18 +66,18 @@ const saveModal = (
   }
 };
 
-type ConnectModalProps = {
-  connection: ReturnType<typeof useConnection>,
-  modal: ReturnType<typeof useModal>,
-  messages: MessagesType,
-}
-
 const ConnectModal = ({
   connection,
   modal,
   messages,
-}: ConnectModalProps) => {
+}: {
+  connection: ReturnType<typeof useConnection>,
+  modal: ReturnType<typeof useModal>,
+  messages: ReturnType<typeof useMessages>,
+}) => {
   const inputStatusIcon = useInputStatusIcon(connection.isUp);
+  const cancelModalHandler = cancelModal(connection, modal, messages, inputStatusIcon);
+  const saveModalHandler = saveModal(connection, modal, messages, inputStatusIcon);
 
   /**
    * HTMLDialogElement is not support by TypeScript, but that's what
@@ -100,21 +102,16 @@ const ConnectModal = ({
     <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
       <div>
         <h3 className="mb-2 font-medium">WebSocket server</h3>
-        <div className="flex space-x-1">
+        <InputButtonGroup>
           <Input id="connection" noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
           {inputStatusIcon.current}
-        </div>
+        </InputButtonGroup>
       </div>
 
-      <div className="flex justify-between">
-        <Button colorless onClick={cancelModal(connection, modal, messages, inputStatusIcon)}>
-          Cancel
-        </Button>
-
-        <Button onClick={saveModal(connection, modal, messages, inputStatusIcon)}>
-          Save
-        </Button>
-      </div>
+      <SpaceBetween>
+        <Button onClick={cancelModalHandler} colorless>Cancel</Button>
+        <Button onClick={saveModalHandler}>Save</Button>
+      </SpaceBetween>
     </dialog>
   );
 };
