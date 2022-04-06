@@ -30,18 +30,23 @@ const Message = ({
   };
 
   const [time, setTime] = useState(0);
+  const [wasHidden, setWasHidden] = useState(false);
   const intervalDuration = 10;
-  const showAnimation = intervalDuration;
-  const hideAnimation = messageDuration() + transitionDuration;
-  const removeMessage = messageDuration() + transitionDuration * 2;
+  const showAnimationStep = intervalDuration;
+  const hideAnimationStep = messageDuration() + transitionDuration;
+  const removeMessageStep = messageDuration() + transitionDuration * 2;
 
   const animation = () => {
-    const removeTime = removeMessage - transitionDuration;
+    if (time >= showAnimationStep) messageRef.current.classList.add('show');
+    if (time >= hideAnimationStep) {
+      setTimeout(() => {
+        setWasHidden(true);
+      }, transitionDuration);
+      messageRef.current.classList.remove('show');
+    }
+    if (time >= removeMessageStep && wasHidden) messages.remove(message.id);
 
-    if (time === showAnimation) messageRef.current.classList.add('show');
-    if (time >= hideAnimation) messageRef.current.classList.remove('show');
-    if (removeTime >= removeMessage) messages.remove(message.id);
-
+    messageRef.current.style.setProperty('--progress', (time / hideAnimationStep));
     setTime(time + intervalDuration);
   };
 
@@ -53,8 +58,12 @@ const Message = ({
     };
   }, [time]);
 
+  useEffect(() => {
+    messageRef.current.style.transitionDuration = `${transitionDuration}ms`;
+  }, []);
+
   return (
-    <p ref={messageRef} className={`first-letter:uppercase ${color()} font-medium p-2 last:rounded-b-md message w-full text-center`} style={{ transitionDuration: `${transitionDuration}ms` }}>
+    <p ref={messageRef} className={`relative first-letter:uppercase ${color()} font-medium p-2 last:rounded-b-md message w-full text-center`}>
       {text}
     </p>
   );
