@@ -93,7 +93,7 @@ const App = () => {
         }
 
         if (payload.isPrivate) {
-          messages.clear('Waiting for the host...', 'info', 9999);
+          messages.clear('Waiting for the host...', 'info', 9999999999999);
 
           room.setPending({
             ...room.current,
