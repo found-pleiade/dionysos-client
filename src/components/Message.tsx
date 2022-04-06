@@ -36,11 +36,13 @@ const Message = ({
   const removeMessage = messageDuration() + transitionDuration * 2;
 
   const animation = () => {
-    setTime(time + intervalDuration);
+    const removeTime = removeMessage - transitionDuration;
 
     if (time === showAnimation) messageRef.current.classList.add('show');
-    if (time === hideAnimation) messageRef.current.classList.remove('show');
-    if (time === removeMessage) messages.remove(message.id);
+    if (time >= hideAnimation) messageRef.current.classList.remove('show');
+    if (removeTime >= removeMessage) messages.remove(message.id);
+
+    setTime(time + intervalDuration);
   };
 
   useEffect(() => {

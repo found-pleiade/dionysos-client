@@ -19,12 +19,17 @@ const useMessages = () => {
    * Calling clean then add cause async problems, so you can add a message with the clean function.
    */
   const clear = (text?: string, type?: string, duration?: number) => {
+    const messagesWithNoDuration = messages.map((message) => ({
+      ...message,
+      duration: 0,
+    })) as Array<MessageType>;
+
     if (!text || !type) {
-      setMessages([]);
+      setMessages(messagesWithNoDuration);
     } else {
-      setMessages([{
+      setMessages(messagesWithNoDuration.concat({
         id: uuidv4(), text, type, duration,
-      }]);
+      }));
     }
   };
 
