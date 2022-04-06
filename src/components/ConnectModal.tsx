@@ -8,7 +8,7 @@ import useModal from '../hooks/modal';
 import { preventDialogEscape, toggleDialog } from '../utils';
 import Button from './Button';
 import Input from './Input';
-import InputButtonGroup from './InputButtonGroup';
+import RowGroup from './RowGroup';
 import SpaceBetween from './SpaceBetween';
 
 /**
@@ -102,10 +102,10 @@ const ConnectModal = ({
     <dialog ref={dialogRef} className="min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground">
       <div>
         <h3 className="mb-2 font-medium">WebSocket server</h3>
-        <InputButtonGroup>
+        <RowGroup>
           <Input id="connection" noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
           {inputStatusIcon.current}
-        </InputButtonGroup>
+        </RowGroup>
       </div>
 
       <SpaceBetween>

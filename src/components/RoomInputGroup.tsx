@@ -11,7 +11,7 @@ import Input from './Input';
 import useRoom from '../hooks/room';
 import useConnection from '../hooks/connection';
 import useHelp from '../hooks/help';
-import InputButtonGroup from './InputButtonGroup';
+import RowGroup from './RowGroup';
 import SpaceBetween from './SpaceBetween';
 
 /**
@@ -89,16 +89,16 @@ const RoomInputGroup = ({
         <Button colorless className="h-7 w-7 px-0 py-0 rounded-full" title="Need some help ?" onClick={() => help.setIsOpen(!help.isOpen)}><QuestionMarkCircleIcon /></Button>
       </SpaceBetween>
 
-      <InputButtonGroup>
+      <RowGroup>
         <Input noHelper id="join" className="rounded-r-none" placeholder="Room ID" onKeyPress={joinRoomHandler} value={joinInput} setValue={setJoinInput} />
         <Button className="rounded-l-none w-24 px-1" onClick={joinRoomHandler} disabled={!equalsForty(joinInput)}>Join</Button>
-      </InputButtonGroup>
+      </RowGroup>
 
-      <InputButtonGroup>
+      <RowGroup>
         <Input id="create" className="rounded-r-none" placeholder="Room name" onKeyPress={createRoomHandler} value={createInput} setValue={setCreateInput} />
         <Button className="px-2 h-10 w-11 rounded-none" colorless onClick={keyLockHandler} onKeyPress={keyLockHandler} title={lockTitle}>{lockIcon}</Button>
         <Button colorless className="rounded-l-none w-28 px-1" onClick={createRoomHandler} disabled={!isValid(createInput)}>Create</Button>
-      </InputButtonGroup>
+      </RowGroup>
     </div>
   );
 };

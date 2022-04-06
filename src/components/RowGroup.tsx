@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputButtonGroup = ({
+const RowGroup = ({
   children,
 }: {
   children: React.ReactNode
@@ -10,4 +10,4 @@ const InputButtonGroup = ({
   </div>
 );
 
-export default InputButtonGroup;
+export default RowGroup;

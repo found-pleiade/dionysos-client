@@ -11,7 +11,7 @@ import useModal from '../hooks/modal';
 import useConnection from '../hooks/connection';
 import useUsers from '../hooks/users';
 import useMessages from '../hooks/messages';
-import InputButtonGroup from '../components/InputButtonGroup';
+import RowGroup from '../components/RowGroup';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -56,10 +56,10 @@ const Connect = ({
           <h2 className="text-[2rem] font-semibold">Share cinematic experences.</h2>
         </header>
 
-        <InputButtonGroup>
+        <RowGroup>
           <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
           <Button className="rounded-l-none" disabled={!validAndConnected()} onClick={connectionHandler}>{connection.isUp ? 'Next' : 'No connection'}</Button>
-        </InputButtonGroup>
+        </RowGroup>
       </div>
 
       {/* Top left button to access WebSocket settings. */}
