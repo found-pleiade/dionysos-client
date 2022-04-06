@@ -96,7 +96,7 @@ const RoomInputGroup = ({
 
       <RowGroup>
         <Input id="create" className="rounded-r-none" placeholder="Room name" onKeyPress={createRoomHandler} value={createInput} setValue={setCreateInput} />
-        <Button className="px-2 h-10 w-11 rounded-none" colorless onClick={keyLockHandler} onKeyPress={keyLockHandler} title={lockTitle}>{lockIcon}</Button>
+        <Button className="px-2 h-10 w-11 rounded-none" colorless onClick={keyLockHandler} title={lockTitle}>{lockIcon}</Button>
         <Button colorless className="rounded-l-none w-28 px-1" onClick={createRoomHandler} disabled={!isValid(createInput)}>Create</Button>
       </RowGroup>
     </div>
