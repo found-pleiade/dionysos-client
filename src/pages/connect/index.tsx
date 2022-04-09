@@ -1,17 +1,20 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobeAltIcon } from '@heroicons/react/solid';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { isValid, requestData, invalidInput } from '../utils';
-import { codes } from '../constants';
-import ConnectModal from '../components/ConnectModal';
-import useModal from '../hooks/modal';
-import useConnection from '../hooks/connection';
-import useUsers from '../hooks/users';
-import useMessages from '../hooks/messages';
-import RowGroup from '../components/RowGroup';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { isValid, requestData, invalidInput } from '../../utils';
+import { codes } from '../../constants';
+import useModal from '../../hooks/modal';
+import useConnection from '../../hooks/connection';
+import useUsers from '../../hooks/users';
+import useMessages from '../../hooks/messages';
+import RowGroup from '../../components/RowGroup';
+import Modal from '../../components/Modal';
+import SpaceBetween from '../../components/SpaceBetween';
+import useInputStatusIcon from '../../hooks/inputStatusIcon';
+import webSocketModalFunctions from './webSocketModal';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -31,10 +34,22 @@ const Connect = ({
   users: ReturnType<typeof useUsers>,
   messages: ReturnType<typeof useMessages>,
 }) => {
+  const inputStatusIcon = useInputStatusIcon(connection.isUp);
+  const wsModal = useModal(webSocketModalFunctions({
+    connection,
+    messages,
+    inputStatusIcon,
+  }));
   const navigate = useNavigate();
-  const modal = useModal();
+  const connectModalRef = useRef() as any;
   const [username, setUsername] = useState('');
   const validAndConnected = () => isValid(username) && connection.isUp;
+
+  useEffect(() => {
+    inputStatusIcon.setCurrent(
+      connection.isUp ? inputStatusIcon.icons.valid : inputStatusIcon.icons.error,
+    );
+  }, [connection]);
 
   /**
    * Send the username to the server and set the username in the app.
@@ -63,16 +78,25 @@ const Connect = ({
       </div>
 
       {/* Top left button to access WebSocket settings. */}
-      <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={() => modal.toggle()}>
+      <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={() => wsModal.toggle()}>
         <GlobeAltIcon />
       </Button>
 
-      {/* Modal with WebSocket settings. */}
-      <ConnectModal
-        connection={connection}
-        modal={modal}
-        messages={messages}
-      />
+      {/* Modal to change the WebSocket address. */}
+      <Modal modalRef={connectModalRef} modal={wsModal}>
+        <div>
+          <h3 className="mb-2 font-medium">WebSocket server</h3>
+          <RowGroup>
+            <Input id="connection" noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
+            {inputStatusIcon.current}
+          </RowGroup>
+        </div>
+
+        <SpaceBetween>
+          <Button onClick={wsModal.cancel} colorless>Cancel</Button>
+          <Button onClick={wsModal.save}>Save</Button>
+        </SpaceBetween>
+      </Modal>
     </>
   );
 };
