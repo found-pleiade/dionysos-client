@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
-const useModal = (contextFunctions?: any) => {
+const useModal = () => {
   /**
    * Check if the modal is opened.
    */
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef() as any;
 
   /**
    * Toggle the modal visibility, opened or closed.
@@ -13,24 +14,11 @@ const useModal = (contextFunctions?: any) => {
     setIsOpen(!isOpen);
   }
 
-  const defaultObject = {
+  return {
+    ref,
     isOpen,
     toggle,
   };
-
-  /**
-   * Context functions are functions like save, cancel, etc.
-   * It should be an array, object or a function returning one.
-   * Example : {save: () => {}, cancel: () => {}}
-   */
-  if (contextFunctions) {
-    return {
-      ...defaultObject,
-      ...contextFunctions(defaultObject),
-    };
-  }
-
-  return defaultObject;
 };
 
 export default useModal;

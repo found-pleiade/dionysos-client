@@ -1,16 +1,15 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
 import { appWindow } from '@tauri-apps/api/window';
 import { codes, devServer } from './constants';
-import { JoinRequest } from './utils/types';
 import useMessages from './hooks/messages';
 import { isValid, notNil } from './utils';
-import useModal from './hooks/modal';
 import useConnection from './hooks/connection';
 import useRoom from './hooks/room';
 import useUsers from './hooks/users';
 import Messages from './components/Messages';
+import useJoinRequests from './hooks/joinRequests';
 
 const Connect = React.lazy(() => import('./pages/connect'));
 const Home = React.lazy(() => import('./pages/home'));
@@ -20,12 +19,11 @@ const Home = React.lazy(() => import('./pages/home'));
  * Returns the shell style, app router and messages.
  */
 const App = () => {
-  const connection = useConnection(devServer);
-  const users = useUsers();
-  const room = useRoom();
   const messages = useMessages();
-  const joinRequestModal = useModal();
-  const [joinRequests, setJoinRequests] = useState<Array<JoinRequest>>([]);
+  const connection = useConnection(devServer, messages);
+  const users = useUsers(connection);
+  const room = useRoom();
+  const joinRequests = useJoinRequests(connection);
 
   // Set the WebSocket to use on app start.
   // Listen for the app closing to close the WebSocket.
@@ -55,7 +53,7 @@ const App = () => {
     connection.webSocket.onopen = (event) => {
       console.log('onopen: ', event);
       connection.setIsUp(true);
-      connection.send(users.current.uuid);
+      connection.send(users.current.get.uuid);
     };
 
     // Server is sending data.
@@ -69,7 +67,7 @@ const App = () => {
       }
 
       if (code === codes.response.connection) {
-        users.setCurrent({ ...users.current, id: payload.userId });
+        users.current.set({ ...users.current.get, id: payload.userId });
       }
 
       if (code === codes.response.roomCreation) {
@@ -77,9 +75,9 @@ const App = () => {
         room.setCurrent({
           ...room.current,
           id: payload.roomId,
-          ownerId: users.current.id,
+          ownerId: users.current.get.id,
         });
-        users.set([users.current]);
+        users.set([users.current.get]);
       }
 
       if (code === codes.response.joinRoom) {
@@ -118,7 +116,7 @@ const App = () => {
 
       if (code === codes.response.changeUserName && isValid(room.current.name)) {
         messages.clear();
-        users.setCurrent({ ...users.current, name: payload.username });
+        users.current.set({ ...users.current.get, name: payload.username });
       }
 
       if (code === codes.response.newPeers) {
@@ -133,10 +131,10 @@ const App = () => {
       }
 
       if (code === codes.response.joinRequest) {
-        if (joinRequests.length === 0) {
-          joinRequestModal.toggle();
+        if (joinRequests.get.length === 0) {
+          joinRequests.modal.toggle();
         }
-        setJoinRequests(joinRequests.concat({
+        joinRequests.set(joinRequests.get.concat({
           requesterId: payload.requesterId,
           requesterUsername: payload.requesterUsername,
           roomId: payload.roomId,
@@ -154,7 +152,7 @@ const App = () => {
       console.log('onclose: ', event);
       connection.setIsUp(false);
 
-      if (users.current.id.length > 0) {
+      if (users.current.get.id.length > 0) {
         messages.add('Connection lost', 'error');
       }
     };
@@ -183,7 +181,6 @@ const App = () => {
                 <Connect
                   connection={connection}
                   users={users}
-                  messages={messages}
                 />
               </Suspense>
             )}
@@ -196,9 +193,7 @@ const App = () => {
                   connection={connection}
                   users={users}
                   room={room}
-                  joinRequestModal={joinRequestModal}
                   joinRequests={joinRequests}
-                  setJoinRequests={setJoinRequests}
                 />
               </Suspense>
             )}

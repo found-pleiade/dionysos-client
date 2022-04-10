@@ -1,20 +1,16 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobeAltIcon } from '@heroicons/react/solid';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import { isValid, requestData, invalidInput } from '../../utils';
-import { codes } from '../../constants';
-import useModal from '../../hooks/modal';
-import useConnection from '../../hooks/connection';
-import useUsers from '../../hooks/users';
-import useMessages from '../../hooks/messages';
-import RowGroup from '../../components/RowGroup';
-import Modal from '../../components/Modal';
-import SpaceBetween from '../../components/SpaceBetween';
-import useInputStatusIcon from '../../hooks/inputStatusIcon';
-import webSocketModalFunctions from './webSocketModal';
+import Button from '../components/Button';
+import Input from '../components/Input';
+import { isValid, requestData, invalidInput } from '../utils';
+import { codes } from '../constants';
+import useConnection from '../hooks/connection';
+import useUsers from '../hooks/users';
+import RowGroup from '../components/RowGroup';
+import Modal from '../components/Modal';
+import SpaceBetween from '../components/SpaceBetween';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -28,28 +24,13 @@ const requestCHU = (username: string) => requestData(
 const Connect = ({
   connection,
   users,
-  messages,
 }: {
   connection: ReturnType<typeof useConnection>,
   users: ReturnType<typeof useUsers>,
-  messages: ReturnType<typeof useMessages>,
 }) => {
-  const inputStatusIcon = useInputStatusIcon(connection.isUp);
-  const wsModal = useModal(webSocketModalFunctions({
-    connection,
-    messages,
-    inputStatusIcon,
-  }));
   const navigate = useNavigate();
-  const connectModalRef = useRef() as any;
   const [username, setUsername] = useState('');
   const validAndConnected = () => isValid(username) && connection.isUp;
-
-  useEffect(() => {
-    inputStatusIcon.setCurrent(
-      connection.isUp ? inputStatusIcon.icons.valid : inputStatusIcon.icons.error,
-    );
-  }, [connection]);
 
   /**
    * Send the username to the server and set the username in the app.
@@ -58,7 +39,7 @@ const Connect = ({
   const connectionHandler = (event?: any) => {
     if (invalidInput(event) || !validAndConnected()) return;
     connection.send(requestCHU(username));
-    users.setCurrent({ ...users.current, name: username });
+    users.current.set({ ...users.current.get, name: username });
     navigate('/home');
   };
 
@@ -78,23 +59,23 @@ const Connect = ({
       </div>
 
       {/* Top left button to access WebSocket settings. */}
-      <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={() => wsModal.toggle()}>
+      <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={() => connection.modal.toggle()}>
         <GlobeAltIcon />
       </Button>
 
       {/* Modal to change the WebSocket address. */}
-      <Modal modalRef={connectModalRef} modal={wsModal}>
+      <Modal modal={connection.modal}>
         <div>
           <h3 className="mb-2 font-medium">WebSocket server</h3>
           <RowGroup>
-            <Input id="connection" noHelper className="rounded-r-none" value={connection.currentUrl} setValue={connection.setCurrentUrl} />
-            {inputStatusIcon.current}
+            <Input id="connection" noHelper className="rounded-r-none" value={connection.url.current} setValue={connection.url.setCurrent} />
+            {connection.currentStatusIcon}
           </RowGroup>
         </div>
 
         <SpaceBetween>
-          <Button onClick={wsModal.cancel} colorless>Cancel</Button>
-          <Button onClick={wsModal.save}>Save</Button>
+          <Button onClick={connection.modal.cancel} colorless>Cancel</Button>
+          <Button onClick={connection.modal.save}>Save</Button>
         </SpaceBetween>
       </Modal>
     </>
