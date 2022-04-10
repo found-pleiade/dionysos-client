@@ -13,13 +13,9 @@ import RoomDisplay from '../components/RoomDisplay';
 import Userlist from '../components/Userlist';
 import UserDisplay from '../components/UserDisplay';
 import Chat from '../components/Chat';
-import SpaceBetween from '../components/SpaceBetween';
-import Button from '../components/Button';
-import Modal from '../components/Modal';
-import Input from '../components/Input';
-import { isValid } from '../utils';
-import Id from '../components/Id';
 import useJoinRequests from '../hooks/joinRequests';
+import JoinRequestModal from '../components/JoinRequestModal';
+import ChangeUsernameModal from '../components/ChangeUsernameModal';
 
 const Home = ({
   connection,
@@ -44,32 +40,9 @@ const Home = ({
 
   return (
     <>
-      <Modal modal={users.current.modal}>
-        <Input id="changeUsername" placeholder="Username" value={users.current.newUsername} setValue={users.current.setNewUsername} onKeyPress={users.current.modal.save} />
+      <ChangeUsernameModal users={users} />
 
-        <SpaceBetween>
-          <Button onClick={users.current.modal.cancel} colorless>Cancel</Button>
-          <Button
-            onClick={users.current.modal.save}
-            disabled={!isValid(users.current.newUsername)}
-          >
-            Save
-          </Button>
-        </SpaceBetween>
-      </Modal>
-
-      <Modal modal={joinRequests.modal}>
-        <p className="font-medium text-lg">
-          {joinRequests.current.requesterUsername}
-          <Id id={joinRequests.current.requesterId} className="px-1" short inline />
-          wants to join your room.
-        </p>
-
-        <SpaceBetween>
-          <Button colorless onClick={joinRequests.answer(false)}>Refuse</Button>
-          <Button colorless onClick={joinRequests.answer(true)}>Accept</Button>
-        </SpaceBetween>
-      </Modal>
+      <JoinRequestModal joinRequests={joinRequests} />
 
       <div className="h-screen w-screen truncate bg-black flex">
         <Panel state={panel}>

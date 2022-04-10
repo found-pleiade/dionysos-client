@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobeAltIcon } from '@heroicons/react/solid';
@@ -9,8 +8,7 @@ import { codes } from '../constants';
 import useConnection from '../hooks/connection';
 import useUsers from '../hooks/users';
 import RowGroup from '../components/RowGroup';
-import Modal from '../components/Modal';
-import SpaceBetween from '../components/SpaceBetween';
+import WebSocketModal from '../components/WebSocketModal';
 
 /**
  * Setup the request for changing username, which here allow to set your username
@@ -64,20 +62,7 @@ const Connect = ({
       </Button>
 
       {/* Modal to change the WebSocket address. */}
-      <Modal modal={connection.modal}>
-        <div>
-          <h3 className="mb-2 font-medium">WebSocket server</h3>
-          <RowGroup>
-            <Input id="connection" noHelper className="rounded-r-none" value={connection.url.current} setValue={connection.url.setCurrent} />
-            {connection.currentStatusIcon}
-          </RowGroup>
-        </div>
-
-        <SpaceBetween>
-          <Button onClick={connection.modal.cancel} colorless>Cancel</Button>
-          <Button onClick={connection.modal.save}>Save</Button>
-        </SpaceBetween>
-      </Modal>
+      <WebSocketModal connection={connection} />
     </>
   );
 };
