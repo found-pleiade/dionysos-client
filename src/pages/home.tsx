@@ -40,7 +40,7 @@ const Home = ({
 
   return (
     <>
-      <ChangeUsernameModal users={users} />
+      <ChangeUsernameModal users={users} className="pt-9" />
 
       <JoinRequestModal joinRequests={joinRequests} />
 

@@ -6,10 +6,11 @@ import Input from './Input';
 import Modal from './Modal';
 import SpaceBetween from './SpaceBetween';
 
-const ChangeUsernameModal = ({ users }: {
-  users: ReturnType<typeof useUsers>
+const ChangeUsernameModal = ({ users, className }: {
+  users: ReturnType<typeof useUsers>,
+  className?: string
 }) => (
-  <Modal modal={users.current.modal}>
+  <Modal modal={users.current.modal} className={className}>
     <Input id="changeUsername" placeholder="Username" value={users.current.newUsername} setValue={users.current.setNewUsername} onKeyPress={users.current.modal.save} />
 
     <SpaceBetween>
