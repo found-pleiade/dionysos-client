@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Videojs from '../components/Videojs';
 import OverlayMenu from '../components/OverlayMenu';
 import Panel from '../components/Panel';
