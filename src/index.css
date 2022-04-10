@@ -9,8 +9,14 @@
   --outline: 2px;
   outline-width: var(--outline);
   outline-style: solid;
-  outline-color: theme('colors.accent.500');
   outline-offset: calc(0px - var(--outline));
+  outline-color: theme('colors.light.accent.500');
+}
+
+@media (prefers-color-scheme: dark) {
+  *:focus {
+    outline-color: theme('colors.dark.accent.500');
+  }
 }
 
 /**
@@ -36,13 +42,20 @@ dialog::backdrop {
 }
 
 /**
-  * Move the placeholder to the top of the input field.
-  */
+ * Move the placeholder to the top of the input field.
+ */
 .input:focus+.placeholder,
 .input:not(:placeholder-shown)+.placeholder {
   transform: translateY(-140%);
-  color: theme('colors.foreground');
   font-size: theme('fontSize.sm');
+  color: theme('colors.light.secondary');
+}
+
+@media (prefers-color-scheme: dark) {
+  .input:focus+.placeholder,
+  .input:not(:placeholder-shown)+.placeholder {
+    color: theme('colors.dark.secondary');
+  }
 }
 
 /**

@@ -29,15 +29,15 @@ const Button = ({
   disabled?: boolean,
   children: React.ReactNode,
 }) => {
-  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground whitespace-nowrap';
+  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap';
 
   const visibility = hidden ? 'hidden' : 'visible';
 
   const colorsAndCursor = () => {
-    if (disabled && colorless) return 'bg-background-600/40 hover:bg-background-600/40 cursor-not-allowed';
-    if (colorless) return 'bg-background-600 hover:bg-background-500 cursor-pointer';
-    if (disabled) return 'bg-accent-500/40 hover:bg-accent-500/40 cursor-not-allowed';
-    return 'bg-accent-500 hover:bg-accent-400 focus:outline-pending cursor-pointer';
+    if (disabled && colorless) return 'dark:bg-dark-dominant-600/40 dark:hover:bg-dark-dominant-600/40 cursor-not-allowed';
+    if (colorless) return 'dark:bg-dark-dominant-600 dark:hover:bg-dark-dominant-500 cursor-pointer';
+    if (disabled) return 'dark:bg-dark-accent-500/40 dark:hover:bg-dark-accent-500/40 cursor-not-allowed';
+    return 'dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400 dark:focus:outline-dark-pending cursor-pointer';
   };
 
   const style = `${base} ${visibility} ${colorsAndCursor()}`;

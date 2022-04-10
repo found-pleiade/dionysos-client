@@ -43,7 +43,7 @@ const Input = ({
       <input
         id={id}
         tabIndex={0}
-        className={`input cursor-text transition-colors bg-foreground text-background-900 font-medium px-3 py-2 w-full rounded-md ${inputWithHelperStyle} ${className}`}
+        className={`input cursor-text transition-colors dark:bg-dark-secondary dark:text-dark-dominant-900 font-medium px-3 py-2 w-full rounded-md ${inputWithHelperStyle} ${className}`}
         type="text"
         value={value}
         onChange={(event) => {
@@ -53,11 +53,11 @@ const Input = ({
         onKeyPress={onKeyPress}
         placeholder={' '}
       />
-      <p className="absolute top-2 left-3 font-medium cursor-text text-background-400/70 unclickable transition-all duration-200 placeholder">{placeholder}</p>
+      <p className="absolute top-2 left-3 font-medium cursor-text dark:text-dark-dominant-400/70 unclickable transition-all duration-200 placeholder">{placeholder}</p>
 
-      <div className={`absolute z-10 bg-background-600 w-full rounded-b-lg px-3 py-2 flex flex-col mt-1 font-bold text-sm ${visibility(showHelper)}`}>
-        <p className={`text-error ${visibility(!gteThree)}`}>3 characters min.</p>
-        <p className={`text-error ${visibility(!lteTwenty)}`}>20 characters max.</p>
+      <div className={`absolute z-10 dark:bg-dark-dominant-600 w-full rounded-b-lg px-3 py-2 flex flex-col mt-1 font-bold text-sm ${visibility(showHelper)}`}>
+        <p className={`dark:text-dark-error-400 ${visibility(!gteThree)}`}>3 characters min.</p>
+        <p className={`dark:text-dark-error-400 ${visibility(!lteTwenty)}`}>20 characters max.</p>
       </div>
     </div>
   );

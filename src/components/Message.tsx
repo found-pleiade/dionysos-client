@@ -35,8 +35,8 @@ const Message = ({
    * Tailwind CSS class based on message type.
    */
   const color = () => {
-    if (type === 'error') return 'bg-error';
-    if (type === 'info') return 'bg-pending';
+    if (type === 'error') return 'dark:bg-dark-error-500';
+    if (type === 'info') return 'dark:bg-dark-pending';
     return 'bg-background-500';
   };
 

@@ -17,7 +17,7 @@ const Modal = ({
   }, [modal]);
 
   return (
-    <dialog ref={modal.ref} className={`min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground ${notNil(className) ? className : ''} hideModal`}>
+    <dialog ref={modal.ref} className={`min-w-[55ch] p-6 first-letter:space-y-6 dark:bg-dark-dominant-700 rounded-md relative space-y-6 dark:text-dark-secondary ${notNil(className) ? className : ''} hideModal`}>
       {children}
     </dialog>
   );
