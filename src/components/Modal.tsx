@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import useModal from '../hooks/modal';
-import { preventDialogEscape, toggleDialog } from '../utils';
+import { notNil, preventDialogEscape, toggleDialog } from '../utils';
 
 const Modal = ({
   modal,
@@ -17,7 +17,7 @@ const Modal = ({
   }, [modal]);
 
   return (
-    <dialog ref={modal.ref} className={`min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground ${className}`}>
+    <dialog ref={modal.ref} className={`min-w-[55ch] p-6 first-letter:space-y-6 bg-background-700 rounded-md relative space-y-6 text-foreground ${notNil(className) ? className : ''} hideModal`}>
       {children}
     </dialog>
   );

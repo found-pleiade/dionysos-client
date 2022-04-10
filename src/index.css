@@ -153,3 +153,60 @@ dialog::backdrop {
     padding-right: 0;
   }
 }
+
+/**
+ * Modal transition.
+ */
+
+.showModal,
+.showModal::backdrop,
+.hideModal,
+.hideModal::backdrop  {
+  /**
+   * Hardcoded because I didn't find a way to
+   * access ::backdrop from js, even set a custom
+   * css property doesn't seem to work. Change it in
+   * modal.ts too.
+   */
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+
+.showModal,
+.showModal::backdrop {
+  animation-name: showModal;
+}
+
+.hideModal,
+.hideModal::backdrop {
+  animation-name: hideModal;
+}
+
+@keyframes showModal {
+  0% {
+    opacity: 0;
+  }
+
+  1% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hideModal {
+  0% {
+    opacity: 1;
+  }
+
+  99% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
