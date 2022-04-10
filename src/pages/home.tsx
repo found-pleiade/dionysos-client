@@ -49,7 +49,12 @@ const Home = ({
 
         <SpaceBetween>
           <Button onClick={users.current.modal.cancel} colorless>Cancel</Button>
-          <Button onClick={users.current.modal.save} disabled={!isValid(users.current.newUsername)}>Save</Button>
+          <Button
+            onClick={users.current.modal.save}
+            disabled={!isValid(users.current.newUsername)}
+          >
+            Save
+          </Button>
         </SpaceBetween>
       </Modal>
 
