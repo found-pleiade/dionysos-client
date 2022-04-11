@@ -5,17 +5,28 @@
 /**
  * Default focus style
  */
+
 *:focus {
-  --outline: 2px;
-  outline-width: var(--outline);
-  outline-style: solid;
-  outline-offset: calc(0px - var(--outline));
-  outline-color: theme('colors.light.accent.500');
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 1px solid theme('colors.light.secondary');
+  outline-offset: 3px;
+}
+
+input:focus-visible {
+  outline: none;
+  background-color: theme('colors.light.secondary');
 }
 
 @media (prefers-color-scheme: dark) {
-  *:focus {
-    outline-color: theme('colors.dark.accent.500');
+  *:focus-visible {
+    outline-color: theme('colors.dark.secondary');
+  }
+
+  input:focus-visible {
+    background-color: theme('colors.dark.secondary');
   }
 }
 
