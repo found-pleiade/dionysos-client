@@ -43,7 +43,7 @@ const Input = ({
       <input
         id={id}
         tabIndex={0}
-        className={`input cursor-text transition-colors dark:bg-dark-secondary dark:text-dark-dominant-900 font-medium px-3 py-2 w-full rounded-md ${inputWithHelperStyle} ${className}`}
+        className={`input cursor-text transition-colors dark:bg-dark-secondary/[.87] dark:text-dark-dominant-900 font-medium px-3 py-2 w-full rounded-md ${inputWithHelperStyle} ${className} dark:focus:bg-dark-secondary shadow-lg`}
         type="text"
         value={value}
         onChange={(event) => {
