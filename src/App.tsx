@@ -169,7 +169,7 @@ const App = () => {
   }, [users, room, messages, connection]);
 
   return (
-    <div className="dark:text-dark-secondary dark:bg-gradient-to-br dark:from-dark-dominant-800 dark:via-dark-dominant-700 dark:to-dark-accent-900 h-screen cursor-default relative">
+    <div className="dark:text-dark-secondary h-screen cursor-default relative">
       <Messages messages={messages} />
 
       <MemoryRouter>
