@@ -55,7 +55,7 @@ const Input = ({
       />
       <p className="absolute top-2 left-3 font-medium cursor-text dark:text-dark-dominant-400/70 unclickable transition-all duration-200 placeholder">{placeholder}</p>
 
-      <div className={`absolute z-10 dark:bg-dark-dominant-600 w-full rounded-b-lg px-3 py-2 flex flex-col mt-1 font-bold text-sm ${visibility(showHelper)}`}>
+      <div className={`absolute z-10 dark:bg-dark-dominant-600/50 w-full rounded-b-lg px-3 py-2 flex flex-col mt-1 font-bold text-sm ${visibility(showHelper)}`}>
         <p className={`dark:text-dark-error-400 ${visibility(!gteThree)}`}>3 characters min.</p>
         <p className={`dark:text-dark-error-400 ${visibility(!lteTwenty)}`}>20 characters max.</p>
       </div>
