@@ -5,8 +5,11 @@ import { JoinRequest } from '../utils/types';
 import useConnection from './connection';
 import useModal from './modal';
 
-const useJoinRequests = (connection: ReturnType<typeof useConnection>) => {
-  const modal = useModal();
+const useJoinRequests = (
+  connection: ReturnType<typeof useConnection>,
+  pageRef: any,
+) => {
+  const modal = useModal(pageRef);
   const [requests, setRequests] = useState<Array<JoinRequest>>([]);
   const [currentRequest, setCurrentRequest] = useState({ requesterId: '', requesterUsername: '', roomId: '' });
 

@@ -22,11 +22,13 @@ const Home = ({
   users,
   room,
   joinRequests,
+  reference,
 }: {
   connection: ReturnType<typeof useConnection>,
   users: ReturnType<typeof useUsers>,
   room: ReturnType<typeof useRoom>,
   joinRequests: ReturnType<typeof useJoinRequests>,
+  reference: any,
 }) => {
   /**
    * State of the visibility of the panel, help, chat and modal.
@@ -39,7 +41,7 @@ const Home = ({
   const emptyUserList = users.get.length <= 0;
 
   return (
-    <>
+    <div className="page" ref={reference}>
       <ChangeUsernameModal users={users} className="pt-9" />
 
       <JoinRequestModal joinRequests={joinRequests} />
@@ -88,7 +90,7 @@ const Home = ({
           <OverlayMenu panel={panel} chat={chat} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

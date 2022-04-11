@@ -8,13 +8,14 @@ import useModal from './modal';
 const useConnection = (
   devServer: string,
   messages: ReturnType<typeof useMessages>,
+  ref: any,
 ) => {
   const [webSocket, setWebSocket] = useState<WebSocket>();
   const [currentUrl, setCurrentUrl] = useState(devServer);
   const [backupUrl, setBackupUrl] = useState(devServer);
   const [isUp, setIsUp] = useState(false);
   const inputStatusIcon = useInputStatusIcon(isUp);
-  const modal = useModal();
+  const modal = useModal(ref);
 
   /**
  * Two use function that first set the WebSocket to use then the data to send
@@ -40,7 +41,7 @@ const useConnection = (
     inputStatusIcon.setCurrent(inputStatusIcon.icons.valid);
     messages.clear();
     setBackupUrl(currentUrl);
-    modal.toggle();
+    modal.toggle(600);
   };
 
   const onClose = (event: any) => {

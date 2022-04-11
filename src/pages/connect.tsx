@@ -22,9 +22,11 @@ const requestCHU = (username: string) => requestData(
 const Connect = ({
   connection,
   users,
+  reference,
 }: {
   connection: ReturnType<typeof useConnection>,
   users: ReturnType<typeof useUsers>,
+  reference: any,
 }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -42,7 +44,7 @@ const Connect = ({
   };
 
   return (
-    <>
+    <div className="page" ref={reference}>
       {/* Main content of the page. */}
       <div className="absolute top-[30%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
         <header className="xl:mb-52 md:mb-32 mb-20">
@@ -63,7 +65,7 @@ const Connect = ({
 
       {/* Modal to change the WebSocket address. */}
       <WebSocketModal connection={connection} />
-    </>
+    </div>
   );
 };
 

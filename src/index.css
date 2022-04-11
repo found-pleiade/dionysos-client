@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+.page {
+  height: 100vh;
   transition: 
     filter ease-in-out,
     transform ease-in-out;
@@ -10,7 +11,7 @@ body {
   transform: scale(1);
 }
 
-body.background {
+.page.background {
   filter: blur(3px);
   transform: scale(0.96);
 }
@@ -63,6 +64,7 @@ html {
  */
 dialog::backdrop {
   background-color: hsl(240, 24%, 4%, 0.66);
+  background: radial-gradient(circle, rgba(0,0,0,.33) 0%, rgba(0,0,0,0) 100%);
 }
 
 /**
