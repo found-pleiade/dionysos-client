@@ -19,6 +19,9 @@ const useModal = () => {
    * Toggle the modal visibility, opened or closed.
    */
   function toggle() {
+    const body = document.querySelector('body') as HTMLBodyElement;
+    body.style.transitionDuration = `${transitionDuration - 5}ms`;
+    body.classList.toggle('background');
     ref.current.classList.toggle('showModal');
     ref.current.classList.toggle('hideModal');
 

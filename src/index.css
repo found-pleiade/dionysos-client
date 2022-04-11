@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  transition: 
+    filter ease-in-out,
+    transform ease-in-out;
+  filter: blur(0px);
+  transform: scale(1);
+}
+
+body.background {
+  filter: blur(3px);
+  transform: scale(0.96);
+}
+
 /**
  * Default focus style
  */
