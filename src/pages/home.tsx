@@ -44,7 +44,7 @@ const Home = ({
 
       <JoinRequestModal joinRequests={joinRequests} />
 
-      <div className="h-screen w-screen truncate bg-black flex">
+      <div className="h-screen w-screen truncate flex">
         <Panel state={panel}>
           <RoomInputGroup
             connection={connection}
