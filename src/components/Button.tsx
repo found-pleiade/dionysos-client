@@ -34,8 +34,8 @@ const Button = ({
   const visibility = hidden ? 'hidden' : 'visible';
 
   const colorsAndCursor = () => {
-    if (disabled && colorless) return 'dark:bg-dark-dominant-600/40 dark:hover:bg-dark-dominant-600/40 cursor-not-allowed';
-    if (colorless) return 'dark:bg-dark-dominant-600 dark:hover:bg-dark-dominant-500 cursor-pointer';
+    if (disabled && colorless) return 'dark:bg-dark-primary-600/40 dark:hover:bg-dark-primary-600/40 cursor-not-allowed';
+    if (colorless) return 'dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500 cursor-pointer';
     if (disabled) return 'dark:bg-dark-accent-500/40 dark:hover:bg-dark-accent-500/40 cursor-not-allowed';
     return 'dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400 cursor-pointer';
   };

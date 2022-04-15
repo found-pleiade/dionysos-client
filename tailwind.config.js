@@ -10,7 +10,7 @@ module.exports = {
       },
       colors: {
         dark: {
-          dominant: {
+          primary: {
             400: 'hsl(240, 22%, 24%)',
             500: 'hsl(240, 22%, 20%)',
             600: 'hsl(240, 21%, 16%)',
@@ -37,7 +37,7 @@ module.exports = {
           pending: 'hsl(201, 72%, 40%)',
         },
         light: {
-          dominant: {
+          primary: {
             400: 'hsl(240, 22%, 24%)',
             500: 'hsl(240, 22%, 20%)',
             600: 'hsl(240, 21%, 16%)',
