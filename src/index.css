@@ -8,12 +8,10 @@
     filter ease-in-out,
     transform ease-in-out;
   filter: blur(0px);
-  transform: scale(1);
 }
 
 .page.background {
   filter: blur(3px);
-  transform: scale(0.96);
 }
 
 /**
