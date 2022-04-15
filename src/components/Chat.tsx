@@ -10,7 +10,7 @@ const Chat = ({
   state: ReturnType<typeof useSideMenu>,
   children: React.ReactNode
 }) => (
-  <div className={`flex flex-col justify-between dark:bg-dark-primary-700/60 relative transition-all py-3 ${translate(state.isOpen)} shadow-xl shadow-dark-primary-800`}>
+  <div className={`flex flex-col justify-between bg-light-primary-200/20 dark:bg-dark-primary-700/60 relative transition-all py-3 ${translate(state.isOpen)} shadow-xl shadow-light-primary-300 dark:shadow-dark-primary-800`}>
     <MinimizeIcon toggle={state.toggle} />
     {children}
   </div>

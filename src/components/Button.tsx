@@ -34,10 +34,10 @@ const Button = ({
   const visibility = hidden ? 'hidden' : 'visible';
 
   const colorsAndCursor = () => {
-    if (disabled && colorless) return 'dark:bg-dark-primary-600/40 dark:hover:bg-dark-primary-600/40 cursor-not-allowed';
-    if (colorless) return 'dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500 cursor-pointer';
-    if (disabled) return 'dark:bg-dark-accent-500/40 dark:hover:bg-dark-accent-500/40 cursor-not-allowed';
-    return 'dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400 cursor-pointer';
+    if (disabled && colorless) return 'text-light-secondary/90 bg-light-primary-200/50 hover:bg-light-primary-200/70 dark:bg-dark-primary-600/40 dark:hover:bg-dark-primary-600/40 cursor-not-allowed';
+    if (colorless) return 'text-light-secondary bg-light-primary-200 hover:bg-light-primary-200/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500 cursor-pointer';
+    if (disabled) return 'text-light-primary-100/90 bg-light-accent-500/60 hover:bg-light-accent-500/50 dark:bg-dark-accent-500/40 dark:hover:bg-dark-accent-500/40 cursor-not-allowed';
+    return 'text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400 cursor-pointer';
   };
 
   const style = `${base} ${visibility} ${colorsAndCursor()}`;

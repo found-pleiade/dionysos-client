@@ -5,7 +5,7 @@ const RowGroup = ({
 }: {
   children: React.ReactNode
 }) => (
-  <div className="flex space-x-1 w-full shadow-md shadow-dark-primary-800/30">
+  <div className="flex space-x-1 w-full">
     {children}
   </div>
 );
