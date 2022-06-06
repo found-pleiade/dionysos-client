@@ -43,7 +43,7 @@ const Input = ({
       <input
         id={id}
         tabIndex={0}
-        className={`input cursor-text transition-colors text-light-secondary bg-light-primary-200 focus:bg-light-primary-200/[.85] dark:text-dark-primary-900 dark:bg-dark-secondary/[.87] dark:focus:bg-dark-secondary font-medium px-3 py-2 w-full rounded-md ${inputWithHelperStyle} ${className}`}
+        className={`input cursor-text transition-colors text-light-secondary bg-light-primary-300 focus:bg-light-primary-300/[.8] dark:text-dark-primary-900 dark:bg-dark-secondary/[.87] dark:focus:bg-dark-secondary font-medium px-3 py-2 w-full rounded-md ${inputWithHelperStyle} ${className}`}
         type="text"
         value={value}
         onChange={(event) => {
@@ -54,7 +54,7 @@ const Input = ({
         placeholder={' '}
       />
 
-      <p className="absolute top-2 left-3 font-medium cursor-text text-light-secondary/70 dark:text-dark-primary-400/70 unclickable transition-all duration-200 placeholder">{placeholder}</p>
+      <p className="absolute top-2 left-3 font-medium cursor-text text-light-secondary/60 dark:text-dark-primary-400/70 unclickable transition-all duration-200 placeholder">{placeholder}</p>
 
       <div className={`absolute z-10 bg-light-primary-200/90 dark:bg-dark-primary-600/50 w-full rounded-b-lg px-3 py-2 flex flex-col mt-1 font-bold text-sm ${visibility(showHelper)}`}>
         <p className={`text-light-error-400 dark:text-dark-error-400 ${visibility(!gteThree)}`}>3 characters min.</p>
