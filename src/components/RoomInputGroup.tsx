@@ -41,7 +41,7 @@ const RoomInputGroup = ({
   const [isPrivate, setIsPrivate] = useState(false);
   const [joinInput, setJoinInput] = useState('');
   const [createInput, setCreateInput] = useState('');
-  const lockIcon = isPrivate ? <LockClosedIcon /> : <LockOpenIcon className="text-valid" />;
+  const lockIcon = isPrivate ? <LockClosedIcon /> : <LockOpenIcon className="text-dark-valid" />;
   const lockTitle = isPrivate ? 'Private Room' : 'Public Room';
 
   useEffect(() => {

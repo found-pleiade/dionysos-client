@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as R from 'ramda';
 import { appWindow } from '@tauri-apps/api/window';
@@ -19,11 +19,14 @@ const Home = React.lazy(() => import('./pages/home'));
  * Returns the shell style, app router and messages.
  */
 const App = () => {
+  const connectPageReference = useRef<any>();
+  const homePageReference = useRef<any>();
+
   const messages = useMessages();
-  const connection = useConnection(devServer, messages);
-  const users = useUsers(connection);
+  const connection = useConnection(devServer, messages, connectPageReference);
+  const users = useUsers(connection, homePageReference);
   const room = useRoom();
-  const joinRequests = useJoinRequests(connection);
+  const joinRequests = useJoinRequests(connection, homePageReference);
 
   // Set the WebSocket to use on app start.
   // Listen for the app closing to close the WebSocket.
@@ -169,7 +172,7 @@ const App = () => {
   }, [users, room, messages, connection]);
 
   return (
-    <div className="text-foreground bg-background-800 h-screen cursor-default relative">
+    <div className="dark:text-dark-secondary h-screen cursor-default relative">
       <Messages messages={messages} />
 
       <MemoryRouter>
@@ -181,6 +184,7 @@ const App = () => {
                 <Connect
                   connection={connection}
                   users={users}
+                  reference={connectPageReference}
                 />
               </Suspense>
             )}
@@ -194,6 +198,7 @@ const App = () => {
                   users={users}
                   room={room}
                   joinRequests={joinRequests}
+                  reference={homePageReference}
                 />
               </Suspense>
             )}

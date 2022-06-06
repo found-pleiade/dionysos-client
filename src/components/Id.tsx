@@ -23,11 +23,11 @@ const Id = ({
   const idToDisplay = short ? id.substring(0, idLength) : id;
   const inlineClass = inline ? 'inline' : 'block';
   const title = copy ? 'Click to copy' : id;
-  const buttonStyle = copy ? 'cursor-pointer hover:text-foreground/60' : 'focus:outline-none cursor-default';
+  const buttonStyle = copy ? 'cursor-pointer hover:dark:text-dark-secondary/80' : 'focus:outline-none cursor-default';
   const tabIndex = copy ? 0 : -1;
 
   return (
-    <span className={`text-md text-foreground/40 ${buttonStyle} transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyPress={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
+    <span className={`text-md dark:text-dark-secondary/60 ${buttonStyle} transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyPress={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
       {idToDisplay}
     </span>
   );

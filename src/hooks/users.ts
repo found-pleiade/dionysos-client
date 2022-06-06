@@ -7,7 +7,10 @@ import { User } from '../utils/types';
 import useConnection from './connection';
 import useModal from './modal';
 
-const useUsers = (connection: ReturnType<typeof useConnection>) => {
+const useUsers = (
+  connection: ReturnType<typeof useConnection>,
+  pageRef: any,
+) => {
   const defaultUser = {
     id: '',
     uuid: uuidv4(),
@@ -17,7 +20,7 @@ const useUsers = (connection: ReturnType<typeof useConnection>) => {
   const [current, setCurrent] = useState<User>(defaultUser);
   const [newUsername, setNewUsername] = useState(current.name);
   const [get, set] = useState<Array<User>>([]);
-  const modal = useModal();
+  const modal = useModal(pageRef);
 
   const revertNewUsername = () => {
     setNewUsername(current.name);

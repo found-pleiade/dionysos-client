@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, To } from 'react-router-dom';
-import * as R from 'ramda';
+import { isLenZero } from '../utils';
 
 /**
  * Basic button component, 'text' is the text inside the button,
@@ -29,15 +29,15 @@ const Button = ({
   disabled?: boolean,
   children: React.ReactNode,
 }) => {
-  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium text-foreground whitespace-nowrap';
+  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap';
 
   const visibility = hidden ? 'hidden' : 'visible';
 
   const colorsAndCursor = () => {
-    if (disabled && colorless) return 'bg-background-600/40 hover:bg-background-600/40 cursor-not-allowed';
-    if (colorless) return 'bg-background-600 hover:bg-background-500 cursor-pointer';
-    if (disabled) return 'bg-accent-500/40 hover:bg-accent-500/40 cursor-not-allowed';
-    return 'bg-accent-500 hover:bg-accent-400 focus:outline-pending cursor-pointer';
+    if (disabled && colorless) return 'text-light-secondary/90 bg-light-primary-300/50 hover:bg-light-primary-300/70 dark:bg-dark-primary-600/40 dark:hover:bg-dark-primary-600/40 cursor-not-allowed';
+    if (colorless) return 'text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500 cursor-pointer';
+    if (disabled) return 'text-light-primary-100/90 bg-light-accent-500/60 hover:bg-light-accent-500/50 dark:bg-dark-accent-500/40 dark:hover:bg-dark-accent-500/40 cursor-not-allowed';
+    return 'text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400 cursor-pointer';
   };
 
   const style = `${base} ${visibility} ${colorsAndCursor()}`;
@@ -70,7 +70,7 @@ const Button = ({
     </Link>
   );
 
-  return R.equals(R.length(to as string), 0) || disabled ? buttonProp : linkProp;
+  return isLenZero(to as string) || disabled ? buttonProp : linkProp;
 };
 
 export default Button;

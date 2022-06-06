@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
-const useModal = () => {
+const useModal = (pageRef: any) => {
   /**
    * Check if the modal is opened.
    */
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef() as any;
+  const modalRef = useRef() as any;
 
   /**
    * Hardcoded because I didn't find a way to
@@ -18,21 +18,26 @@ const useModal = () => {
   /**
    * Toggle the modal visibility, opened or closed.
    */
-  function toggle() {
-    ref.current.classList.toggle('showModal');
-    ref.current.classList.toggle('hideModal');
+  function toggle(delay?: number) {
+    setTimeout(() => {
+      /* eslint-disable no-param-reassign */
+      pageRef.current.style.transitionDuration = `${transitionDuration}ms`;
+      pageRef.current.classList.toggle('background');
+      modalRef.current.classList.toggle('showModal');
+      modalRef.current.classList.toggle('hideModal');
 
-    if (!isOpen) {
-      setIsOpen(!isOpen);
-    } else if (isOpen) {
-      setTimeout(() => {
+      if (!isOpen) {
         setIsOpen(!isOpen);
-      }, transitionDuration);
-    }
+      } else if (isOpen) {
+        setTimeout(() => {
+          setIsOpen(!isOpen);
+        }, transitionDuration);
+      }
+    }, (delay || 0));
   }
 
   return {
-    ref,
+    ref: modalRef,
     isOpen,
     toggle,
   };

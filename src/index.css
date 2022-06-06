@@ -2,15 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+.page {
+  height: 100vh;
+  transition: 
+    filter ease-in-out,
+    transform ease-in-out;
+  filter: blur(0px);
+}
+
+.page.background {
+  filter: blur(3px);
+}
+
 /**
  * Default focus style
  */
+
 *:focus {
-  --outline: 2px;
-  outline-width: var(--outline);
-  outline-style: solid;
-  outline-color: theme('colors.accent.500');
-  outline-offset: calc(0px - var(--outline));
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 1px solid theme('colors.light.secondary');
+  outline-offset: 3px;
+}
+
+input:focus-visible {
+  outline: none;
+  background-color: theme('colors.light.secondary');
+}
+
+@media (prefers-color-scheme: dark) {
+  *:focus-visible {
+    outline-color: theme('colors.dark.secondary');
+  }
+
+  input:focus-visible {
+    background-color: theme('colors.dark.secondary');
+  }
 }
 
 /**
@@ -31,18 +60,31 @@ html {
 /**
  * Use the theme of the app for the background of dialogs.
  */
+
 dialog::backdrop {
-  background-color: hsl(240, 24%, 4%, 0.66);
+  background: rgba(0,0,0,.2);
 }
 
+@media (prefers-color-scheme: dark) {
+  dialog::backdrop {
+    background: rgba(0,0,0,.33);
+  }
+}
 /**
-  * Move the placeholder to the top of the input field.
-  */
+ * Move the placeholder to the top of the input field.
+ */
 .input:focus+.placeholder,
 .input:not(:placeholder-shown)+.placeholder {
   transform: translateY(-140%);
-  color: theme('colors.foreground');
   font-size: theme('fontSize.sm');
+  color: theme('colors.light.secondary');
+}
+
+@media (prefers-color-scheme: dark) {
+  .input:focus+.placeholder,
+  .input:not(:placeholder-shown)+.placeholder {
+    color: theme('colors.dark.secondary');
+  }
 }
 
 /**
