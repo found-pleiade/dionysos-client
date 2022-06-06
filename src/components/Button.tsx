@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, To } from 'react-router-dom';
-import * as R from 'ramda';
+import { isLenZero } from '../utils';
 
 /**
  * Basic button component, 'text' is the text inside the button,
@@ -70,7 +70,7 @@ const Button = ({
     </Link>
   );
 
-  return R.equals(R.length(to as string), 0) || disabled ? buttonProp : linkProp;
+  return isLenZero(to as string) || disabled ? buttonProp : linkProp;
 };
 
 export default Button;

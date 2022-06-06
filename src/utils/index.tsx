@@ -71,3 +71,5 @@ export const preventDialogEscape = (dialogRef: any) => {
     event.preventDefault();
   };
 };
+
+export const isLenZero = (x: string) => R.equals(R.length(x), 0);
