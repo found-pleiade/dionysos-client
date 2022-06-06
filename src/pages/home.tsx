@@ -12,7 +12,6 @@ import Help from '../components/Help';
 import RoomDisplay from '../components/RoomDisplay';
 import Userlist from '../components/Userlist';
 import UserDisplay from '../components/UserDisplay';
-import Chat from '../components/Chat';
 import useJoinRequests from '../hooks/joinRequests';
 import JoinRequestModal from '../components/JoinRequestModal';
 import ChangeUsernameModal from '../components/ChangeUsernameModal';
@@ -71,10 +70,6 @@ const Home = ({
 
           <UserDisplay users={users} />
         </Panel>
-
-        <Chat state={chat}>
-          <p>Ceci est un chat</p>
-        </Chat>
 
         {/* Video */}
         <div className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center">

@@ -1,4 +1,4 @@
-import { ChatAltIcon, MenuIcon } from '@heroicons/react/solid';
+import { MenuIcon } from '@heroicons/react/solid';
 import React from 'react';
 import useSideMenu from '../hooks/sideMenu';
 import { visibility } from '../utils';
@@ -17,8 +17,6 @@ const OverlayMenu = ({
   return (
     <div className="absolute top-[50%] left-3 z-10 translate-y-[-50%]">
       <MenuIcon className={`${iconStyle} ${iconMarge} ${visibility(!panel.isOpen)}`} onClick={() => panel.toggle()} />
-
-      <ChatAltIcon className={`${iconStyle} ${iconMarge} ${visibility(!chat.isOpen)}`} onClick={() => chat.toggle()} />
     </div>
   );
 };
