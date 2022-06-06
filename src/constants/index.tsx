@@ -1,7 +1,7 @@
 /**
  * URL of the default WebSocket server.
  */
-export const devServer = 'wss://dionysos-test.yannlacroix.fr';
+export const devServer = 'ws://localhost:8080';
 
 /**
  * Length for the short id.
