@@ -62,12 +62,12 @@ html {
  */
 
 dialog::backdrop {
-  background: radial-gradient(circle, rgba(0,0,0,.2) 0%, rgba(0,0,0,0) 100%);
+  background: rgba(0,0,0,.2);
 }
 
 @media (prefers-color-scheme: dark) {
   dialog::backdrop {
-    background: radial-gradient(circle, rgba(0,0,0,.33) 0%, rgba(0,0,0,0) 100%);
+    background: rgba(0,0,0,.33);
   }
 }
 /**
