@@ -53,7 +53,7 @@ const Connect = ({
         </header>
 
         <RowGroup>
-          <Input id="connect" className="rounded-r-none" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
+          <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={username} setValue={setUsername} onKeyPress={connectionHandler} />
           <Button className="rounded-l-none" disabled={!validAndConnected()} onClick={connectionHandler}>{connection.isUp ? 'Next' : 'No connection'}</Button>
         </RowGroup>
       </div>
