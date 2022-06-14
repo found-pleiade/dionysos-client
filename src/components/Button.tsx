@@ -25,7 +25,7 @@ const Button = ({
 }) => {
   // Return an empty button element if there are no children.
   // Used for navigation buttons when needing a single right aligned button.
-  if (Children.toArray(children).length <= 0) return <div role="none" />;
+  if (Children.toArray(children).length <= 1) return <div role="none" />;
 
   // Tailwind classes based on props. As observed, classes added later override
   // earlier classes style.
