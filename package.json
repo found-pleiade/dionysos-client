@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "test": "vitest",
+    "test:run": "vitest run",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
