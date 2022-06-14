@@ -19,6 +19,8 @@ dist-ssr
 !.yarn/sdks
 !.yarn/versions
 
+coverage
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
