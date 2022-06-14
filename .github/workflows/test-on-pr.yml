@@ -29,6 +29,3 @@ jobs:
       run: npm i -g pnpm && pnpm i
     - name: run the tests
       run: pnpm test:run
-    - uses: tauri-apps/tauri-action@v0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
