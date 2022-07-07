@@ -6,6 +6,7 @@ specifiers:
   '@tauri-apps/cli': 1.0.0-rc.13
   '@testing-library/jest-dom': ^5.16.4
   '@testing-library/react': ^13.3.0
+  '@types/node': ^18.0.3
   '@types/ramda': ^0.28.14
   '@types/react': ^18.0.12
   '@types/react-dom': ^18.0.5
@@ -57,6 +58,7 @@ devDependencies:
   '@tauri-apps/cli': 1.0.0-rc.13
   '@testing-library/jest-dom': 5.16.4
   '@testing-library/react': 13.3.0_ef5jwxihqo6n7gxfmzogljlgcm
+  '@types/node': 18.0.3
   '@types/ramda': 0.28.14
   '@types/react-dom': 18.0.5
   '@types/uuid': 8.3.4
@@ -641,6 +643,10 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/node/18.0.3:
+    resolution: {integrity: sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==}
     dev: true
 
   /@types/prop-types/15.7.5:

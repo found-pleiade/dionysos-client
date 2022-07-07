@@ -32,6 +32,7 @@
     "@tauri-apps/cli": "1.0.0-rc.13",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
+    "@types/node": "^18.0.3",
     "@types/ramda": "^0.28.14",
     "@types/react-dom": "^18.0.5",
     "@types/uuid": "^8.3.4",
