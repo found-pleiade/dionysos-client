@@ -27,7 +27,7 @@ const Id = ({
   const tabIndex = copy ? 0 : -1;
 
   return (
-    <span className={`text-md dark:text-dark-secondary/60 ${buttonStyle} transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyPress={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
+    <span className={`text-md dark:text-dark-secondary/60 ${buttonStyle} transition-colors ${inlineClass} ${className}`} title={title} onClick={() => handleCopy(id, copy)} role="button" tabIndex={tabIndex} onKeyDown={(event) => { if (event.code === 'Enter') handleCopy(id, copy); }}>
       {idToDisplay}
     </span>
   );

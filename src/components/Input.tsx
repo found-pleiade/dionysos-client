@@ -6,7 +6,7 @@ const Input = ({
   className,
   placeholder,
   onChange,
-  onKeyPress,
+  onKeyDown,
 
   value,
   setValue,
@@ -16,7 +16,7 @@ const Input = ({
   className?: string,
   placeholder?: string,
   onChange?: any,
-  onKeyPress?: any,
+  onKeyDown?: any,
 
   value?: any,
   setValue?: React.Dispatch<React.SetStateAction<any>>,
@@ -50,7 +50,7 @@ const Input = ({
           if (setValue) setValue(event.target.value);
           if (onChange) onChange(event);
         }}
-        onKeyPress={onKeyPress}
+        onKeyDown={onKeyDown}
         placeholder={' '}
       />
 
