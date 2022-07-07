@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expect, describe, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -80,16 +80,6 @@ describe('Events', () => {
       screen.getByText('Hello World').click();
       expect(clicked).toBe(true);
     });
-
-    it('keypress', () => {
-      let pressed = false;
-      const func = () => { pressed = true; };
-
-      render(<Button onKeyPress={func}>Hello World</Button>, { wrapper: MemoryRouter });
-
-      fireEvent.keyPress(screen.getByText('Hello World'), { key: 'Enter', charCode: 13 });
-      expect(pressed).toBe(true);
-    });
   });
 
   describe('Router link', () => {
@@ -101,16 +91,6 @@ describe('Events', () => {
 
       screen.getByText('Hello World').click();
       expect(clicked).toBe(true);
-    });
-
-    it('keypress', () => {
-      let pressed = false;
-      const func = () => { pressed = true; };
-
-      render(<Button to="test" onKeyPress={func}>Hello World</Button>, { wrapper: MemoryRouter });
-
-      fireEvent.keyPress(screen.getByText('Hello World'), { key: 'Enter', charCode: 13 });
-      expect(pressed).toBe(true);
     });
   });
 });

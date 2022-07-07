@@ -9,7 +9,6 @@ const Button = ({
   to = '',
   colorless,
   onClick,
-  onKeyPress,
   disabled,
   children,
 }: {
@@ -19,7 +18,6 @@ const Button = ({
   to?: To,
   colorless?: boolean,
   onClick?: any,
-  onKeyPress?: any,
   disabled?: boolean,
   children?: React.ReactNode,
 }) => {
@@ -45,7 +43,6 @@ const Button = ({
       type="button"
       className={style()}
       onClick={onClick}
-      onKeyPress={onKeyPress}
       title={title}
       tabIndex={0}
       disabled={disabled}
@@ -59,7 +56,6 @@ const Button = ({
       id={id}
       className={style()}
       onClick={onClick}
-      onKeyPress={onKeyPress}
       title={title}
       tabIndex={0}
       to={to}
