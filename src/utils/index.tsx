@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 
 /**
- * Stringify json data to be sent to the server.
+ * Stringify json data with a code to be sent to the server.
  */
 export const requestData = (code: string, data: {}) => JSON.stringify({ code, payload: data });
 
@@ -22,34 +22,35 @@ export const equalsForty = (x: string) => R.equals(R.length(x), 40);
 export const notNil = (x: any) => R.not(R.isNil(x));
 
 /**
+ * An object that contains tests for the isValid function.
+ * Used for user and room name validations and inputs helpers.
+ */
+export const isValidConditions = { gteThree, lteTwenty };
+
+/**
  * Check the validity of the passed string, used for usernames and room names.
  */
-export const isValid = R.allPass([gteThree, lteTwenty, notNil]);
+export const isValid = R.allPass(Object.values(isValidConditions));
 
 /**
- * An object that contains tests for the isValid function.
- */
-export const isValidConditions = { gteThree, lteTwenty, notNil };
-
-/**
- * Translate the element by applying a class to it, used for the chat and the main panel.
+ * Translate the element by applying a class to it, used for the panel.
  */
 export const translate = (condition: boolean) => (condition ? 'openSideMenus' : 'closeSideMenus');
 
 /**
  * Check if the passed string is the id of the active/focused element.
  */
-export const testActiveElementById = (id: string) => document.activeElement?.id === id;
+export const testActiveElement = (element: HTMLElement) => document.activeElement === element;
 
 /**
  * Check if the input is focused, and the key pressed is enter.
  * The element needs an ID. Ignore clicks.
  */
 export const invalidInput = (event: any) => {
-  const isKeyPress = event.type === 'keypress';
+  const isKeyDown = event.type === 'keydown';
   const isEnter = event.code === 'Enter';
-  const isFocused = testActiveElementById(event.target.id);
-  return isKeyPress && (!isEnter || !isFocused);
+  const isFocused = testActiveElement(event.target);
+  return !isKeyDown || !isEnter || !isFocused;
 };
 
 /**
@@ -73,3 +74,8 @@ export const preventDialogEscape = (dialogRef: any) => {
 };
 
 export const isLenZero = (x: string) => R.equals(R.length(x), 0);
+
+export const exportedForTesting = {
+  gteThree,
+  lteTwenty,
+};

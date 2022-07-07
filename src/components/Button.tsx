@@ -1,18 +1,13 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { Link, To } from 'react-router-dom';
 import { isLenZero } from '../utils';
 
-/**
- * Basic button component, 'text' is the text inside the button,
- * 'to' is a React Router Link used to navigate to a new page.
- */
 const Button = ({
   id,
   className,
   title,
   to = '',
   colorless,
-  hidden,
   onClick,
   onKeyPress,
   disabled,
@@ -23,54 +18,57 @@ const Button = ({
   title?: string,
   to?: To,
   colorless?: boolean,
-  hidden?: boolean,
   onClick?: any,
   onKeyPress?: any,
   disabled?: boolean,
-  children: React.ReactNode,
+  children?: React.ReactNode,
 }) => {
-  const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap';
+  // Return an empty button element if there are no children.
+  // Used for navigation buttons when needing a single right aligned button.
+  if (Children.toArray(children).length <= 0) return <div role="none" />;
 
-  const visibility = hidden ? 'hidden' : 'visible';
+  // Tailwind classes based on props. As observed, classes added later override
+  // earlier classes style.
+  const style = () => {
+    const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400';
 
-  const colorsAndCursor = () => {
-    if (disabled && colorless) return 'text-light-secondary/90 bg-light-primary-300/50 hover:bg-light-primary-300/70 dark:bg-dark-primary-600/40 dark:hover:bg-dark-primary-600/40 cursor-not-allowed';
-    if (colorless) return 'text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500 cursor-pointer';
-    if (disabled) return 'text-light-primary-100/90 bg-light-accent-500/60 hover:bg-light-accent-500/50 dark:bg-dark-accent-500/40 dark:hover:bg-dark-accent-500/40 cursor-not-allowed';
-    return 'text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400 cursor-pointer';
+    const c = colorless ? 'text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500' : '';
+
+    const d = disabled ? 'cursor-not-allowed opacity-50' : '';
+
+    return `${base} ${c} ${d} ${className}`;
   };
 
-  const style = `${base} ${visibility} ${colorsAndCursor()}`;
-
-  const buttonProp = (
+  const buttonTag = (
     <button
       id={id}
       type="button"
-      className={`${style} ${className}`}
+      className={style()}
       onClick={onClick}
       onKeyPress={onKeyPress}
       title={title}
       tabIndex={0}
+      disabled={disabled}
     >
       {children}
     </button>
   );
 
-  const linkProp = (
+  const linkComp = (
     <Link
       id={id}
-      to={to}
-      className={`${style} ${className}`}
+      className={style()}
       onClick={onClick}
       onKeyPress={onKeyPress}
       title={title}
       tabIndex={0}
+      to={to}
     >
       {children}
     </Link>
   );
 
-  return isLenZero(to as string) || disabled ? buttonProp : linkProp;
+  return isLenZero(to as string) || disabled ? buttonTag : linkComp;
 };
 
 export default Button;
