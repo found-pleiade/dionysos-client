@@ -11,7 +11,7 @@ const ChangeUsernameModal = ({ users, className }: {
   className?: string
 }) => (
   <Modal modal={users.current.modal} className={className}>
-    <Input id="changeUsername" placeholder="Username" value={users.current.newUsername} setValue={users.current.setNewUsername} onKeyPress={users.current.modal.save} />
+    <Input id="changeUsername" placeholder="Username" value={users.current.newUsername} setValue={users.current.setNewUsername} onKeyDown={users.current.modal.save} />
 
     <SpaceBetween>
       <Button onClick={users.current.modal.cancel} colorless>Cancel</Button>
