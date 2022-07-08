@@ -18,12 +18,14 @@ const Connect = () => {
     ),
   );
 
+  const connectionBoxStyle = 'flex flex-col items-center space-y-3 bg-light-primary-100 p-10 rounded-md min-w-[55ch]';
+
   if (isLoading) {
     return (
       <div className="page flex justify-center items-center h-screen">
-        <div className="flex flex-col items-center space-y-3">
+        <div className={connectionBoxStyle}>
           <p className="font-medium text-xl text-center">Connection to the server</p>
-          <PropagateLoader size=".65rem" color="hsl(0, 0%, 2%)" />
+          <PropagateLoader size=".65rem" color="hsl(0, 0%, 2%)" cssOverride={{ paddingTop: '.65rem', paddingBottom: '.3rem' }} />
         </div>
       </div>
     );
@@ -32,7 +34,7 @@ const Connect = () => {
   if (error) {
     return (
       <div className="page flex justify-center items-center h-screen">
-        <div className="flex flex-col items-center space-y-3">
+        <div className={connectionBoxStyle}>
           <p className="font-medium text-xl text-center">
             Connection to the server failed.
             <br />
