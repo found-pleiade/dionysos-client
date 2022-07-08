@@ -1,16 +1,8 @@
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { Suspense } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import * as R from 'ramda';
-import { appWindow } from '@tauri-apps/api/window';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import { codes, devServer } from './constants';
-import useMessages from './hooks/messages';
-import { isValid, notNil } from './utils';
-import useConnection from './hooks/connection';
-import useRoom from './hooks/room';
-import useUsers from './hooks/users';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import Messages from './components/Messages';
-import useJoinRequests from './hooks/joinRequests';
+import useMessages from './hooks/messages';
 
 const Connect = React.lazy(() => import('./pages/connect'));
 const Home = React.lazy(() => import('./pages/home'));
@@ -20,16 +12,9 @@ const Home = React.lazy(() => import('./pages/home'));
  * Returns the shell style, app router and messages.
  */
 const App = () => {
-  const connectPageReference = useRef<any>();
-  const homePageReference = useRef<any>();
+  const queryClient = new QueryClient();
 
   const messages = useMessages();
-  const connection = useConnection(devServer, messages, connectPageReference);
-  const users = useUsers(connection, homePageReference);
-  const room = useRoom();
-  const joinRequests = useJoinRequests(connection, homePageReference);
-
-  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -41,26 +26,8 @@ const App = () => {
             <Route
               path="/"
               element={(
-                <Suspense fallback={<div />}>
-                  <Connect
-                    connection={connection}
-                    users={users}
-                    reference={connectPageReference}
-                  />
-                </Suspense>
-              )}
-            />
-            <Route
-              path="/home"
-              element={(
-                <Suspense fallback={<div />}>
-                  <Home
-                    connection={connection}
-                    users={users}
-                    room={room}
-                    joinRequests={joinRequests}
-                    reference={homePageReference}
-                  />
+                <Suspense fallback={<div className="page" />}>
+                  <Connect />
                 </Suspense>
               )}
             />

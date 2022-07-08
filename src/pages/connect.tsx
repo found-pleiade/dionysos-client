@@ -1,50 +1,52 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { GlobeAltIcon } from '@heroicons/react/solid';
+import { useQuery } from 'react-query';
+import { PropagateLoader } from 'react-spinners';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { isValid, requestData, invalidInput } from '../utils';
-import { codes } from '../constants';
-import useConnection from '../hooks/connection';
-import useUsers from '../hooks/users';
 import RowGroup from '../components/RowGroup';
-import WebSocketModal from '../components/WebSocketModal';
 
-/**
- * Setup the request for changing username, which here allow to set your username
- * for the first time.
- */
-const requestCHU = (username: string) => requestData(
-  codes.request.changeUserName,
-  { newUsername: username },
-);
-
-const Connect = ({
-  connection,
-  users,
-  reference,
-}: {
-  connection: ReturnType<typeof useConnection>,
-  users: ReturnType<typeof useUsers>,
-  reference: any,
-}) => {
-  const navigate = useNavigate();
+const Connect = () => {
   const [username, setUsername] = useState('');
-  const validAndConnected = () => isValid(username) && connection.isUp;
 
   /**
-   * Send the username to the server and set the username in the app.
-   * Handles both click and keyboard inputs.
+   * Get version to verify if the server is up.
    */
-  const connectionHandler = (event?: any) => {
-    if (invalidInput(event) || !validAndConnected()) return;
-    connection.send(requestCHU(username));
-    users.current.set({ ...users.current.get, name: username });
-    navigate('/home');
-  };
+  const { isLoading, error, data } = useQuery(
+    'repoData',
+    () => fetch('https://dionysos-test.yannlacroix.fr/version').then(
+      (res) => res.json(),
+    ),
+  );
+
+  if (isLoading) {
+    return (
+      <div className="page flex justify-center items-center h-screen">
+        <div className="flex flex-col items-center space-y-3">
+          <p className="font-medium text-xl text-center">Connection to the server</p>
+          <PropagateLoader size=".65rem" color="hsl(0, 0%, 2%)" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="page flex justify-center items-center h-screen">
+        <div className="flex flex-col items-center space-y-3">
+          <p className="font-medium text-xl text-center">
+            Connection to the server failed.
+            <br />
+            Check your internet connection or try again later.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  console.log(data);
 
   return (
-    <div className="page" ref={reference}>
+    <div className="page">
       {/* Main content of the page. */}
       <div className="absolute top-[30%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center flex flex-col items-center">
         <header className="xl:mb-52 md:mb-32 mb-20">
@@ -53,18 +55,11 @@ const Connect = ({
         </header>
 
         <RowGroup>
-          <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={username} setValue={setUsername} onKeyDown={connectionHandler} />
-          <Button className="rounded-l-none" disabled={!validAndConnected()} onClick={connectionHandler}>{connection.isUp ? 'Next' : 'No connection'}</Button>
+          <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={username} setValue={setUsername} />
+
+          <Button className="rounded-l-none" />
         </RowGroup>
       </div>
-
-      {/* Top left button to access WebSocket settings. */}
-      <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={() => connection.modal.toggle()}>
-        <GlobeAltIcon />
-      </Button>
-
-      {/* Modal to change the WebSocket address. */}
-      <WebSocketModal connection={connection} />
     </div>
   );
 };
