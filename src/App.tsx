@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Messages from './components/Messages';
@@ -26,9 +26,7 @@ const App = () => {
             <Route
               path="/"
               element={(
-                <Suspense fallback={<div className="page" />}>
-                  <Connect />
-                </Suspense>
+                <Connect />
               )}
             />
           </Routes>
