@@ -4,7 +4,7 @@ import CenterCard from '../components/register/CenterCard';
 import RegisterForm from '../components/register/RegisterForm';
 import useVersion from '../hooks/version';
 
-const Connect = () => {
+const Register = () => {
   const { isLoading, error, data } = useVersion();
 
   const pageSkeleton = (template: JSX.Element) => (
@@ -53,4 +53,4 @@ const Connect = () => {
   );
 };
 
-export default Connect;
+export default Register;
