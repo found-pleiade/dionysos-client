@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import useRegister from '../../hooks/register';
 import Button from '../Button';
@@ -10,6 +11,11 @@ const RegisterForm = () => {
   const {
     isLoading, error, data, createUser,
   } = useRegister(username);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data) navigate('/home');
+  }, [data]);
 
   const buttonText = () => {
     if (isLoading) {
@@ -18,10 +24,6 @@ const RegisterForm = () => {
 
     if (error) {
       return 'Try again';
-    }
-
-    if (data) {
-      return 'Connected';
     }
 
     return 'Next';
