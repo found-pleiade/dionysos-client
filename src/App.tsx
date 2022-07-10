@@ -7,10 +7,6 @@ import useMessages from './hooks/messages';
 const Connect = React.lazy(() => import('./pages/register'));
 const Home = React.lazy(() => import('./pages/home'));
 
-/**
- * App main function, here lies most states and every WebSocket listeners.
- * Returns the shell style, app router and messages.
- */
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
