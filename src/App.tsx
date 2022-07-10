@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Messages from './components/Messages';
 import useMessages from './hooks/messages';
 
-const Connect = React.lazy(() => import('./pages/connect'));
+const Connect = React.lazy(() => import('./pages/register'));
 const Home = React.lazy(() => import('./pages/home'));
 
 /**
@@ -12,7 +12,15 @@ const Home = React.lazy(() => import('./pages/home'));
  * Returns the shell style, app router and messages.
  */
 const App = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+      mutations: {
+      },
+    },
+  });
 
   const messages = useMessages();
 
