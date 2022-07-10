@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@headlessui/react': ^1.6.6
   '@heroicons/react': ^1.0.6
   '@tauri-apps/api': ^1.0.0-rc.6
   '@tauri-apps/cli': 1.0.0-rc.13
@@ -40,6 +41,7 @@ specifiers:
   vitest: ^0.14.1
 
 dependencies:
+  '@headlessui/react': 1.6.6_ef5jwxihqo6n7gxfmzogljlgcm
   '@heroicons/react': 1.0.6_react@18.1.0
   '@tauri-apps/api': 1.0.0-rc.6
   '@types/react': 18.0.12
@@ -374,6 +376,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@headlessui/react/1.6.6_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-MFJtmj9Xh/hhBMhLccGbBoSk+sk61BlP6sJe4uQcVMtXZhCgGqd2GyIQzzmsdPdTEWGSF434CBi8mnhR6um46Q==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    dev: false
 
   /@heroicons/react/1.0.6_react@18.1.0:
     resolution: {integrity: sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ==}
