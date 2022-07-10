@@ -3,9 +3,8 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Messages from './components/Messages';
 import useMessages from './hooks/messages';
-
-const Connect = React.lazy(() => import('./pages/register'));
-const Home = React.lazy(() => import('./pages/home'));
+import Register from './pages/register';
+import Home from './pages/home';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -30,7 +29,13 @@ const App = () => {
             <Route
               path="/"
               element={(
-                <Connect />
+                <Register />
+              )}
+            />
+            <Route
+              path="/home"
+              element={(
+                <Home />
               )}
             />
           </Routes>
