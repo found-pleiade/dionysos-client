@@ -31,7 +31,7 @@ const Input = ({
   /**
    * Helper visibility boolean.
    */
-  const showHelper = (!isValid(value) && !noHelper) && value.length > 0;
+  const showHelper = value && (!isValid(value) && !noHelper) && value.length > 0;
 
   /**
    * Adapt input style to the helper visibility.
