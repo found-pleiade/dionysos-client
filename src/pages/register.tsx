@@ -2,6 +2,7 @@ import React from 'react';
 import { PropagateLoader } from 'react-spinners';
 import CenterCard from '../components/register/CenterCard';
 import RegisterForm from '../components/register/RegisterForm';
+import ServerModal from '../components/register/ServerModal';
 import useVersion from '../hooks/version';
 
 const Register = () => {
@@ -18,6 +19,8 @@ const Register = () => {
 
         {template}
       </div>
+
+      <ServerModal />
     </div>
   );
 
