@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'no-return-await': 'off',
     'react/jsx-no-bind': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true, optionalDependencies: false, peerDependencies: false }],
     'linebreak-style': 0,
