@@ -43,7 +43,7 @@ const Register = () => {
     );
   }
 
-  if (data.response !== 'v0.1.0') {
+  if (data !== '0.1.0') {
     return pageSkeleton(
       <CenterCard>
         Version mismatch between the client and the server api.
@@ -51,9 +51,7 @@ const Register = () => {
     );
   }
 
-  return pageSkeleton(
-    <RegisterForm />,
-  );
+  return pageSkeleton(<RegisterForm />);
 };
 
 export default Register;

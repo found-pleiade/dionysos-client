@@ -1,8 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Messages from './components/Messages';
-import useMessages from './hooks/messages';
 import Register from './pages/register';
 import Home from './pages/home';
 
@@ -17,13 +15,9 @@ const App = () => {
     },
   });
 
-  const messages = useMessages();
-
   return (
     <QueryClientProvider client={queryClient}>
       <div className="dark:text-dark-secondary h-screen cursor-default relative">
-        <Messages messages={messages} />
-
         <MemoryRouter>
           <Routes>
             <Route

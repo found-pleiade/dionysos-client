@@ -1,11 +1,6 @@
 import * as R from 'ramda';
 
 /**
- * Stringify json data with a code to be sent to the server.
- */
-export const requestData = (code: string, data: {}) => JSON.stringify({ code, payload: data });
-
-/**
  * Toggle 'visible' and 'hidden' classes based on the boolean value.
  */
 export const visibility = (condition: boolean) => (condition ? 'visible' : 'hidden');
@@ -52,26 +47,6 @@ export const invalidInput = (event: any) => {
   const isEnter = event.code === 'Enter';
   const isFocused = testActiveElement(event.target);
   return !(isClick || (isKeyDown && isEnter && isFocused));
-};
-
-/**
- * Toggle the dialog element depending of the modal isOpen state.
- * Check if the dialog element is already open to prevent an app crash.
- */
-export const toggleDialog = (condition: boolean, dialogRef: any) => {
-  const dialogElement = dialogRef.current;
-  if (!dialogElement.open && condition) dialogElement.showModal();
-  if (dialogElement.open && !condition) dialogElement.close();
-};
-
-/**
- * Prevent the user from canceling the modal by pressing escape.
- */
-export const preventDialogEscape = (dialogRef: any) => {
-  const dialogElement = dialogRef.current;
-  dialogElement.oncancel = (event: any) => {
-    event.preventDefault();
-  };
 };
 
 export const isLenZero = (x: string) => R.equals(R.length(x), 0);
