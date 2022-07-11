@@ -6,23 +6,6 @@ import '@testing-library/jest-dom';
 import { expect, describe, it } from 'vitest';
 import * as utils from '../utils';
 
-describe('requestData', () => {
-  it('Passed code and payload is actually stringified', () => {
-    expect(utils.requestData('CODE', {})).toBe('{"code":"CODE","payload":{}}');
-
-    expect(utils.requestData('CODE', {
-      id: 4,
-      name: 'Albert',
-      gay: true,
-      family: {
-        dad: undefined, // don't pass
-        mom: null, // pass
-        sister: 'Jeanne',
-      },
-    })).toBe('{"code":"CODE","payload":{"id":4,"name":"Albert","gay":true,"family":{"mom":null,"sister":"Jeanne"}}}');
-  });
-});
-
 describe('visibility', () => {
   it('Output visible or hidden if true or false', () => {
     expect(utils.visibility(true)).toBe('visible');
