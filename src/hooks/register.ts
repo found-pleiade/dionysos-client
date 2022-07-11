@@ -4,7 +4,7 @@ const useRegister = (username: string) => {
   const {
     isLoading, error, data, mutate,
   } = useMutation(
-    'getVersion',
+    'createUser',
     () => fetch('https://dionysos-test.yannlacroix.fr/users/', {
       method: 'POST',
       body: JSON.stringify({ username }),
