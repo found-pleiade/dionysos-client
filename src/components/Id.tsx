@@ -1,10 +1,11 @@
 import React from 'react';
 import { idLength } from '../constants';
 import { notNil } from '../utils';
+import { writeText } from '@tauri-apps/api/clipboard';
 
 const handleCopy = (id: string, copy: boolean | undefined) => {
   if (notNil(copy) && copy) {
-    navigator.clipboard.writeText(id);
+    writeText(id);
   }
 };
 
