@@ -27,3 +27,13 @@ You can now run the app with hot-reloading.
 ### Build
 ```pnpm tauri build```  
 Bundle: ```src-tauri/target/release```
+
+### Test
+Run tests in watch mode  
+```pnpm test```  
+
+Run tests once  
+```pnpm test:run```
+
+Run tests coverage  
+```pnpm coverage```
