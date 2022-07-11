@@ -47,10 +47,13 @@ export const testActiveElement = (element: HTMLElement) => document.activeElemen
  * The element needs an ID. Ignore clicks.
  */
 export const invalidInput = (event: any) => {
+  console.log(event);
+  
+  const isClick = event.type === 'click';
   const isKeyDown = event.type === 'keydown';
   const isEnter = event.code === 'Enter';
   const isFocused = testActiveElement(event.target);
-  return !isKeyDown || !isEnter || !isFocused;
+  return !(isClick || (isKeyDown && isEnter && isFocused));
 };
 
 /**
