@@ -35,7 +35,7 @@ const useSettings = () => {
           server: initialSettings.server,
         };
       default:
-        return state;
+        throw new Error(`Unhandled action type: ${action.type}`);
     }
   };
 
