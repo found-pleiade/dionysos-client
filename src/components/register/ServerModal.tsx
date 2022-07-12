@@ -7,6 +7,7 @@ import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
 import useSettings from '../../hooks/settings';
 import useVersion from '../../hooks/version';
+import ErrorCard from './ErrorCard';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +60,28 @@ const ServerModal = () => {
     return 'Save';
   };
 
+  const errorMessage = () => {
+    if (error) {
+      return (
+        <ErrorCard>
+          An error occurred while fetching the version.
+          <br />
+          Check your internet connection and the url.
+        </ErrorCard>
+      );
+    }
+
+    if (data !== '0.1.0') {
+      return (
+        <ErrorCard>
+          Version mismatch between the client and the server api.
+        </ErrorCard>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <>
       <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={openModal}>
@@ -98,7 +121,9 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <Input className="mb-6" value={serverAddress} setValue={setServerAddress} />
+                  <Input className="mb-4" value={serverAddress} setValue={setServerAddress} />
+
+                  {errorMessage()}
 
                   <SpaceBetween>
                     <Button onClick={closeModal} colorless>
