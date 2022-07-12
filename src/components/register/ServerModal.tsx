@@ -38,9 +38,7 @@ const ServerModal = () => {
         payload: { server: serverAddress },
       });
 
-      setTimeout(() => {
-        closeModal();
-      }, 500);
+      closeModal();
     }
   }, [data, isStale]);
 
@@ -97,7 +95,7 @@ const ServerModal = () => {
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-200"
+            leave="ease-in duration-200 delay-500"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -111,7 +109,7 @@ const ServerModal = () => {
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
+                leave="ease-in duration-200 delay-500"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
