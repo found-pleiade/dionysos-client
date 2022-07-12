@@ -5,13 +5,7 @@
 .page {
   height: 100vh;
   transition: 
-    filter ease-in-out,
     transform ease-in-out;
-  filter: blur(0px);
-}
-
-.page.background {
-  filter: blur(3px);
 }
 
 /**
