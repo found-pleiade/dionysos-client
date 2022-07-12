@@ -2,53 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-.page {
-  height: 100vh;
-  transition: 
-    transform ease-in-out;
-}
-
-/**
- * Default focus style
- */
-
-*:focus {
-  outline: none;
-}
-
-*:focus-visible {
-  outline: 1px solid theme('colors.light.secondary');
-  outline-offset: 3px;
-}
-
-input:focus-visible {
-  outline: none;
-  background-color: theme('colors.light.secondary');
-}
-
-@media (prefers-color-scheme: dark) {
-  *:focus-visible {
-    outline-color: theme('colors.dark.secondary');
-  }
-
-  input:focus-visible {
-    background-color: theme('colors.dark.secondary');
-  }
-}
 
 /**
  * Prevent users from selecting text like in a browser
  * for a more native experience.
  */
-html {
+ html {
   user-select: none;
 }
 
-/**
- * Useful for preventing users to click on an element.
- */
-.unclickable {
-  pointer-events: none;
+@layer components {
+  .page {
+    height: 100vh;
+    transition: transform ease-in-out;
+  }
+
+  /**
+  * Prevent the video to overflow in any container ratio.
+  */
+  .video-max-width {
+    max-width: calc(16 / 9 * 100 * 1vh);
+  }
 }
 
 /**
@@ -66,13 +40,6 @@ html {
   .input:not(:placeholder-shown)+.placeholder {
     color: theme('colors.dark.secondary');
   }
-}
-
-/**
-  * Prevent the video to overflow in any container ratio.
-  */
-.video-max-width {
-  max-width: calc(16 / 9 * 100 * 1vh);
 }
 
 /**
