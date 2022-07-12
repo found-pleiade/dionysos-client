@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
 import { ClipLoader } from 'react-spinners';
@@ -31,16 +31,14 @@ const ServerModal = () => {
     refetch();
   };
 
-  useEffect(() => {
-    if (data && !isStale && isOpen) {
-      settings.dispatch({
-        type: 'SET_SERVER',
-        payload: { server: serverAddress },
-      });
+  if (data && !isStale && isOpen) {
+    settings.dispatch({
+      type: 'SET_SERVER',
+      payload: { server: serverAddress },
+    });
 
-      closeModal();
-    }
-  }, [data, isStale]);
+    closeModal();
+  }
 
   const buttonText = () => {
     if (isLoading) {
