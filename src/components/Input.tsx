@@ -36,7 +36,7 @@ const Input = ({
       placeholder={' '}
     />
 
-    <p className="absolute top-2 left-3 font-medium cursor-text text-light-secondary/60 dark:text-dark-primary-400/70 unclickable transition-all duration-200 placeholder">
+    <p className="absolute top-2 left-3 font-medium cursor-text text-light-secondary/60 dark:text-dark-primary-400/70 pointer-events-none transition-all duration-200 placeholder">
       {placeholder}
     </p>
   </div>

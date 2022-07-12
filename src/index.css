@@ -2,45 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.page {
-  height: 100vh;
-  transition: 
-    filter ease-in-out,
-    transform ease-in-out;
-  filter: blur(0px);
-}
-
-.page.background {
-  filter: blur(3px);
-}
-
-/**
- * Default focus style
- */
-
-*:focus {
-  outline: none;
-}
-
-*:focus-visible {
-  outline: 1px solid theme('colors.light.secondary');
-  outline-offset: 3px;
-}
-
-input:focus-visible {
-  outline: none;
-  background-color: theme('colors.light.secondary');
-}
-
-@media (prefers-color-scheme: dark) {
-  *:focus-visible {
-    outline-color: theme('colors.dark.secondary');
-  }
-
-  input:focus-visible {
-    background-color: theme('colors.dark.secondary');
-  }
-}
 
 /**
  * Prevent users from selecting text like in a browser
@@ -50,26 +11,20 @@ html {
   user-select: none;
 }
 
-/**
- * Useful for preventing users to click on an element.
- */
-.unclickable {
-  pointer-events: none;
-}
+@layer components {
+  .page {
+    height: 100vh;
+    transition: transform ease-in-out;
+  }
 
-/**
- * Use the theme of the app for the background of dialogs.
- */
-
-dialog::backdrop {
-  background: rgba(0,0,0,.2);
-}
-
-@media (prefers-color-scheme: dark) {
-  dialog::backdrop {
-    background: rgba(0,0,0,.33);
+  /**
+   * Prevent the video to overflow in any container ratio.
+   */
+  .video-max-width {
+    max-width: calc(16 / 9 * 100 * 1vh);
   }
 }
+
 /**
  * Move the placeholder to the top of the input field.
  */
@@ -88,45 +43,8 @@ dialog::backdrop {
 }
 
 /**
-  * Prevent the video to overflow in any container ratio.
-  */
-.video-max-width {
-  max-width: calc(16 / 9 * 100 * 1vh);
-}
-
-/**
-  * Messages at the top of the page.
-  */
-
-.message {
-  max-height: 0;
-  padding: 0 theme('spacing.5');
-  transition-property: all;
-  transition-timing-function: ease-out;
-  overflow: hidden;
-}
-
-.message::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-  background-color: hsl(0 0% 10% / 0.1);
-  transition-property: transform;
-  transition-timing-function: linear;
-  transform: translateX(calc(var(--progress) * -100%));
-}
-
-.message.show {
-  max-height: theme('spacing.24');
-  padding: theme('spacing.2') theme('spacing.5');
-}
-
-/**
-  * Animation for side menus.
-  */
+ * Animation for side menus.
+ */
 
 .openSideMenus,
 .closeSideMenus {
@@ -196,59 +114,3 @@ dialog::backdrop {
   }
 }
 
-/**
- * Modal transition.
- */
-
-.showModal,
-.showModal::backdrop,
-.hideModal,
-.hideModal::backdrop  {
-  /**
-   * Hardcoded because I didn't find a way to
-   * access ::backdrop from js, even set a custom
-   * css property doesn't seem to work. Change it in
-   * modal.ts too.
-   */
-  animation-duration: 200ms;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-}
-
-.showModal,
-.showModal::backdrop {
-  animation-name: showModal;
-}
-
-.hideModal,
-.hideModal::backdrop {
-  animation-name: hideModal;
-}
-
-@keyframes showModal {
-  0% {
-    opacity: 0;
-  }
-
-  1% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes hideModal {
-  0% {
-    opacity: 1;
-  }
-
-  99% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
