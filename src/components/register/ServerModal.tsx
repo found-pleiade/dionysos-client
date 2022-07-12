@@ -31,7 +31,7 @@ const ServerModal = () => {
   };
 
   useEffect(() => {
-    if (data && isOpen) {
+    if (data && !isStale && isOpen) {
       settings.dispatch({
         type: 'SET_SERVER',
         payload: { server: serverAddress },
@@ -41,7 +41,7 @@ const ServerModal = () => {
         closeModal();
       }, 400);
     }
-  }, [data]);
+  }, [data, isStale]);
 
   const buttonText = () => {
     if (isLoading) {
