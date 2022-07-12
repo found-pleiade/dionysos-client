@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 
 const useSettings = () => {
   const initialSettings = {
-    server: 'http://localhost:3000',
+    server: 'https://dionysos-test.yannlacroix.fr',
   };
 
   type Settings = typeof initialSettings;
