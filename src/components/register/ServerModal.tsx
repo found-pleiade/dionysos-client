@@ -40,7 +40,7 @@ const ServerModal = () => {
 
       setTimeout(() => {
         closeModal();
-      }, 400);
+      }, 500);
     }
   }, [data, isStale]);
 
