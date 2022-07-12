@@ -5,8 +5,6 @@ const useSettings = () => {
     server: 'https://dionysos-test.yannlacroix.fr',
   };
 
-  type Settings = typeof initialSettings;
-
   enum SettingsActionList {
     SET_SERVER = 'SET_SERVER',
     SET_SERVER_DEFAULT = 'SET_SERVER_DEFAULT',
@@ -20,7 +18,7 @@ const useSettings = () => {
   }
 
   const settingsReducer = (
-    state: Settings,
+    state: typeof initialSettings,
     action: SettingsAction,
   ) => {
     switch (action.type) {
