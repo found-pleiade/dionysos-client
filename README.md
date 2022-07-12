@@ -16,25 +16,27 @@ You need to install Rust and some dependencies.
 You can check os dependent installation [here](https://tauri.studio/v1/guides/getting-started/prerequisites/).
 
 ### Setup the project
-Clone the project, go into it and install the Javascript dependencies.  
-```git clone git@github.com:Brawdunoir/dionysos-client.git```  
-```cd dionysos-client```  
-```pnpm i```
+Clone the project, go into it and install the Javascript dependencies.
+```
+git clone git@github.com:Brawdunoir/dionysos-client.git  
+cd dionysos-client  
+pnpm i
+```
 
 ### Dev
 You can now run the app with hot-reloading.  
-```pnpm tauri dev```
+`pnpm tauri dev`
 
 ### Build
-```pnpm tauri build```  
-Bundle: ```src-tauri/target/release```
+`pnpm tauri build`  
+Bundle: `src-tauri/target/release`
 
 ### Test
 Run tests in watch mode  
-```pnpm test```  
+`pnpm test`  
 
 Run tests once  
-```pnpm test:run```
+`pnpm test:run`
 
 Run tests coverage  
-```pnpm coverage```
+`pnpm coverage`
