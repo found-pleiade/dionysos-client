@@ -10,16 +10,12 @@ const useSettings = () => {
     SET_SERVER_DEFAULT = 'SET_SERVER_DEFAULT',
   }
 
-  type SettingsAction = {
-    type: keyof typeof SettingsActionList;
-    payload: {
-      server?: typeof initialSettings.server;
-    };
-  }
-
   const settingsReducer = (
     state: typeof initialSettings,
-    action: SettingsAction,
+    action: {
+      type: keyof typeof SettingsActionList;
+      payload: Partial<typeof initialSettings>;
+    },
   ) => {
     switch (action.type) {
       case SettingsActionList.SET_SERVER:
