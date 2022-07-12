@@ -1,14 +1,25 @@
 import { useQuery } from 'react-query';
+import useSettings from './settings';
 
-const useVersion = () => {
-  const { isLoading, error, data } = useQuery(
+const useVersion = (address?: string, enabled = true) => {
+  const settings = useSettings();
+
+  const {
+    isStale, isLoading, isFetching, error, data, refetch,
+  } = useQuery(
     'getVersion',
-    () => fetch('https://dionysos-test.yannlacroix.fr/version').then(
+    () => fetch(`${address || settings.get.server}/version`).then(
       (res) => res.text(),
     ),
+    {
+      enabled,
+      staleTime: 800,
+    },
   );
 
-  return { isLoading, error, data };
+  return {
+    isStale, isLoading: (isLoading || isFetching), error, data, refetch,
+  };
 };
 
 export default useVersion;

@@ -1,12 +1,23 @@
 import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { GlobeAltIcon } from '@heroicons/react/solid';
+import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
+import { ClipLoader } from 'react-spinners';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
+import useSettings from '../../hooks/settings';
+import useVersion from '../../hooks/version';
+import ErrorCard from './ErrorCard';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const settings = useSettings();
+  const [serverAddress, setServerAddress] = useState(settings.get.server);
+
+  const {
+    isStale, isLoading, error, data, refetch,
+  } = useVersion(serverAddress, false);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -14,6 +25,59 @@ const ServerModal = () => {
 
   const openModal = () => {
     setIsOpen(true);
+  };
+
+  const saveModal = () => {
+    refetch();
+  };
+
+  if (data && !isStale && isOpen) {
+    settings.dispatch({
+      type: 'SET_SERVER',
+      payload: { server: serverAddress },
+    });
+
+    closeModal();
+  }
+
+  const buttonText = () => {
+    if (isLoading) {
+      return <ClipLoader size="18px" color="white" />;
+    }
+
+    if (error) {
+      return 'Retry';
+    }
+
+    if (data && !isStale) {
+      return <CheckIcon className="text-white w-6 h-6" />;
+    }
+
+    return 'Save';
+  };
+
+  const buttonClassName = data && !isStale ? 'bg-light-success-400 dark:bg-dark-success-500' : '';
+
+  const errorMessage = () => {
+    if (error) {
+      return (
+        <ErrorCard>
+          An error occurred while fetching the version.
+          <br />
+          Check your internet connection and the url.
+        </ErrorCard>
+      );
+    }
+
+    if (data !== '0.1.0') {
+      return (
+        <ErrorCard>
+          Version mismatch between the client and the server api.
+        </ErrorCard>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -29,7 +93,7 @@ const ServerModal = () => {
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-200"
+            leave="ease-in duration-200 delay-500"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -43,11 +107,11 @@ const ServerModal = () => {
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
+                leave="ease-in duration-200 delay-500"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all dark:bg-dark-primary-700 dark:text-dark-secondary">
+                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 mb-4"
@@ -55,15 +119,17 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <Input id="5" className="mb-6" />
+                  <Input className="mb-4" value={serverAddress} setValue={setServerAddress} />
+
+                  {errorMessage()}
 
                   <SpaceBetween>
                     <Button onClick={closeModal} colorless>
-                      Cancel
+                      Back
                     </Button>
 
-                    <Button onClick={closeModal}>
-                      Save
+                    <Button onClick={saveModal} className={`w-[12ch] flex items-center justify-center ${buttonClassName}`}>
+                      {buttonText()}
                     </Button>
                   </SpaceBetween>
                 </Dialog.Panel>

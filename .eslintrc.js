@@ -21,6 +21,10 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
     'no-return-await': 'off',
     'react/jsx-no-bind': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true, optionalDependencies: false, peerDependencies: false }],
@@ -29,7 +33,6 @@ module.exports = {
     'import/extensions': ['error', 'never'],
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'react/require-default-props': 0,
-    'no-unused-vars': ['warn', { vars: 'all', args: 'none', ignoreRestSiblings: false }],
     'no-undef': 'off',
   },
 };

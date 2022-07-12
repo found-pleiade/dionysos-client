@@ -9,9 +9,8 @@ const Input = ({
 
   value,
   setValue,
-  noHelper,
 }: {
-  id: string,
+  id?: string,
   className?: string,
   placeholder?: string,
   onChange?: any,
@@ -19,7 +18,6 @@ const Input = ({
 
   value?: any,
   setValue?: React.Dispatch<React.SetStateAction<any>>,
-  noHelper?: boolean,
 }) => (
   <div className="w-full relative">
     <input
