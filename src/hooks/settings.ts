@@ -23,9 +23,10 @@ const useSettings = () => {
   ) => {
     switch (action.type) {
       case SettingsActionList.SET_SERVER:
+        if (!action.payload.server) throw new Error('Missing server');
         return {
           ...state,
-          ...action.payload,
+          server: action.payload.server,
         };
       case SettingsActionList.SET_SERVER_DEFAULT:
         return {
