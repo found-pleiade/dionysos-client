@@ -9,7 +9,7 @@ The NodeJS version used for the project is the `16.15.1`
 
 ### Packet manager
 Pnpm is used as the packet manager for it’s speed and space efficiency while remaining compatible with Tauri.  
-```npm install -g pnpm```  
+`npm install -g pnpm`  
 
 ### Tauri
 You need to install Rust and some dependencies.  
