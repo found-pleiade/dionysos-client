@@ -60,6 +60,8 @@ const ServerModal = () => {
     return 'Save';
   };
 
+  const buttonClassName = data && !isStale ? 'bg-light-success-400 dark:bg-dark-success-500' : '';
+
   const errorMessage = () => {
     if (error) {
       return (
@@ -130,7 +132,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModal} className="w-[12ch] flex items-center justify-center">
+                    <Button onClick={saveModal} className={`w-[12ch] flex items-center justify-center ${buttonClassName}`}>
                       {buttonText()}
                     </Button>
                   </SpaceBetween>
