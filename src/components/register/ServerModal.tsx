@@ -1,12 +1,22 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { GlobeAltIcon } from '@heroicons/react/solid';
+import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
+import { ClipLoader } from 'react-spinners';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
+import useSettings from '../../hooks/settings';
+import useVersion from '../../hooks/version';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const settings = useSettings();
+  const [serverAddress, setServerAddress] = useState(settings.get.server);
+
+  const {
+    isStale, isLoading, error, data, refetch,
+  } = useVersion(serverAddress, false);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -14,6 +24,39 @@ const ServerModal = () => {
 
   const openModal = () => {
     setIsOpen(true);
+  };
+
+  const saveModal = () => {
+    refetch();
+  };
+
+  useEffect(() => {
+    if (data && isOpen) {
+      settings.dispatch({
+        type: 'SET_SERVER',
+        payload: { server: serverAddress },
+      });
+
+      setTimeout(() => {
+        closeModal();
+      }, 400);
+    }
+  }, [data]);
+
+  const buttonText = () => {
+    if (isLoading) {
+      return <ClipLoader size="18px" color="white" />;
+    }
+
+    if (error) {
+      return 'Retry';
+    }
+
+    if (data && !isStale) {
+      return <CheckIcon className="text-white w-6 h-6" />;
+    }
+
+    return 'Save';
   };
 
   return (
@@ -55,15 +98,15 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <Input id="5" className="mb-6" />
+                  <Input className="mb-6" value={serverAddress} setValue={setServerAddress} />
 
                   <SpaceBetween>
                     <Button onClick={closeModal} colorless>
-                      Cancel
+                      Back
                     </Button>
 
-                    <Button onClick={closeModal}>
-                      Save
+                    <Button onClick={saveModal} className="w-[12ch] flex items-center justify-center">
+                      {buttonText()}
                     </Button>
                   </SpaceBetween>
                 </Dialog.Panel>
