@@ -7,7 +7,7 @@
  * Prevent users from selecting text like in a browser
  * for a more native experience.
  */
- html {
+html {
   user-select: none;
 }
 
@@ -18,8 +18,8 @@
   }
 
   /**
-  * Prevent the video to overflow in any container ratio.
-  */
+   * Prevent the video to overflow in any container ratio.
+   */
   .video-max-width {
     max-width: calc(16 / 9 * 100 * 1vh);
   }
@@ -43,8 +43,8 @@
 }
 
 /**
-  * Animation for side menus.
-  */
+ * Animation for side menus.
+ */
 
 .openSideMenus,
 .closeSideMenus {
@@ -113,3 +113,4 @@
     padding-right: 0;
   }
 }
+
