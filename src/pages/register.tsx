@@ -25,10 +25,12 @@ const Register = () => {
   );
 
   if (isLoading) {
+    const color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#fff' : '#000';
+
     return pageSkeleton(
       <CenterCard>
-        <p className="font-medium text-xl text-center text-light-secondary">Connection to the server</p>
-        <PropagateLoader size=".65rem" color="hsl(0, 0%, 2%)" cssOverride={{ paddingTop: '.65rem', paddingBottom: '.3rem' }} />
+        <p className="font-medium text-xl text-center">Connection to the server</p>
+        <PropagateLoader size=".65rem" color={color} cssOverride={{ paddingTop: '.65rem', paddingBottom: '.3rem' }} />
       </CenterCard>,
     );
   }
