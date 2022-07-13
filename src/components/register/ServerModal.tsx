@@ -12,15 +12,10 @@ import ErrorCard from './ErrorCard';
 import SettingsContext from '../../contexts/SettingContext';
 
 const ServerModal = () => {
+  /**
+   * Handle basic state of the modal
+   */
   const [isOpen, setIsOpen] = useState(false);
-
-  const settings = useContext(SettingsContext);
-  const [serverAddress, setServerAddress] = useState(settings.get.server);
-  const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
-
-  const {
-    isStale, isLoading, error, data, refetch,
-  } = useVersion(false);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -30,16 +25,33 @@ const ServerModal = () => {
     setIsOpen(true);
   };
 
+  const settings = useContext(SettingsContext);
+  const [serverAddress, setServerAddress] = useState(settings.get.server);
+  const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
+  const {
+    isStale, isLoading, error, data, refetch,
+  } = useVersion(false);
+
+  /**
+   * Handle server address backup when closing the modal
+   */
   const exitModal = () => {
     if (data) setServerAddress(serverAddressBackup);
-    setIsOpen(false);
+    closeModal();
   };
 
-  const saveModal = () => {
+  /**
+   * Check if the server address has a version when clicking the save button
+   */
+  const saveModalOnClick = () => {
     refetch();
   };
 
-  const saveAddress = () => {
+  /**
+   * Save the server address in the settings and set the server address backup
+   * when the save button is focused
+   */
+  const saveAddressOnFocus = () => {
     setServerAddressBackup(serverAddress);
 
     settings.dispatch({
@@ -48,11 +60,15 @@ const ServerModal = () => {
     });
   };
 
+  /**
+   * Close the modal if the data is recent and the modal is open,
+   * meaning the user successfully changed the server address
+   */
   if (data && !isStale && isOpen) {
     closeModal();
   }
 
-  const buttonText = () => {
+  const saveButtonContent = () => {
     if (isLoading) {
       return <ClipLoader size="18px" color="white" />;
     }
@@ -68,7 +84,9 @@ const ServerModal = () => {
     return 'Save';
   };
 
-  const buttonClassName = data && !isStale ? 'bg-light-success-400 dark:bg-dark-success-500' : '';
+  const saveButtonClassName = data && !isStale
+    ? 'bg-light-success-400 dark:bg-dark-success-500'
+    : '';
 
   const errorMessage = () => {
     if (error) {
@@ -140,8 +158,8 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModal} onFocus={saveAddress} className={`w-[12ch] flex items-center justify-center ${buttonClassName}`}>
-                      {buttonText()}
+                    <Button onClick={saveModalOnClick} onFocus={saveAddressOnFocus} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
+                      {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
                 </Dialog.Panel>
