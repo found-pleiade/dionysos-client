@@ -9,7 +9,6 @@ const Button = ({
   to = '',
   colorless,
   onClick,
-  onFocus,
   disabled,
   children,
 }: {
@@ -19,7 +18,6 @@ const Button = ({
   to?: To,
   colorless?: boolean,
   onClick?: any,
-  onFocus?: any,
   disabled?: boolean,
   children?: React.ReactNode,
 }) => {
@@ -47,7 +45,6 @@ const Button = ({
       onClick={onClick}
       title={title}
       tabIndex={0}
-      onFocus={onFocus}
       disabled={disabled}
     >
       {children}
@@ -61,7 +58,6 @@ const Button = ({
       onClick={onClick}
       title={title}
       tabIndex={0}
-      onFocus={onFocus}
       to={to}
     >
       {children}
