@@ -1,8 +1,9 @@
+import { useContext } from 'react';
 import { useMutation } from 'react-query';
-import useSettings from './settings';
+import SettingsContext from '../contexts/SettingContext';
 
 const useRegister = (username: string) => {
-  const settings = useSettings();
+  const settings = useContext(SettingsContext);
 
   const {
     isLoading, error, data, mutate,

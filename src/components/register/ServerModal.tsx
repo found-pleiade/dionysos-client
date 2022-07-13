@@ -1,23 +1,25 @@
-import React, { Fragment, useState } from 'react';
+import React, {
+  Fragment, useContext, useState,
+} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
 import { ClipLoader } from 'react-spinners';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
-import useSettings from '../../hooks/settings';
 import useVersion from '../../hooks/version';
 import ErrorCard from './ErrorCard';
+import SettingsContext from '../../contexts/SettingContext';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const settings = useSettings();
+  const settings = useContext(SettingsContext);
   const [serverAddress, setServerAddress] = useState(settings.get.server);
 
   const {
     isStale, isLoading, error, data, refetch,
-  } = useVersion(serverAddress, false);
+  } = useVersion(false);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -31,12 +33,14 @@ const ServerModal = () => {
     refetch();
   };
 
-  if (data && !isStale && isOpen) {
+  const saveAddress = () => {
     settings.dispatch({
       type: 'SET_SERVER',
       payload: { server: serverAddress },
     });
+  };
 
+  if (data && !isStale && isOpen) {
     closeModal();
   }
 
@@ -119,7 +123,7 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <Input className="mb-4" value={serverAddress} setValue={setServerAddress} />
+                  <Input disabled={isLoading} className="mb-4" value={serverAddress} setValue={setServerAddress} />
 
                   {errorMessage()}
 
@@ -128,7 +132,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModal} className={`w-[12ch] flex items-center justify-center ${buttonClassName}`}>
+                    <Button onClick={saveModal} onFocus={saveAddress} className={`w-[12ch] flex items-center justify-center ${buttonClassName}`}>
                       {buttonText()}
                     </Button>
                   </SpaceBetween>

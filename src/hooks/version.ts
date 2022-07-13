@@ -1,14 +1,15 @@
+import { useContext } from 'react';
 import { useQuery } from 'react-query';
-import useSettings from './settings';
+import SettingsContext from '../contexts/SettingContext';
 
-const useVersion = (address?: string, enabled = true) => {
-  const settings = useSettings();
+const useVersion = (enabled = true) => {
+  const settings = useContext(SettingsContext);
 
   const {
     isStale, isLoading, isFetching, error, data, refetch,
   } = useQuery(
     'getVersion',
-    () => fetch(`${address || settings.get.server}/version`).then(
+    () => fetch(`${settings.get.server}/version`).then(
       (res) => res.text(),
     ),
     {
