@@ -1,5 +1,5 @@
 import React, {
-  Fragment, useContext, useState,
+  Fragment, useContext, useEffect, useState,
 } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
@@ -12,9 +12,6 @@ import ErrorCard from './ErrorCard';
 import SettingsContext from '../../contexts/SettingContext';
 
 const ServerModal = () => {
-  /**
-   * Handle basic state of the modal
-   */
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -32,38 +29,23 @@ const ServerModal = () => {
     isStale, isLoading, error, data, refetch,
   } = useVersion(false);
 
-  /**
-   * Handle server address backup when closing the modal
-   */
   const exitModal = () => {
     if (data) setServerAddress(serverAddressBackup);
     closeModal();
   };
 
-  /**
-   * Check if the server address has a version when clicking the save button
-   */
   const saveModalOnClick = () => {
+    setServerAddressBackup(serverAddress);
     refetch();
   };
 
-  /**
-   * Save the server address in the settings and set the server address backup
-   * when the save button is focused
-   */
-  const saveAddressOnFocus = () => {
-    setServerAddressBackup(serverAddress);
-
+  useEffect(() => {
     settings.dispatch({
       type: 'SET_SERVER',
       payload: { server: serverAddress },
     });
-  };
+  }, [serverAddress]);
 
-  /**
-   * Close the modal if the data is recent and the modal is open,
-   * meaning the user successfully changed the server address
-   */
   if (data && !isStale && isOpen) {
     closeModal();
   }
@@ -158,7 +140,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} onFocus={saveAddressOnFocus} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
+                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
