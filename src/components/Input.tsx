@@ -6,6 +6,7 @@ const Input = ({
   placeholder,
   onChange,
   onKeyDown,
+  disabled,
 
   value,
   setValue,
@@ -15,6 +16,7 @@ const Input = ({
   placeholder?: string,
   onChange?: any,
   onKeyDown?: any,
+  disabled?: boolean,
 
   value?: any,
   setValue?: React.Dispatch<React.SetStateAction<any>>,
@@ -32,6 +34,7 @@ const Input = ({
       }}
       onKeyDown={onKeyDown}
       placeholder={' '}
+      disabled={disabled}
     />
 
     <p className="absolute top-2 left-3 font-medium cursor-text text-light-secondary/60 dark:text-dark-primary-400/70 pointer-events-none transition-all duration-200 placeholder">
