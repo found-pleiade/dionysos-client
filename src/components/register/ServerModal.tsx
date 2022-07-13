@@ -16,6 +16,7 @@ const ServerModal = () => {
 
   const settings = useContext(SettingsContext);
   const [serverAddress, setServerAddress] = useState(settings.get.server);
+  const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
 
   const {
     isStale, isLoading, error, data, refetch,
@@ -29,11 +30,18 @@ const ServerModal = () => {
     setIsOpen(true);
   };
 
+  const exitModal = () => {
+    if (data) setServerAddress(serverAddressBackup);
+    setIsOpen(false);
+  };
+
   const saveModal = () => {
     refetch();
   };
 
   const saveAddress = () => {
+    setServerAddressBackup(serverAddress);
+
     settings.dispatch({
       type: 'SET_SERVER',
       payload: { server: serverAddress },
@@ -91,7 +99,7 @@ const ServerModal = () => {
       </Button>
 
       <Transition show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={exitModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -128,7 +136,7 @@ const ServerModal = () => {
                   {errorMessage()}
 
                   <SpaceBetween>
-                    <Button onClick={closeModal} colorless>
+                    <Button onClick={exitModal} colorless>
                       Back
                     </Button>
 
