@@ -1,23 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import React, {
+  Fragment, useContext, useEffect, useState,
+} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
 import { ClipLoader } from 'react-spinners';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
-import useSettings from '../../hooks/settings';
 import useVersion from '../../hooks/version';
 import ErrorCard from './ErrorCard';
+import SettingsContext from '../../contexts/SettingContext';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const settings = useSettings();
-  const [serverAddress, setServerAddress] = useState(settings.get.server);
-
-  const {
-    isStale, isLoading, error, data, refetch,
-  } = useVersion(serverAddress, false);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -27,20 +22,35 @@ const ServerModal = () => {
     setIsOpen(true);
   };
 
-  const saveModal = () => {
+  const settings = useContext(SettingsContext);
+  const [serverAddress, setServerAddress] = useState(settings.get.server);
+  const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
+  const {
+    isStale, isLoading, error, data, refetch,
+  } = useVersion(false);
+
+  const exitModal = () => {
+    if (data) setServerAddress(serverAddressBackup);
+    closeModal();
+  };
+
+  const saveModalOnClick = () => {
+    setServerAddressBackup(serverAddress);
     refetch();
   };
 
-  if (data && !isStale && isOpen) {
+  useEffect(() => {
     settings.dispatch({
       type: 'SET_SERVER',
       payload: { server: serverAddress },
     });
+  }, [serverAddress]);
 
+  if (data && !isStale && isOpen) {
     closeModal();
   }
 
-  const buttonText = () => {
+  const saveButtonContent = () => {
     if (isLoading) {
       return <ClipLoader size="18px" color="white" />;
     }
@@ -56,7 +66,9 @@ const ServerModal = () => {
     return 'Save';
   };
 
-  const buttonClassName = data && !isStale ? 'bg-light-success-400 dark:bg-dark-success-500' : '';
+  const saveButtonClassName = data && !isStale
+    ? 'bg-light-success-400 dark:bg-dark-success-500'
+    : '';
 
   const errorMessage = () => {
     if (error) {
@@ -87,7 +99,7 @@ const ServerModal = () => {
       </Button>
 
       <Transition show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={exitModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -119,17 +131,17 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <Input className="mb-4" value={serverAddress} setValue={setServerAddress} />
+                  <Input disabled={isLoading} className="mb-4" value={serverAddress} setValue={setServerAddress} />
 
                   {errorMessage()}
 
                   <SpaceBetween>
-                    <Button onClick={closeModal} colorless>
+                    <Button onClick={exitModal} colorless>
                       Back
                     </Button>
 
-                    <Button onClick={saveModal} className={`w-[12ch] flex items-center justify-center ${buttonClassName}`}>
-                      {buttonText()}
+                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
+                      {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
                 </Dialog.Panel>
