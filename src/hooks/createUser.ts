@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useMutation } from 'react-query';
 import SettingsContext from '../contexts/SettingContext';
 
-const useRegister = (name: string) => {
+const useCreateUser = (name: string) => {
   const settings = useContext(SettingsContext);
 
   const {
@@ -17,14 +17,14 @@ const useRegister = (name: string) => {
     ),
   );
 
-  const createUser = () => {
-    if (data) return;
+  const safeMutate = () => {
+    if (data || isLoading) return;
     mutate();
   };
 
   return {
-    isLoading, error, data, createUser,
+    isLoading, error, data, safeMutate,
   };
 };
 
-export default useRegister;
+export default useCreateUser;

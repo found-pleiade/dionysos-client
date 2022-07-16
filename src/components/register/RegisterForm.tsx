@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
-import useRegister from '../../hooks/register';
+import UserContext from '../../contexts/UserContext';
+import useCreateUser from '../../hooks/createUser';
 import Button from '../Button';
 import Input from '../Input';
 import RowGroup from '../RowGroup';
@@ -9,12 +10,29 @@ import RowGroup from '../RowGroup';
 const RegisterForm = () => {
   const [name, setName] = useState('');
   const {
-    isLoading, error, data, createUser,
-  } = useRegister(name);
+    isLoading, error, data, safeMutate,
+  } = useCreateUser(name);
+  const user = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data) navigate('/home');
+    if (data) {
+      user.dispatch({
+        type: 'SET_URI_AND_ID',
+        payload: {
+          uri: data.uri,
+        },
+      });
+
+      user.dispatch({
+        type: 'SET_NAME',
+        payload: {
+          name,
+        },
+      });
+
+      navigate('/home');
+    }
   }, [data]);
 
   const buttonText = () => {
@@ -33,7 +51,7 @@ const RegisterForm = () => {
     <RowGroup>
       <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={name} setValue={setName} />
 
-      <Button className="rounded-l-none w-[12ch] flex items-center justify-center" onClick={createUser}>
+      <Button className="rounded-l-none w-[12ch] flex items-center justify-center" onClick={safeMutate}>
         {buttonText()}
       </Button>
     </RowGroup>
