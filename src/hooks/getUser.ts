@@ -10,7 +10,7 @@ const useGetUser = () => {
   const {
     isLoading, error, data,
   } = useQuery(
-    'createUser',
+    'getUser',
     () => fetch(`${settings.get.server}${user.get.uri}`).then(
       (res) => res.json(),
     ),
