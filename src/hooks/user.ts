@@ -20,21 +20,28 @@ const useUser = () => {
     },
   ) => {
     switch (action.type) {
-      case SettingsActionList.SET_URI_AND_ID:
-        if (!action.payload.uri) throw new Error('Missing uri');
-        if (!action.payload.uri.split('/').pop()) throw new Error('Missing id in uri');
+      case SettingsActionList.SET_URI_AND_ID: {
+        const { uri } = action.payload;
+        if (!uri) throw new Error('Missing uri');
+
+        const id = Number(uri.split('/').pop());
+        if (!id) throw new Error('Missing id in uri');
 
         return {
           ...state,
-          uri: action.payload.uri,
-          id: parseInt(action.payload.uri.split('/').pop() as string, 10),
+          uri,
+          id,
         };
-      case SettingsActionList.SET_NAME:
-        if (!action.payload.name) throw new Error('Missing name');
+      }
+      case SettingsActionList.SET_NAME: {
+        const { name } = action.payload;
+
+        if (!name) throw new Error('Missing name');
         return {
           ...state,
-          name: action.payload.name,
+          name,
         };
+      }
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
