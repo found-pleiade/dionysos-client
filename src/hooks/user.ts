@@ -8,7 +8,7 @@ const useUser = () => {
   };
 
   enum SettingsActionList {
-    SET_URI = 'SET_URI',
+    SET_URI_AND_ID = 'SET_URI_AND_ID',
     SET_NAME = 'SET_NAME',
   }
 
@@ -20,7 +20,7 @@ const useUser = () => {
     },
   ) => {
     switch (action.type) {
-      case SettingsActionList.SET_URI:
+      case SettingsActionList.SET_URI_AND_ID:
         if (!action.payload.uri) throw new Error('Missing uri');
         if (!action.payload.uri.split('/').pop()) throw new Error('Missing id in uri');
 

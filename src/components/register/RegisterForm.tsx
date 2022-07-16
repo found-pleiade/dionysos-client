@@ -18,7 +18,7 @@ const RegisterForm = () => {
   useEffect(() => {
     if (data) {
       user.dispatch({
-        type: 'SET_URI',
+        type: 'SET_URI_AND_ID',
         payload: {
           uri: data.uri,
         },
