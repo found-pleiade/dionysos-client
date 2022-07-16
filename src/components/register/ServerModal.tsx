@@ -66,6 +66,10 @@ const ServerModal = () => {
     return 'Save';
   };
 
+  const leaveDelay = data && !isStale
+    ? 'delay-500'
+    : '';
+
   const saveButtonClassName = data && !isStale
     ? 'bg-light-success-400 dark:bg-dark-success-500'
     : '';
@@ -105,7 +109,7 @@ const ServerModal = () => {
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-200 delay-500"
+            leave={`ease-in duration-200 ${leaveDelay}`}
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -119,7 +123,7 @@ const ServerModal = () => {
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200 delay-500"
+                leave={`ease-in duration-200 ${leaveDelay}`}
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
