@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import UserContext from '../../contexts/UserContext';
 import useCreateUser from '../../hooks/createUser';
 import Button from '../Button';
 import Input from '../Input';
@@ -11,10 +12,27 @@ const RegisterForm = () => {
   const {
     isLoading, error, data, safeMutate,
   } = useCreateUser(name);
+  const user = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data) navigate('/home');
+    if (data) {
+      user.dispatch({
+        type: 'SET_URI',
+        payload: {
+          uri: data.uri,
+        },
+      });
+
+      user.dispatch({
+        type: 'SET_NAME',
+        payload: {
+          name,
+        },
+      });
+
+      navigate('/home');
+    }
   }, [data]);
 
   const buttonText = () => {
