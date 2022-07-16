@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import { useMutation } from 'react-query';
 import SettingsContext from '../contexts/SettingContext';
+import UserContext from '../contexts/UserContext';
 
 const useCreateUser = (name: string) => {
   const settings = useContext(SettingsContext);
+  const user = useContext(UserContext);
 
   const {
     isLoading, error, data, mutate,
@@ -21,6 +23,15 @@ const useCreateUser = (name: string) => {
     if (data || isLoading) return;
     mutate();
   };
+
+  if (data) {
+    user.dispatch({
+      type: 'SET_URI',
+      payload: {
+        uri: data.uri,
+      },
+    });
+  }
 
   return {
     isLoading, error, data, safeMutate,
