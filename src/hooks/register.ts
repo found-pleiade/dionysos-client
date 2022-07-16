@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useMutation } from 'react-query';
 import SettingsContext from '../contexts/SettingContext';
 
-const useRegister = (username: string) => {
+const useRegister = (name: string) => {
   const settings = useContext(SettingsContext);
 
   const {
@@ -11,7 +11,7 @@ const useRegister = (username: string) => {
     'createUser',
     () => fetch(`${settings.get.server}/users/`, {
       method: 'POST',
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({ name }),
     }).then(
       (res) => res.json(),
     ),

@@ -7,10 +7,10 @@ import Input from '../Input';
 import RowGroup from '../RowGroup';
 
 const RegisterForm = () => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const {
     isLoading, error, data, createUser,
-  } = useRegister(username);
+  } = useRegister(name);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const RegisterForm = () => {
 
   return (
     <RowGroup>
-      <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={username} setValue={setUsername} />
+      <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={name} setValue={setName} />
 
       <Button className="rounded-l-none w-[12ch] flex items-center justify-center" onClick={createUser}>
         {buttonText()}
