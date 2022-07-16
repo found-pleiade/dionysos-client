@@ -7,7 +7,7 @@ import Input from '../Input';
 import RowGroup from '../RowGroup';
 
 const RegisterForm = () => {
-  const [name, setUser] = useState('');
+  const [name, setName] = useState('');
   const {
     isLoading, error, data, createUser,
   } = useRegister(name);
@@ -31,7 +31,7 @@ const RegisterForm = () => {
 
   return (
     <RowGroup>
-      <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={name} setValue={setUser} />
+      <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={name} setValue={setName} />
 
       <Button className="rounded-l-none w-[12ch] flex items-center justify-center" onClick={createUser}>
         {buttonText()}
