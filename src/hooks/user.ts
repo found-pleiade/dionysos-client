@@ -3,7 +3,7 @@ import { useReducer } from 'react';
 const useUser = () => {
   const baseUser = {
     uri: '',
-    id: '',
+    id: 0,
     name: '',
   };
 
@@ -22,10 +22,12 @@ const useUser = () => {
     switch (action.type) {
       case SettingsActionList.SET_URI:
         if (!action.payload.uri) throw new Error('Missing uri');
+        if (!action.payload.uri.split('/').pop()) throw new Error('Missing id in uri');
+
         return {
           ...state,
           uri: action.payload.uri,
-          id: action.payload.uri.split('/').pop() as string,
+          id: parseInt(action.payload.uri.split('/').pop() as string, 10),
         };
       case SettingsActionList.SET_NAME:
         if (!action.payload.name) throw new Error('Missing name');
