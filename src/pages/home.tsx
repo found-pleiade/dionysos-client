@@ -1,6 +1,7 @@
 import React from 'react';
-import OverlayMenu from '../components/OverlayMenu';
-import Panel from '../components/Panel';
+import UserDisplay from '../components/home/UserDisplay';
+import OverlayMenu from '../components/home/OverlayMenu';
+import Panel from '../components/home/Panel';
 import useSideMenu from '../hooks/sideMenu';
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       <div className="h-screen w-screen truncate flex">
         <Panel state={panel}>
           <div />
+          <UserDisplay />
         </Panel>
 
         {/* Video */}
