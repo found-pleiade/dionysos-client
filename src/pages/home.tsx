@@ -1,6 +1,6 @@
 import React from 'react';
-import OverlayMenu from '../components/OverlayMenu';
-import Panel from '../components/Panel';
+import OverlayMenu from '../components/home/OverlayMenu';
+import Panel from '../components/home/Panel';
 import useSideMenu from '../hooks/sideMenu';
 
 const Home = () => {
