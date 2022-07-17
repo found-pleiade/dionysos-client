@@ -44,20 +44,3 @@ Run tests once
 
 Run tests coverage  
 `pnpm coverage`
-
-## Intern dev workflow
-If you never used github as a project manager, here is how we work on the project.  
-
-- In the `Issues` tab, either
-	- Create an issue about a change you want to make, add the revelent tags about it and add it to the project.  
-	- Pick an existing issue.  
-
-	Assign yourself, talk about the issue if needed.  
-
-![Show an issue](./README_ressources/issue-1.png)
-
-- Once created, set the status of the project to "Todo" and create a branch to work on it. For that just clic on `create a branch`, let the default settings, create and checkout localy.   
-
-![Show the right columm after creating the issue](./README_ressources/issue-2.png)
-
-- Once your work done, go back in the `Code` tab and create a `Pull Request` with the notification about your branch being ahead of `main`. You'll need a reviewer for your code to get squashed and merged.
