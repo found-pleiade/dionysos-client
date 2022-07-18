@@ -1,5 +1,6 @@
 import React, { Children } from 'react';
 import { Link, To } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { isLenZero } from '../utils';
 
 const Button = ({
@@ -12,6 +13,7 @@ const Button = ({
   disabled,
   children,
   headless,
+  loading,
 }: {
   id?: string,
   className?: string,
@@ -22,6 +24,7 @@ const Button = ({
   disabled?: boolean,
   children?: React.ReactNode,
   headless?: boolean,
+  loading?: boolean,
 }) => {
   // Return an empty button element if there are no children.
   // Used for navigation buttons when needing a single right aligned button.
@@ -41,6 +44,14 @@ const Button = ({
     return `${base} ${c} ${d} ${className}`;
   };
 
+  const buttonState = () => {
+    if (loading) {
+      return <ClipLoader size="18px" color="white" />;
+    }
+
+    return children;
+  };
+
   const buttonTag = (
     <button
       id={id}
@@ -51,7 +62,7 @@ const Button = ({
       tabIndex={0}
       disabled={disabled}
     >
-      {children}
+      {buttonState()}
     </button>
   );
 
@@ -64,7 +75,7 @@ const Button = ({
       tabIndex={0}
       to={to}
     >
-      {children}
+      {buttonState()}
     </Link>
   );
 

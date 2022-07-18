@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
-import { ClipLoader } from 'react-spinners';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
@@ -51,10 +50,6 @@ const ServerModal = () => {
   }
 
   const saveButtonContent = () => {
-    if (isLoading) {
-      return <ClipLoader size="18px" color="white" />;
-    }
-
     if (error) {
       return 'Retry';
     }
@@ -144,7 +139,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
+                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`} loading={isLoading}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
