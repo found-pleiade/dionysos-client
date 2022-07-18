@@ -1,16 +1,23 @@
 import React, { useContext } from 'react';
 import UserContext from '../../contexts/UserContext';
+import Button from '../Button';
 
 /**
  * Display the user's name.
  */
-const UserDisplay = () => {
+const UserDisplay = ({
+  className,
+  onClick,
+}: {
+  className?: string,
+  onClick?: () => void,
+}) => {
   const user = useContext(UserContext);
 
   return (
-    <div className="text-md font-medium flex items-center w-min">
-      <p>{user.get.name}</p>
-    </div>
+    <Button headless onClick={onClick} className={className}>
+      {user.get.name}
+    </Button>
   );
 };
 
