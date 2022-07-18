@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import * as R from 'ramda';
 
 const useSettings = () => {
   const initialSettings = {
@@ -20,8 +21,8 @@ const useSettings = () => {
     switch (action.type) {
       case SettingsActionList.SET_SERVER: {
         const { server } = action.payload;
+        if (R.isNil(server)) throw new Error('Missing server');
 
-        if (!server) throw new Error('Missing server');
         return {
           ...state,
           server,
