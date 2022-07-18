@@ -90,6 +90,14 @@ const UserModal = () => {
     : '';
 
   const errorMessage = () => {
+    if (error && username.length === 0) {
+      return (
+        <ErrorCard>
+          Empty names are not allowed.
+        </ErrorCard>
+      );
+    }
+
     if (error) {
       return (
         <ErrorCard>
