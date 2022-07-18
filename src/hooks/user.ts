@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { useReducer } from 'react';
 
 const useUser = () => {
@@ -35,8 +36,8 @@ const useUser = () => {
       }
       case SettingsActionList.SET_NAME: {
         const { name } = action.payload;
+        if (R.isNil(name)) throw new Error('Missing name');
 
-        if (!name) throw new Error('Missing name');
         return {
           ...state,
           name,
