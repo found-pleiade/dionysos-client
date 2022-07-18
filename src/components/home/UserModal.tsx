@@ -7,7 +7,6 @@ import { ClipLoader } from 'react-spinners';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
-import UserDisplay from './UserDisplay';
 import UserContext from '../../contexts/UserContext';
 import useRenameUser from '../../hooks/renameUser';
 import ErrorCard from '../ErrorCard';
@@ -146,7 +145,9 @@ const UserModal = () => {
 
   return (
     <>
-      <UserDisplay className="text-left" onClick={openModal} />
+      <Button headless onClick={openModal} className="text-left">
+        {user.get.name}
+      </Button>
 
       <Transition show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={exitModal}>
