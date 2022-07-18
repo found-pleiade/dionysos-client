@@ -13,6 +13,9 @@ import useRenameUser from '../../hooks/renameUser';
 import ErrorCard from '../ErrorCard';
 
 const UserModal = () => {
+  const closeOnSuccessDelay = 500;
+  const closeDuration = 200;
+
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -34,6 +37,10 @@ const UserModal = () => {
   const exitModal = () => {
     if (!data) setUsername(usernameBackup);
     closeModal();
+
+    setTimeout(() => {
+      reset();
+    }, closeDuration);
   };
 
   const saveModalOnClick = () => {
@@ -53,7 +60,7 @@ const UserModal = () => {
 
     setTimeout(() => {
       reset();
-    }, 500 + 300); // delay + duration
+    }, closeOnSuccessDelay + closeDuration);
   }, [data]);
 
   const saveButtonContent = () => {
@@ -72,11 +79,13 @@ const UserModal = () => {
     return 'Save';
   };
 
-  const leaveDelay = data
-    ? 'delay-500'
+  const closeDurationClass = `duration-${closeDuration}`;
+
+  const closeDelayClass = data
+    ? `delay-${closeOnSuccessDelay}`
     : '';
 
-  const saveButtonClassName = data
+  const saveButtonClass = data
     ? 'bg-light-success-400 dark:bg-dark-success-500'
     : '';
 
@@ -103,7 +112,7 @@ const UserModal = () => {
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave={`ease-in duration-200 ${leaveDelay}`}
+            leave={`ease-in ${closeDurationClass} ${closeDelayClass}`}
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -117,7 +126,7 @@ const UserModal = () => {
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave={`ease-in duration-200 ${leaveDelay}`}
+                leave={`ease-in ${closeDurationClass} ${closeDelayClass}`}
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
@@ -138,7 +147,7 @@ const UserModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
+                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClass}`}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
