@@ -8,7 +8,7 @@ import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
 import useVersion from '../../hooks/version';
-import ErrorCard from './ErrorCard';
+import ErrorCard from '../ErrorCard';
 import SettingsContext from '../../contexts/SettingContext';
 
 const ServerModal = () => {
