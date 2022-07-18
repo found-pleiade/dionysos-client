@@ -2,14 +2,13 @@ import React, {
   Fragment, useContext, useEffect, useState,
 } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/solid';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
 import UserContext from '../../contexts/UserContext';
 import useRenameUser from '../../hooks/renameUser';
 import ErrorCard from '../ErrorCard';
-import { isLenZero } from '../../utils';
+import { isLenZero, notNil } from '../../utils';
 
 const UserDisplay = () => {
   /**
@@ -101,10 +100,6 @@ const UserDisplay = () => {
       return 'Retry';
     }
 
-    if (data) {
-      return <CheckIcon className="text-white w-6 h-6" />;
-    }
-
     return 'Save';
   };
 
@@ -112,10 +107,6 @@ const UserDisplay = () => {
 
   const closeDelayClass = data
     ? `delay-${closeOnSuccessDelay}`
-    : '';
-
-  const saveButtonClass = data
-    ? 'bg-light-success-400 dark:bg-dark-success-500'
     : '';
 
   const errorMessage = () => {
@@ -186,7 +177,7 @@ const UserDisplay = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClass}`} disabled={isLenZero(username)} loading={isLoading}>
+                    <Button onClick={saveModalOnClick} className="w-[12ch] flex items-center justify-center" success={notNil(data)} disabled={isLenZero(username)} loading={isLoading}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>

@@ -9,6 +9,7 @@ import SpaceBetween from '../SpaceBetween';
 import useVersion from '../../hooks/version';
 import ErrorCard from '../ErrorCard';
 import SettingsContext from '../../contexts/SettingContext';
+import { notNil } from '../../utils';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -139,7 +140,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`} loading={isLoading}>
+                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`} success={notNil(data) && !isStale} loading={isLoading}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
