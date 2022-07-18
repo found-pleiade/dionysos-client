@@ -11,6 +11,7 @@ import UserDisplay from './UserDisplay';
 import UserContext from '../../contexts/UserContext';
 import useRenameUser from '../../hooks/renameUser';
 import ErrorCard from '../ErrorCard';
+import { isLenZero } from '../../utils';
 
 const UserModal = () => {
   /**
@@ -124,7 +125,7 @@ const UserModal = () => {
     : '';
 
   const errorMessage = () => {
-    if (error && username.length === 0) {
+    if (isLenZero(username)) {
       return (
         <ErrorCard>
           Empty names are not allowed.
@@ -189,7 +190,7 @@ const UserModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClass}`}>
+                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClass}`} disabled={isLenZero(username)}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
