@@ -2,7 +2,7 @@ import React, {
   Fragment, useContext, useEffect, useState,
 } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
+import { GlobeAltIcon } from '@heroicons/react/solid';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
@@ -55,19 +55,11 @@ const ServerModal = () => {
       return 'Retry';
     }
 
-    if (data && !isStale) {
-      return <CheckIcon className="text-white w-6 h-6" />;
-    }
-
     return 'Save';
   };
 
   const leaveDelay = data && !isStale
     ? 'delay-500'
-    : '';
-
-  const saveButtonClassName = data && !isStale
-    ? 'bg-light-success-400 dark:bg-dark-success-500'
     : '';
 
   const errorMessage = () => {
@@ -140,7 +132,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`} success={notNil(data) && !isStale} loading={isLoading}>
+                    <Button onClick={saveModalOnClick} className="w-[12ch] flex items-center justify-center" success={notNil(data) && !isStale} loading={isLoading}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
