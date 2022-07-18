@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
 import UserContext from '../../contexts/UserContext';
 import useCreateUser from '../../hooks/createUser';
 import Button from '../Button';
@@ -36,10 +35,6 @@ const RegisterForm = () => {
   }, [data]);
 
   const buttonText = () => {
-    if (isLoading) {
-      return <ClipLoader size="18px" color="white" />;
-    }
-
     if (error) {
       return 'Try again';
     }
@@ -51,7 +46,7 @@ const RegisterForm = () => {
     <RowGroup>
       <Input id="connect" className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100" placeholder="Username" value={name} setValue={setName} />
 
-      <Button className="rounded-l-none w-[12ch] flex items-center justify-center" onClick={safeMutate}>
+      <Button className="rounded-l-none w-[12ch] flex items-center justify-center" onClick={safeMutate} loading={isLoading}>
         {buttonText()}
       </Button>
     </RowGroup>

@@ -2,14 +2,14 @@ import React, {
   Fragment, useContext, useEffect, useState,
 } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon, GlobeAltIcon } from '@heroicons/react/solid';
-import { ClipLoader } from 'react-spinners';
+import { GlobeAltIcon } from '@heroicons/react/solid';
 import Button from '../Button';
 import Input from '../Input';
 import SpaceBetween from '../SpaceBetween';
 import useVersion from '../../hooks/version';
 import ErrorCard from '../ErrorCard';
 import SettingsContext from '../../contexts/SettingContext';
+import { notNil } from '../../utils';
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,16 +51,8 @@ const ServerModal = () => {
   }
 
   const saveButtonContent = () => {
-    if (isLoading) {
-      return <ClipLoader size="18px" color="white" />;
-    }
-
     if (error) {
       return 'Retry';
-    }
-
-    if (data && !isStale) {
-      return <CheckIcon className="text-white w-6 h-6" />;
     }
 
     return 'Save';
@@ -68,10 +60,6 @@ const ServerModal = () => {
 
   const leaveDelay = data && !isStale
     ? 'delay-500'
-    : '';
-
-  const saveButtonClassName = data && !isStale
-    ? 'bg-light-success-400 dark:bg-dark-success-500'
     : '';
 
   const errorMessage = () => {
@@ -144,7 +132,7 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className={`w-[12ch] flex items-center justify-center ${saveButtonClassName}`}>
+                    <Button onClick={saveModalOnClick} className="w-[12ch] flex items-center justify-center" success={notNil(data) && !isStale} loading={isLoading}>
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>
