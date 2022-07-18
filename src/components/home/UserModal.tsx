@@ -13,9 +13,15 @@ import useRenameUser from '../../hooks/renameUser';
 import ErrorCard from '../ErrorCard';
 
 const UserModal = () => {
+  /**
+   * Those are values used for setTimeouts, and the close animation.
+   */
   const closeOnSuccessDelay = 500;
   const closeDuration = 200;
 
+  /**
+   * State of the modal with it's setters.
+   */
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -26,14 +32,27 @@ const UserModal = () => {
     setIsOpen(true);
   };
 
+  /**
+   * The user in the context, the state of the input and
+   * a backup in case there is errors or edits without saving.
+   */
   const user = useContext(UserContext);
   const [username, setUsername] = useState(user.get.name);
   const [usernameBackup, setUsernameBackup] = useState(username);
 
+  /**
+   * Mutation to rename the user. The reset is used to clear
+   * the data and errors when the user closes the modal so
+   * it can be run again.
+   */
   const {
     data, isLoading, error, safeMutate, reset,
   } = useRenameUser(username);
 
+  /**
+   * Change the state of the modal with some effects.
+   * Reset to clear errors after the close animation.
+   */
   const exitModal = () => {
     if (!data) setUsername(usernameBackup);
     closeModal();
@@ -43,10 +62,16 @@ const UserModal = () => {
     }, closeDuration);
   };
 
+  /**
+   * Fire the mutation on save.
+   */
   const saveModalOnClick = () => {
     safeMutate();
   };
 
+  /**
+   * Modify the user object as the user types.
+   */
   useEffect(() => {
     user.dispatch({
       type: 'SET_NAME',
@@ -54,6 +79,11 @@ const UserModal = () => {
     });
   }, [username]);
 
+  /**
+   * Update the backup and close the modal on success.
+   * Add a timeout with a reset to clear the data after
+   * the animation is done.
+   */
   useEffect(() => {
     setUsernameBackup(username);
     closeModal();
@@ -63,6 +93,10 @@ const UserModal = () => {
     }, closeOnSuccessDelay + closeDuration);
   }, [data]);
 
+  /**
+   * Change the visuals of the modal based on
+   * the state of the server.
+   */
   const saveButtonContent = () => {
     if (isLoading) {
       return <ClipLoader size="18px" color="white" />;
