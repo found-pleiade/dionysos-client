@@ -12,7 +12,7 @@ import useRenameUser from '../../hooks/renameUser';
 import ErrorCard from '../ErrorCard';
 import { isLenZero } from '../../utils';
 
-const UserModal = () => {
+const UserDisplay = () => {
   /**
    * Those are values used for setTimeouts, and the close animation.
    */
@@ -205,4 +205,4 @@ const UserModal = () => {
   );
 };
 
-export default UserModal;
+export default UserDisplay;
