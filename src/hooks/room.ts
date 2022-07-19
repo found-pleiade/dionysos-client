@@ -8,6 +8,8 @@ const useRoom = () => {
     name: '',
   };
 
+  const RoomError = (err: string) => new Error(`useRoom: ${err}`);
+
   enum RoomActionList {
     SET_URI_AND_ID = 'SET_URI_AND_ID',
     SET_NAME = 'SET_NAME',
@@ -23,10 +25,10 @@ const useRoom = () => {
     switch (action.type) {
       case RoomActionList.SET_URI_AND_ID: {
         const { uri } = action.payload;
-        if (!uri) throw new Error('Missing uri');
+        if (!uri) throw RoomError('missing uri');
 
         const id = Number(uri.split('/').pop());
-        if (!id) throw new Error('Missing id in uri');
+        if (!id) throw RoomError('missing id in uri');
 
         return {
           ...state,
@@ -36,7 +38,7 @@ const useRoom = () => {
       }
       case RoomActionList.SET_NAME: {
         const { name } = action.payload;
-        if (R.isNil(name)) throw new Error('Missing name');
+        if (R.isNil(name)) throw RoomError('missing name');
 
         return {
           ...state,
@@ -44,7 +46,7 @@ const useRoom = () => {
         };
       }
       default:
-        throw new Error(`Unhandled action type: ${action.type}`);
+        throw RoomError(`unhandled action type: ${action.type}`);
     }
   };
 
