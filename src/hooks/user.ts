@@ -8,7 +8,7 @@ const useUser = () => {
     name: '',
   };
 
-  enum SettingsActionList {
+  enum UserActionList {
     SET_URI_AND_ID = 'SET_URI_AND_ID',
     SET_NAME = 'SET_NAME',
   }
@@ -16,12 +16,12 @@ const useUser = () => {
   const userReducer = (
     state: typeof baseUser,
     action: {
-      type: keyof typeof SettingsActionList;
+      type: keyof typeof UserActionList;
       payload: Partial<typeof baseUser>;
     },
   ) => {
     switch (action.type) {
-      case SettingsActionList.SET_URI_AND_ID: {
+      case UserActionList.SET_URI_AND_ID: {
         const { uri } = action.payload;
         if (!uri) throw new Error('Missing uri');
 
@@ -34,7 +34,7 @@ const useUser = () => {
           id,
         };
       }
-      case SettingsActionList.SET_NAME: {
+      case UserActionList.SET_NAME: {
         const { name } = action.payload;
         if (R.isNil(name)) throw new Error('Missing name');
 
