@@ -16,4 +16,4 @@ jobs:
     - name: run the tests
       run: pnpm test:run
     - name: build with ts
-      run: pnmp build
+      run: pnpm build
