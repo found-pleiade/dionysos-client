@@ -9,7 +9,7 @@ const useCreateUser = (name: string) => {
     isLoading, error, data, mutate,
   } = useMutation(
     'createUser',
-    () => fetch(`${settings.get.server}/users/`, {
+    () => fetch(`${settings.get.server}/users`, {
       method: 'POST',
       body: JSON.stringify({ name }),
     }).then(
