@@ -8,25 +8,27 @@ const useUser = () => {
     name: '',
   };
 
-  enum SettingsActionList {
+  enum UserActionList {
     SET_URI_AND_ID = 'SET_URI_AND_ID',
     SET_NAME = 'SET_NAME',
   }
 
+  const UserError = (err: string) => new Error(`useUser: ${err}`);
+
   const userReducer = (
     state: typeof baseUser,
     action: {
-      type: keyof typeof SettingsActionList;
+      type: keyof typeof UserActionList;
       payload: Partial<typeof baseUser>;
     },
   ) => {
     switch (action.type) {
-      case SettingsActionList.SET_URI_AND_ID: {
+      case UserActionList.SET_URI_AND_ID: {
         const { uri } = action.payload;
-        if (!uri) throw new Error('Missing uri');
+        if (!uri) throw UserError('missing uri');
 
         const id = Number(uri.split('/').pop());
-        if (!id) throw new Error('Missing id in uri');
+        if (!id) throw UserError('missing id in uri');
 
         return {
           ...state,
@@ -34,9 +36,9 @@ const useUser = () => {
           id,
         };
       }
-      case SettingsActionList.SET_NAME: {
+      case UserActionList.SET_NAME: {
         const { name } = action.payload;
-        if (R.isNil(name)) throw new Error('Missing name');
+        if (R.isNil(name)) throw UserError('missing name');
 
         return {
           ...state,
@@ -44,7 +46,7 @@ const useUser = () => {
         };
       }
       default:
-        throw new Error(`Unhandled action type: ${action.type}`);
+        throw UserError(`unhandled action type: ${action.type}`);
     }
   };
 

@@ -11,6 +11,8 @@ const useSettings = () => {
     SET_SERVER_DEFAULT = 'SET_SERVER_DEFAULT',
   }
 
+  const SettingsError = (err: string) => new Error(`useSettings: ${err}`);
+
   const settingsReducer = (
     state: typeof initialSettings,
     action: {
@@ -21,7 +23,7 @@ const useSettings = () => {
     switch (action.type) {
       case SettingsActionList.SET_SERVER: {
         const { server } = action.payload;
-        if (R.isNil(server)) throw new Error('Missing server');
+        if (R.isNil(server)) throw SettingsError('missing server');
 
         return {
           ...state,
@@ -34,7 +36,7 @@ const useSettings = () => {
           server: initialSettings.server,
         };
       default:
-        throw new Error(`Unhandled action type: ${action.type}`);
+        throw SettingsError(`Unhandled action type: ${action.type}`);
     }
   };
 
