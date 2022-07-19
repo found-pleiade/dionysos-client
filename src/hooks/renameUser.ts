@@ -11,7 +11,7 @@ const useRenameUser = (name: string) => {
     isLoading, error, data, mutate, reset,
   } = useMutation(
     'renameUser',
-    () => fetch(`${settings.get.server}${user.get.uri}/`, {
+    () => fetch(`${settings.get.server}${user.get.uri}`, {
       method: 'PATCH',
       body: JSON.stringify({ name }),
     }).then(
