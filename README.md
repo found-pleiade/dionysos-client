@@ -1,7 +1,7 @@
 # Dionysos client
 Share and watch movies with your friends.
 
-# Dev
+# Developpers
 
 ## Project setup
 
