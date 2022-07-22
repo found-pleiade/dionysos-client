@@ -25,11 +25,7 @@ pnpm i
 
 ### Dev
 You can now run the app with hot-reloading.  
-`pnpm tauri dev`
-
-### Build
-Create a bundle located at `src-tauri/target/release`  
-`pnpm tauri build`
+`pnpm dev`
 
 ### Test
 Run tests in watch mode  
