@@ -10,7 +10,7 @@ The best way to get NodeJS is with [nvm](https://github.com/nvm-sh/nvm) or [nvm 
 The NodeJS version used for the project is the `16.15.1`  
 
 ### 2. Install pnpm
-Pnpm is used as the packet manager for it’s speed and space efficiency while remaining compatible with Tauri.  
+Pnpm is used as the packet manager for it’s speed and space efficiency.  
 `npm install -g pnpm`  
 
 ### 3. Clone and install JS dependencies
