@@ -16,8 +16,8 @@ Pnpm is used as the packet manager for it’s speed and space efficiency.
 ### 3. Clone and install JS dependencies
 Clone the project, go into it and install the Javascript dependencies.
 ```
-git clone git@github.com:Brawdunoir/dionysos-client.git  
-cd dionysos-client  
+git clone git@github.com:found-pleiade/dionysos-client.git 
+cd dionysos-client 
 pnpm i
 ```
 
