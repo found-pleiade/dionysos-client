@@ -15,7 +15,7 @@ const useRenameUser = (name: string) => {
       method: 'PATCH',
       body: JSON.stringify({ name }),
     }).then(
-      (res) => res.json(),
+      (res) => res,
     ),
   );
 
