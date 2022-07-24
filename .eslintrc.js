@@ -18,6 +18,6 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {
-    "@typescript-eslint/no-explicit-any": false,
+    "@typescript-eslint/no-explicit-any": 0,
   },
 };
