@@ -5,10 +5,10 @@ import { Dialog, Transition } from '@headlessui/react';
 import { GlobeAltIcon } from '@heroicons/react/solid';
 import Button from '../Button';
 import Input from '../Input';
-import SpaceBetween from '../SpaceBetween';
-import useVersion from '../../hooks/version';
+import SpaceBetween from '../../layouts/SpaceBetween';
+import useVersion from '../../states/getVersion';
 import ErrorCard from '../ErrorCard';
-import SettingsContext from '../../contexts/SettingContext';
+import { SettingsContext } from '../../states/settings';
 import { notNil } from '../../utils';
 
 const ServerModal = () => {

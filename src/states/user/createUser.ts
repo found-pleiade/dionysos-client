@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useMutation } from 'react-query';
-import SettingsContext from '../contexts/SettingContext';
+import { SettingsContext } from '../settings';
 
 const useCreateUser = (name: string) => {
   const settings = useContext(SettingsContext);

@@ -4,9 +4,9 @@ import React, {
 import { Dialog, Transition } from '@headlessui/react';
 import Button from '../Button';
 import Input from '../Input';
-import SpaceBetween from '../SpaceBetween';
-import UserContext from '../../contexts/UserContext';
-import useRenameUser from '../../hooks/renameUser';
+import SpaceBetween from '../../layouts/SpaceBetween';
+import { UserContext } from '../../states/user/user';
+import useRenameUser from '../../states/user/renameUser';
 import ErrorCard from '../ErrorCard';
 import { isLenZero, notNil } from '../../utils';
 

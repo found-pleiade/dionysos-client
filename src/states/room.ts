@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { useReducer } from 'react';
+import { useReducer, createContext } from 'react';
 
 const useRoom = () => {
   const baseRoom = {
@@ -55,4 +55,7 @@ const useRoom = () => {
   return { get, dispatch };
 };
 
+const RoomContext = createContext(null as any as ReturnType<typeof useRoom>);
+
 export default useRoom;
+export { RoomContext };

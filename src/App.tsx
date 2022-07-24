@@ -3,10 +3,8 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Register from './pages/register';
 import Home from './pages/home';
-import SettingsContext from './contexts/SettingContext';
-import useSettings from './hooks/settings';
-import useUser from './hooks/user';
-import UserContext from './contexts/UserContext';
+import useSettings, { SettingsContext } from './states/settings';
+import useUser, { UserContext } from './states/user/user';
 
 const App = () => {
   const queryClient = new QueryClient({

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useQuery } from 'react-query';
-import SettingsContext from '../contexts/SettingContext';
+import { SettingsContext } from './settings';
 
 const useVersion = (enabled = true) => {
   const settings = useContext(SettingsContext);
