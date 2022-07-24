@@ -35,8 +35,8 @@ You can now run the app with hot-reloading.
 
 ### Prettier
 
-Run Prettier on all files  
-`pnpm prettier`
+Run Prettier on specified file or folder.  
+`pnpm prettier {file/folder}`
 
 ### Test
 
