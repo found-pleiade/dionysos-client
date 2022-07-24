@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useQuery } from 'react-query';
-import SettingsContext from '../contexts/SettingContext';
-import UserContext from '../contexts/UserContext';
+import { SettingsContext } from '../settings';
+import { UserContext } from '.';
 
 const useGetUser = () => {
   const settings = useContext(SettingsContext);

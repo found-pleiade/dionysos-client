@@ -1,6 +1,6 @@
 import { MenuIcon } from '@heroicons/react/solid';
 import React from 'react';
-import useSideMenu from '../../hooks/sideMenu';
+import useSideMenu from '../../states/sideMenu';
 import { visibility } from '../../utils';
 
 type OverlayMenuProps = {

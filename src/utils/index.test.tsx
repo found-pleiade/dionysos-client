@@ -4,7 +4,7 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expect, describe, it } from 'vitest';
-import * as utils from '../utils';
+import * as utils from '.';
 
 describe('visibility', () => {
   it('Output visible or hidden if true or false', () => {

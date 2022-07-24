@@ -1,5 +1,5 @@
 import React from 'react';
-import useSideMenu from '../../hooks/sideMenu';
+import useSideMenu from '../../states/sideMenu';
 import { translate } from '../../utils';
 import MinimizeIcon from './MinimizeIcon';
 
