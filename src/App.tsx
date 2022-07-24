@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Register from './pages/register';
 import Home from './pages/home';
 import useSettings, { SettingsContext } from './states/settings';
-import useUser, { UserContext } from './states/user/user';
+import useUser, { UserContext } from './states/user';
 
 const App = () => {
   const queryClient = new QueryClient({

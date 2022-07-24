@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useMutation } from 'react-query';
 import { SettingsContext } from '../settings';
-import { UserContext } from './user';
+import { UserContext } from '.';
 
 const useRenameUser = (name: string) => {
   const settings = useContext(SettingsContext);
