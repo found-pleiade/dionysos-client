@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const useSideMenu = (open: boolean) => {
   const [isOpen, setIsOpen] = useState(open);

@@ -1,22 +1,19 @@
-import { useContext } from 'react';
-import { useMutation } from 'react-query';
-import SettingsContext from '../contexts/SettingContext';
-import UserContext from '../contexts/UserContext';
+import { useContext } from "react";
+import { useMutation } from "react-query";
+import SettingsContext from "../contexts/SettingContext";
+import UserContext from "../contexts/UserContext";
 
 const useRenameUser = (name: string) => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
 
-  const {
-    isLoading, error, data, mutate, reset,
-  } = useMutation(
-    'renameUser',
-    () => fetch(`${settings.get.server}${user.get.uri}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ name }),
-    }).then(
-      (res) => res,
-    ),
+  const { isLoading, error, data, mutate, reset } = useMutation(
+    "renameUser",
+    () =>
+      fetch(`${settings.get.server}${user.get.uri}`, {
+        method: "PATCH",
+        body: JSON.stringify({ name }),
+      }).then((res) => res)
   );
 
   const safeMutate = () => {
@@ -25,7 +22,11 @@ const useRenameUser = (name: string) => {
   };
 
   return {
-    isLoading, error, data, safeMutate, reset,
+    isLoading,
+    error,
+    data,
+    safeMutate,
+    reset,
   };
 };
 

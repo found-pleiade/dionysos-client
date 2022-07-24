@@ -1,16 +1,16 @@
-import * as R from 'ramda';
-import { useReducer } from 'react';
+import * as R from "ramda";
+import { useReducer } from "react";
 
 const useUser = () => {
   const baseUser = {
-    uri: '',
+    uri: "",
     id: 0,
-    name: '',
+    name: "",
   };
 
   enum UserActionList {
-    SET_URI_AND_ID = 'SET_URI_AND_ID',
-    SET_NAME = 'SET_NAME',
+    SET_URI_AND_ID = "SET_URI_AND_ID",
+    SET_NAME = "SET_NAME",
   }
 
   const UserError = (err: string) => new Error(`useUser: ${err}`);
@@ -20,15 +20,15 @@ const useUser = () => {
     action: {
       type: keyof typeof UserActionList;
       payload: Partial<typeof baseUser>;
-    },
+    }
   ) => {
     switch (action.type) {
       case UserActionList.SET_URI_AND_ID: {
         const { uri } = action.payload;
-        if (!uri) throw UserError('missing uri');
+        if (!uri) throw UserError("missing uri");
 
-        const id = Number(uri.split('/').pop());
-        if (!id) throw UserError('missing id in uri');
+        const id = Number(uri.split("/").pop());
+        if (!id) throw UserError("missing id in uri");
 
         return {
           ...state,
@@ -38,7 +38,7 @@ const useUser = () => {
       }
       case UserActionList.SET_NAME: {
         const { name } = action.payload;
-        if (R.isNil(name)) throw UserError('missing name');
+        if (R.isNil(name)) throw UserError("missing name");
 
         return {
           ...state,

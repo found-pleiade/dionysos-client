@@ -1,5 +1,5 @@
-import { Context, createContext } from 'react';
-import useSettings from '../hooks/settings';
+import { Context, createContext } from "react";
+import useSettings from "../hooks/settings";
 
 const SettingsContext = createContext(null as any);
 
