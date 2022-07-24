@@ -33,6 +33,11 @@ pnpm i
 You can now run the app with hot-reloading.  
 `pnpm dev`
 
+### Prettier
+
+Run Prettier on all files
+`pnpm prettier`
+
 ### Test
 
 Run tests in watch mode  
