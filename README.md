@@ -35,7 +35,7 @@ You can now run the app with hot-reloading.
 
 ### Prettier
 
-Run Prettier on all files
+Run Prettier on all files  
 `pnpm prettier`
 
 ### Test
