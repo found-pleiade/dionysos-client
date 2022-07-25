@@ -1,8 +1,10 @@
-import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { expect, describe, it } from "vitest";
-import * as utils from "../utils";
+import React from 'react';
+import {
+  fireEvent, render, screen,
+} from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { expect, describe, it } from 'vitest';
+import * as utils from '.';
 
 describe("visibility", () => {
   it("Output visible or hidden if true or false", () => {

@@ -1,7 +1,7 @@
-import React from "react";
-import useSideMenu from "../../hooks/sideMenu";
-import { translate } from "../../utils";
-import MinimizeIcon from "./MinimizeIcon";
+import React from 'react';
+import useSideMenu from '../../states/sideMenu';
+import { translate } from '../../utils';
+import MinimizeIcon from './MinimizeIcon';
 
 const Panel = ({
   state,

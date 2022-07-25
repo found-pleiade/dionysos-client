@@ -1,9 +1,9 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { expect, describe, it } from "vitest";
-import { MemoryRouter } from "react-router-dom";
-import Button from "../components/Button";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { expect, describe, it } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
+import Button from './Button';
 
 describe("Renders", () => {
   it("div", () => {

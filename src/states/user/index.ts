@@ -1,5 +1,5 @@
-import * as R from "ramda";
-import { useReducer } from "react";
+import * as R from 'ramda';
+import { useReducer, createContext } from 'react';
 
 const useUser = () => {
   const baseUser = {
@@ -55,4 +55,7 @@ const useUser = () => {
   return { get, dispatch };
 };
 
+const UserContext = createContext(null as any as ReturnType<typeof useUser>);
+
 export default useUser;
+export { UserContext };

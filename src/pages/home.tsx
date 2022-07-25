@@ -1,8 +1,8 @@
-import React from "react";
-import OverlayMenu from "../components/home/OverlayMenu";
-import Panel from "../components/home/Panel";
-import useSideMenu from "../hooks/sideMenu";
-import UserDisplay from "../components/home/UserDisplay";
+import React from 'react';
+import OverlayMenu from '../components/home/OverlayMenu';
+import Panel from '../components/home/Panel';
+import useSideMenu from '../states/sideMenu';
+import UserDisplay from '../components/home/UserDisplay';
 
 const Home = () => {
   /**

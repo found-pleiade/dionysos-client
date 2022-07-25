@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
-import useCreateUser from "../../hooks/createUser";
-import Button from "../Button";
-import Input from "../Input";
-import RowGroup from "../RowGroup";
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../states/user';
+import useCreateUser from '../../states/user/createUser';
+import Button from '../Button';
+import Input from '../Input';
+import RowGroup from '../../layouts/RowGroup';
 
 const RegisterForm = () => {
   const [name, setName] = useState("");

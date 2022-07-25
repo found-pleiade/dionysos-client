@@ -1,5 +1,5 @@
-import { useReducer } from "react";
-import * as R from "ramda";
+import { useReducer, createContext } from 'react';
+import * as R from 'ramda';
 
 const useSettings = () => {
   const initialSettings = {
@@ -45,4 +45,7 @@ const useSettings = () => {
   return { get, dispatch };
 };
 
+const SettingsContext = createContext(null as any as ReturnType<typeof useSettings>);
+
 export default useSettings;
+export { SettingsContext };
