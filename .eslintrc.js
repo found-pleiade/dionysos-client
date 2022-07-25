@@ -1,38 +1,23 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'airbnb',
-    'plugin:import/typescript',
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ["react", "@typescript-eslint"],
   rules: {
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
-    'no-return-await': 'off',
-    'react/jsx-no-bind': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true, optionalDependencies: false, peerDependencies: false }],
-    'linebreak-style': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
-    'import/extensions': ['error', 'never'],
-    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
-    'react/require-default-props': 0,
-    'no-undef': 'off',
+    "@typescript-eslint/no-explicit-any": 0,
   },
 };

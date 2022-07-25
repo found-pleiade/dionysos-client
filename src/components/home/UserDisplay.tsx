@@ -1,14 +1,12 @@
-import React, {
-  Fragment, useContext, useEffect, useState,
-} from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import Button from '../Button';
-import Input from '../Input';
-import SpaceBetween from '../SpaceBetween';
-import UserContext from '../../contexts/UserContext';
-import useRenameUser from '../../hooks/renameUser';
-import ErrorCard from '../ErrorCard';
-import { isLenZero, notNil } from '../../utils';
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import Button from "../Button";
+import Input from "../Input";
+import SpaceBetween from "../SpaceBetween";
+import UserContext from "../../contexts/UserContext";
+import useRenameUser from "../../hooks/renameUser";
+import ErrorCard from "../ErrorCard";
+import { isLenZero, notNil } from "../../utils";
 
 const UserDisplay = () => {
   /**
@@ -43,9 +41,7 @@ const UserDisplay = () => {
    * the data and errors when the user closes the modal so
    * it can be run again.
    */
-  const {
-    data, isLoading, error, safeMutate, reset,
-  } = useRenameUser(username);
+  const { data, isLoading, error, safeMutate, reset } = useRenameUser(username);
 
   /**
    * Change the state of the modal with some effects.
@@ -72,7 +68,7 @@ const UserDisplay = () => {
    */
   useEffect(() => {
     user.dispatch({
-      type: 'SET_NAME',
+      type: "SET_NAME",
       payload: { name: username },
     });
   }, [username]);
@@ -97,32 +93,24 @@ const UserDisplay = () => {
    */
   const saveButtonContent = () => {
     if (error) {
-      return 'Retry';
+      return "Retry";
     }
 
-    return 'Save';
+    return "Save";
   };
 
   const closeDurationClass = `duration-${closeDuration}`;
 
-  const closeDelayClass = data
-    ? `delay-${closeOnSuccessDelay}`
-    : '';
+  const closeDelayClass = data ? `delay-${closeOnSuccessDelay}` : "";
 
   const errorMessage = () => {
     if (isLenZero(username)) {
-      return (
-        <ErrorCard>
-          Empty names are not allowed.
-        </ErrorCard>
-      );
+      return <ErrorCard>Empty names are not allowed.</ErrorCard>;
     }
 
     if (error) {
       return (
-        <ErrorCard>
-          An error occurred while trying to rename you.
-        </ErrorCard>
+        <ErrorCard>An error occurred while trying to rename you.</ErrorCard>
       );
     }
 
@@ -168,7 +156,12 @@ const UserDisplay = () => {
                     Username
                   </Dialog.Title>
 
-                  <Input disabled={isLoading} className="mb-4" value={username} setValue={setUsername} />
+                  <Input
+                    disabled={isLoading}
+                    className="mb-4"
+                    value={username}
+                    setValue={setUsername}
+                  />
 
                   {errorMessage()}
 
@@ -177,7 +170,13 @@ const UserDisplay = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className="w-[12ch] flex items-center justify-center" success={notNil(data)} disabled={isLenZero(username)} loading={isLoading}>
+                    <Button
+                      onClick={saveModalOnClick}
+                      className="w-[12ch] flex items-center justify-center"
+                      success={notNil(data)}
+                      disabled={isLenZero(username)}
+                      loading={isLoading}
+                    >
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>

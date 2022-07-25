@@ -1,18 +1,18 @@
-import * as R from 'ramda';
-import { useReducer } from 'react';
+import * as R from "ramda";
+import { useReducer } from "react";
 
 const useRoom = () => {
   const baseRoom = {
-    uri: '',
+    uri: "",
     id: 0,
-    name: '',
+    name: "",
   };
 
   const RoomError = (err: string) => new Error(`useRoom: ${err}`);
 
   enum RoomActionList {
-    SET_URI_AND_ID = 'SET_URI_AND_ID',
-    SET_NAME = 'SET_NAME',
+    SET_URI_AND_ID = "SET_URI_AND_ID",
+    SET_NAME = "SET_NAME",
   }
 
   const roomReducer = (
@@ -20,15 +20,15 @@ const useRoom = () => {
     action: {
       type: keyof typeof RoomActionList;
       payload: Partial<typeof baseRoom>;
-    },
+    }
   ) => {
     switch (action.type) {
       case RoomActionList.SET_URI_AND_ID: {
         const { uri } = action.payload;
-        if (!uri) throw RoomError('missing uri');
+        if (!uri) throw RoomError("missing uri");
 
-        const id = Number(uri.split('/').pop());
-        if (!id) throw RoomError('missing id in uri');
+        const id = Number(uri.split("/").pop());
+        if (!id) throw RoomError("missing id in uri");
 
         return {
           ...state,
@@ -38,7 +38,7 @@ const useRoom = () => {
       }
       case RoomActionList.SET_NAME: {
         const { name } = action.payload;
-        if (R.isNil(name)) throw RoomError('missing name');
+        if (R.isNil(name)) throw RoomError("missing name");
 
         return {
           ...state,

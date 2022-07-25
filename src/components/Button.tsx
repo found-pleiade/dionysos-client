@@ -1,14 +1,14 @@
-import { CheckIcon } from '@heroicons/react/solid';
-import React, { Children } from 'react';
-import { Link, To } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
-import { isLenZero } from '../utils';
+import { CheckIcon } from "@heroicons/react/solid";
+import React, { Children } from "react";
+import { Link, To } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { isLenZero } from "../utils";
 
 const Button = ({
   id,
   className,
   title,
-  to = '',
+  to = "",
   colorless,
   onClick,
   disabled,
@@ -17,17 +17,17 @@ const Button = ({
   loading,
   success,
 }: {
-  id?: string,
-  className?: string,
-  title?: string,
-  to?: To,
-  colorless?: boolean,
-  onClick?: any,
-  disabled?: boolean,
-  children?: React.ReactNode,
-  headless?: boolean,
-  loading?: boolean,
-  success?: boolean,
+  id?: string;
+  className?: string;
+  title?: string;
+  to?: To;
+  colorless?: boolean;
+  onClick?: any;
+  disabled?: boolean;
+  children?: React.ReactNode;
+  headless?: boolean;
+  loading?: boolean;
+  success?: boolean;
 }) => {
   // Return an empty button element if there are no children.
   // Used for navigation buttons when needing a single right aligned button.
@@ -38,19 +38,16 @@ const Button = ({
   const style = () => {
     if (headless) return className;
 
-    const base = 'px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400';
+    const base =
+      "px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400";
 
     const c = colorless
-      ? 'text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500'
-      : '';
+      ? "text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500"
+      : "";
 
-    const d = disabled
-      ? 'cursor-not-allowed opacity-50'
-      : '';
+    const d = disabled ? "cursor-not-allowed opacity-50" : "";
 
-    const s = success
-      ? 'bg-light-success-400 dark:bg-dark-success-500'
-      : '';
+    const s = success ? "bg-light-success-400 dark:bg-dark-success-500" : "";
 
     return `${base} ${c} ${d} ${s} ${className}`;
   };
