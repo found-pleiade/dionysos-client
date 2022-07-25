@@ -15,4 +15,4 @@ jobs:
       - name: run the tests
         run: pnpm test:run
       - name: build with ts
-        run: pnpm build
+        run: pnpm exec tsc 
