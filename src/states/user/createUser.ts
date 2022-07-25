@@ -5,16 +5,11 @@ import { SettingsContext } from '../settings';
 const useCreateUser = (name: string) => {
   const settings = useContext(SettingsContext);
 
-  const {
-    isLoading, error, data, mutate,
-  } = useMutation(
-    'createUser',
-    () => fetch(`${settings.get.server}/users`, {
-      method: 'POST',
+  const { isLoading, error, data, mutate } = useMutation("createUser", () =>
+    fetch(`${settings.get.server}/users`, {
+      method: "POST",
       body: JSON.stringify({ name }),
-    }).then(
-      (res) => res.json(),
-    ),
+    }).then((res) => res.json())
   );
 
   const safeMutate = () => {
@@ -23,7 +18,10 @@ const useCreateUser = (name: string) => {
   };
 
   return {
-    isLoading, error, data, safeMutate,
+    isLoading,
+    error,
+    data,
+    safeMutate,
   };
 };
 

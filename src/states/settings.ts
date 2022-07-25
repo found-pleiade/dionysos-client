@@ -3,12 +3,12 @@ import * as R from 'ramda';
 
 const useSettings = () => {
   const initialSettings = {
-    server: 'https://dionysos-test.yannlacroix.fr/api/v0',
+    server: "https://dionysos-test.yannlacroix.fr/api/v0",
   };
 
   enum SettingsActionList {
-    SET_SERVER = 'SET_SERVER',
-    SET_SERVER_DEFAULT = 'SET_SERVER_DEFAULT',
+    SET_SERVER = "SET_SERVER",
+    SET_SERVER_DEFAULT = "SET_SERVER_DEFAULT",
   }
 
   const SettingsError = (err: string) => new Error(`useSettings: ${err}`);
@@ -18,12 +18,12 @@ const useSettings = () => {
     action: {
       type: keyof typeof SettingsActionList;
       payload: Partial<typeof initialSettings>;
-    },
+    }
   ) => {
     switch (action.type) {
       case SettingsActionList.SET_SERVER: {
         const { server } = action.payload;
-        if (R.isNil(server)) throw SettingsError('missing server');
+        if (R.isNil(server)) throw SettingsError("missing server");
 
         return {
           ...state,

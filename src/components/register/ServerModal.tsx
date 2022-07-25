@@ -25,9 +25,7 @@ const ServerModal = () => {
   const settings = useContext(SettingsContext);
   const [serverAddress, setServerAddress] = useState(settings.get.server);
   const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
-  const {
-    isStale, isLoading, error, data, refetch,
-  } = useVersion(false);
+  const { isStale, isLoading, error, data, refetch } = useVersion(false);
 
   const exitModal = () => {
     if (data) setServerAddress(serverAddressBackup);
@@ -41,7 +39,7 @@ const ServerModal = () => {
 
   useEffect(() => {
     settings.dispatch({
-      type: 'SET_SERVER',
+      type: "SET_SERVER",
       payload: { server: serverAddress },
     });
   }, [serverAddress]);
@@ -52,15 +50,13 @@ const ServerModal = () => {
 
   const saveButtonContent = () => {
     if (error) {
-      return 'Retry';
+      return "Retry";
     }
 
-    return 'Save';
+    return "Save";
   };
 
-  const leaveDelay = data && !isStale
-    ? 'delay-500'
-    : '';
+  const leaveDelay = data && !isStale ? "delay-500" : "";
 
   const errorMessage = () => {
     if (error) {
@@ -73,7 +69,7 @@ const ServerModal = () => {
       );
     }
 
-    if (data !== '0.1.0') {
+    if (data !== "0.1.0") {
       return (
         <ErrorCard>
           Version mismatch between the client and the server api.
@@ -86,7 +82,10 @@ const ServerModal = () => {
 
   return (
     <>
-      <Button className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg" onClick={openModal}>
+      <Button
+        className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg"
+        onClick={openModal}
+      >
         <GlobeAltIcon />
       </Button>
 
@@ -123,7 +122,12 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <Input disabled={isLoading} className="mb-4" value={serverAddress} setValue={setServerAddress} />
+                  <Input
+                    disabled={isLoading}
+                    className="mb-4"
+                    value={serverAddress}
+                    setValue={setServerAddress}
+                  />
 
                   {errorMessage()}
 
@@ -132,7 +136,12 @@ const ServerModal = () => {
                       Back
                     </Button>
 
-                    <Button onClick={saveModalOnClick} className="w-[12ch] flex items-center justify-center" success={notNil(data) && !isStale} loading={isLoading}>
+                    <Button
+                      onClick={saveModalOnClick}
+                      className="w-[12ch] flex items-center justify-center"
+                      success={notNil(data) && !isStale}
+                      loading={isLoading}
+                    >
                       {saveButtonContent()}
                     </Button>
                   </SpaceBetween>

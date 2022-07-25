@@ -1,9 +1,10 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
 /**
  * Toggle 'visible' and 'hidden' classes based on the boolean value.
  */
-export const visibility = (condition: boolean) => (condition ? 'visible' : 'hidden');
+export const visibility = (condition: boolean) =>
+  condition ? "visible" : "hidden";
 
 const gteThree = (x: string) => R.gte(R.length(x), 3);
 
@@ -30,21 +31,23 @@ export const isValid = R.allPass(Object.values(isValidConditions));
 /**
  * Translate the element by applying a class to it, used for the panel.
  */
-export const translate = (condition: boolean) => (condition ? 'openSideMenus' : 'closeSideMenus');
+export const translate = (condition: boolean) =>
+  condition ? "openSideMenus" : "closeSideMenus";
 
 /**
  * Check if the passed string is the id of the active/focused element.
  */
-export const testActiveElement = (element: HTMLElement) => document.activeElement === element;
+export const testActiveElement = (element: HTMLElement) =>
+  document.activeElement === element;
 
 /**
  * Check if the input is focused, and the key pressed is enter.
  * The element needs an ID. Ignore clicks.
  */
 export const invalidInput = (event: any) => {
-  const isClick = event.type === 'click';
-  const isKeyDown = event.type === 'keydown';
-  const isEnter = event.code === 'Enter';
+  const isClick = event.type === "click";
+  const isKeyDown = event.type === "keydown";
+  const isEnter = event.code === "Enter";
   const isFocused = testActiveElement(event.target);
   return !(isClick || (isKeyDown && isEnter && isFocused));
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Input = ({
   id,
@@ -11,15 +11,15 @@ const Input = ({
   value,
   setValue,
 }: {
-  id?: string,
-  className?: string,
-  placeholder?: string,
-  onChange?: any,
-  onKeyDown?: any,
-  disabled?: boolean,
+  id?: string;
+  className?: string;
+  placeholder?: string;
+  onChange?: any;
+  onKeyDown?: any;
+  disabled?: boolean;
 
-  value?: any,
-  setValue?: React.Dispatch<React.SetStateAction<any>>,
+  value?: any;
+  setValue?: React.Dispatch<React.SetStateAction<any>>;
 }) => (
   <div className="w-full relative">
     <input
@@ -33,7 +33,7 @@ const Input = ({
         if (onChange) onChange(event);
       }}
       onKeyDown={onKeyDown}
-      placeholder={' '}
+      placeholder={" "}
       disabled={disabled}
     />
 

@@ -12,8 +12,7 @@ const App = () => {
       queries: {
         refetchOnWindowFocus: false,
       },
-      mutations: {
-      },
+      mutations: {},
     },
   });
 
@@ -27,18 +26,8 @@ const App = () => {
           <div className="dark:text-dark-secondary h-screen cursor-default relative">
             <MemoryRouter>
               <Routes>
-                <Route
-                  path="/"
-                  element={(
-                    <Register />
-                  )}
-                />
-                <Route
-                  path="/home"
-                  element={(
-                    <Home />
-                  )}
-                />
+                <Route path="/" element={<Register />} />
+                <Route path="/home" element={<Home />} />
               </Routes>
             </MemoryRouter>
           </div>
