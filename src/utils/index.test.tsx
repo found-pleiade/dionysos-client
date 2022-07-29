@@ -1,10 +1,8 @@
-import React from 'react';
-import {
-  fireEvent, render, screen,
-} from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { expect, describe, it } from 'vitest';
-import * as utils from '.';
+import React from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { expect, describe, it } from "vitest";
+import * as utils from ".";
 
 describe("visibility", () => {
   it("Output visible or hidden if true or false", () => {
@@ -13,11 +11,11 @@ describe("visibility", () => {
   });
 });
 
-describe("gteThree", () => {
-  it("True if x >= 3", () => {
-    expect(utils.exportedForTesting.gteThree("")).toBe(false);
-    expect(utils.exportedForTesting.gteThree("ab")).toBe(false);
-    expect(utils.exportedForTesting.gteThree("abc")).toBe(true);
+describe("gteTwo", () => {
+  it("True if x >= 2", () => {
+    expect(utils.exportedForTesting.gteTwo("")).toBe(false);
+    expect(utils.exportedForTesting.gteTwo("a")).toBe(false);
+    expect(utils.exportedForTesting.gteTwo("ab")).toBe(true);
   });
 });
 
@@ -28,21 +26,6 @@ describe("lteTwenty", () => {
       true
     );
     expect(utils.exportedForTesting.lteTwenty("abcdefghijklmnopqrstu")).toBe(
-      false
-    );
-  });
-});
-
-describe("equalsForty", () => {
-  it("True if x === 40", () => {
-    expect(utils.equalsForty("")).toBe(false);
-    expect(utils.equalsForty("abcdefghijklmnopqrstuvwxyzabcdefghijklm")).toBe(
-      false
-    );
-    expect(utils.equalsForty("abcdefghijklmnopqrstuvwxyzabcdefghijklmn")).toBe(
-      true
-    );
-    expect(utils.equalsForty("abcdefghijklmnopqrstuvwxyzabcdefghijklmno")).toBe(
       false
     );
   });
@@ -62,16 +45,16 @@ describe("notNil", () => {
 
 describe("isValidConditions", () => {
   it("Contains conditions for user and room names", () => {
-    expect(utils.isValidConditions.gteThree).not.toBe(undefined);
+    expect(utils.isValidConditions.gteTwo).not.toBe(undefined);
     expect(utils.isValidConditions.lteTwenty).not.toBe(undefined);
   });
 });
 
 describe("isValid", () => {
-  it("True if x >= 3, x <= 20", () => {
+  it("True if x >= 2, x <= 20", () => {
     expect(utils.isValid("")).toBe(false);
-    expect(utils.isValid("ab")).toBe(false);
-    expect(utils.isValid("abc")).toBe(true);
+    expect(utils.isValid("a")).toBe(false);
+    expect(utils.isValid("ab")).toBe(true);
     expect(utils.isValid("abcdefghijklmnopqrst")).toBe(true);
     expect(utils.isValid("abcdefghijklmnopqrstu")).toBe(false);
   });
