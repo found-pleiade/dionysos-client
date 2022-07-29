@@ -5,7 +5,7 @@ import useCreateUser from "../../states/user/createUser";
 import Button from "../Button";
 import Input from "../Input";
 import RowGroup from "../../layouts/RowGroup";
-import { isLenZero, isValid } from "../../utils";
+import { isValid } from "../../utils";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -55,7 +55,7 @@ const RegisterForm = () => {
         className="rounded-l-none w-[12ch] flex items-center justify-center"
         onClick={safeMutate}
         loading={isLoading}
-        disabled={isLenZero(name) || !isValid(name)}
+        disabled={!isValid(name)}
       >
         {buttonText()}
       </Button>
