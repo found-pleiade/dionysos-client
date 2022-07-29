@@ -1,5 +1,10 @@
 import { useReducer, createContext } from "react";
 
+enum ActionTypes {
+  SET_URI_AND_ID = "SET_URI_AND_ID",
+  SET_NAME = "SET_NAME",
+}
+
 const useUser = () => {
   const baseUser = {
     uri: "",
@@ -7,21 +12,16 @@ const useUser = () => {
     name: "",
   };
 
-  const actionTypes = Object.freeze({
-    SET_URI_AND_ID: "SET_URI_AND_ID",
-    SET_NAME: "SET_NAME",
-  }); 
-
   // Specify the type of the payload based on the type
   type Action =
     | {
-        type: typeof actionTypes["SET_URI_AND_ID"];
+        type: ActionTypes.SET_URI_AND_ID;
         payload: {
           uri: typeof baseUser.uri;
         };
       }
     | {
-        type: typeof actionTypes["SET_NAME"];
+        type: ActionTypes.SET_NAME;
         payload: {
           name: typeof baseUser.name;
         };
@@ -29,7 +29,7 @@ const useUser = () => {
 
   const reducer = (state: typeof baseUser, action: Action) => {
     switch (action.type) {
-      case actionTypes["SET_URI_AND_ID"]: {
+      case ActionTypes.SET_URI_AND_ID: {
         const { uri } = action.payload;
         const id = Number(uri.split("/").pop());
 
@@ -39,7 +39,7 @@ const useUser = () => {
           id,
         };
       }
-      case actionTypes["SET_NAME"]: {
+      case ActionTypes.SET_NAME: {
         const { name } = action.payload;
 
         return {
@@ -58,4 +58,4 @@ const useUser = () => {
 const UserContext = createContext(null as any as ReturnType<typeof useUser>);
 
 export default useUser;
-export { UserContext };
+export { UserContext, ActionTypes };
