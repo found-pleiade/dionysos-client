@@ -6,11 +6,9 @@ import * as R from "ramda";
 export const visibility = (condition: boolean) =>
   condition ? "visible" : "hidden";
 
-const gteThree = (x: string) => R.gte(R.length(x), 3);
+const gteTwo = (x: string) => R.gte(R.length(x), 2);
 
 const lteTwenty = (x: string) => R.lte(R.length(x), 20);
-
-export const equalsForty = (x: string) => R.equals(R.length(x), 40);
 
 /**
  * Check if the passed variable is not null or undefined.
@@ -21,7 +19,7 @@ export const notNil = (x: any) => R.not(R.isNil(x));
  * An object that contains tests for the isValid function.
  * Used for user and room name validations and inputs helpers.
  */
-export const isValidConditions = { gteThree, lteTwenty };
+export const isValidConditions = { gteTwo, lteTwenty };
 
 /**
  * Check the validity of the passed string, used for usernames and room names.
@@ -55,6 +53,6 @@ export const invalidInput = (event: any) => {
 export const isLenZero = (x: string) => R.equals(R.length(x), 0);
 
 export const exportedForTesting = {
-  gteThree,
+  gteTwo,
   lteTwenty,
 };

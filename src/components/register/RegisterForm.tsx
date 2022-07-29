@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../states/user';
-import useCreateUser from '../../states/user/createUser';
-import Button from '../Button';
-import Input from '../Input';
-import RowGroup from '../../layouts/RowGroup';
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../states/user";
+import useCreateUser from "../../states/user/createUser";
+import Button from "../Button";
+import Input from "../Input";
+import RowGroup from "../../layouts/RowGroup";
+import { isValid } from "../../utils";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -54,6 +55,7 @@ const RegisterForm = () => {
         className="rounded-l-none w-[12ch] flex items-center justify-center"
         onClick={safeMutate}
         loading={isLoading}
+        disabled={!isValid(name)}
       >
         {buttonText()}
       </Button>
