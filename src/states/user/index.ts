@@ -1,5 +1,9 @@
-import * as R from 'ramda';
-import { useReducer, createContext } from 'react';
+import { useReducer, createContext } from "react";
+
+enum ActionTypes {
+  SET_URI_AND_ID = "SET_URI_AND_ID",
+  SET_NAME = "SET_NAME",
+}
 
 const useUser = () => {
   const baseUser = {
@@ -8,27 +12,26 @@ const useUser = () => {
     name: "",
   };
 
-  enum UserActionList {
-    SET_URI_AND_ID = "SET_URI_AND_ID",
-    SET_NAME = "SET_NAME",
-  }
+  // Specify the type of the payload based on the type
+  type Action =
+    | {
+        type: ActionTypes.SET_URI_AND_ID;
+        payload: {
+          uri: typeof baseUser.uri;
+        };
+      }
+    | {
+        type: ActionTypes.SET_NAME;
+        payload: {
+          name: typeof baseUser.name;
+        };
+      };
 
-  const UserError = (err: string) => new Error(`useUser: ${err}`);
-
-  const userReducer = (
-    state: typeof baseUser,
-    action: {
-      type: keyof typeof UserActionList;
-      payload: Partial<typeof baseUser>;
-    }
-  ) => {
+  const reducer = (state: typeof baseUser, action: Action) => {
     switch (action.type) {
-      case UserActionList.SET_URI_AND_ID: {
+      case ActionTypes.SET_URI_AND_ID: {
         const { uri } = action.payload;
-        if (!uri) throw UserError("missing uri");
-
         const id = Number(uri.split("/").pop());
-        if (!id) throw UserError("missing id in uri");
 
         return {
           ...state,
@@ -36,21 +39,18 @@ const useUser = () => {
           id,
         };
       }
-      case UserActionList.SET_NAME: {
+      case ActionTypes.SET_NAME: {
         const { name } = action.payload;
-        if (R.isNil(name)) throw UserError("missing name");
 
         return {
           ...state,
           name,
         };
       }
-      default:
-        throw UserError(`unhandled action type: ${action.type}`);
     }
   };
 
-  const [get, dispatch] = useReducer(userReducer, baseUser);
+  const [get, dispatch] = useReducer(reducer, baseUser);
 
   return { get, dispatch };
 };
@@ -58,4 +58,4 @@ const useUser = () => {
 const UserContext = createContext(null as any as ReturnType<typeof useUser>);
 
 export default useUser;
-export { UserContext };
+export { UserContext, ActionTypes };

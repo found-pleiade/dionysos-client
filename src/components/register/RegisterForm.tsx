@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../states/user";
+import { UserContext, ActionTypes as UserActionTypes } from "../../states/user";
 import useCreateUser from "../../states/user/createUser";
 import Button from "../Button";
 import Input from "../Input";
@@ -16,14 +16,14 @@ const RegisterForm = () => {
   useEffect(() => {
     if (data) {
       user.dispatch({
-        type: "SET_URI_AND_ID",
+        type: UserActionTypes.SET_URI_AND_ID,
         payload: {
           uri: data.uri,
         },
       });
 
       user.dispatch({
-        type: "SET_NAME",
+        type: UserActionTypes.SET_NAME,
         payload: {
           name,
         },
