@@ -1,15 +1,16 @@
-import React, {
-  Fragment, useContext, useEffect, useState,
-} from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { GlobeAltIcon } from '@heroicons/react/solid';
-import Button from '../Button';
-import Input from '../Input';
-import SpaceBetween from '../../layouts/SpaceBetween';
-import useVersion from '../../states/getVersion';
-import ErrorCard from '../ErrorCard';
-import { SettingsContext } from '../../states/settings';
-import { notNil } from '../../utils';
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { GlobeAltIcon } from "@heroicons/react/solid";
+import Button from "../Button";
+import Input from "../Input";
+import SpaceBetween from "../../layouts/SpaceBetween";
+import useVersion from "../../states/getVersion";
+import ErrorCard from "../ErrorCard";
+import {
+  SettingsContext,
+  ActionTypes as SettingsActionTypes,
+} from "../../states/settings";
+import { notNil } from "../../utils";
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,7 @@ const ServerModal = () => {
 
   useEffect(() => {
     settings.dispatch({
-      type: "SET_SERVER",
+      type: SettingsActionTypes.SET_SERVER,
       payload: { server: serverAddress },
     });
   }, [serverAddress]);

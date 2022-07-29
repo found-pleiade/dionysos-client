@@ -1,51 +1,54 @@
-import { useReducer, createContext } from 'react';
-import * as R from 'ramda';
+import { useReducer, createContext } from "react";
+
+enum ActionTypes {
+  SET_SERVER = "SET_SERVER",
+  SET_SERVER_DEFAULT = "SET_SERVER_DEFAULT",
+}
 
 const useSettings = () => {
   const initialSettings = {
     server: "https://dionysos-test.yannlacroix.fr/api/v0",
   };
 
-  enum SettingsActionList {
-    SET_SERVER = "SET_SERVER",
-    SET_SERVER_DEFAULT = "SET_SERVER_DEFAULT",
-  }
+  // Specify the type of the payload based on the type
+  type Action =
+    | {
+        type: ActionTypes.SET_SERVER;
+        payload: {
+          server: typeof initialSettings.server;
+        };
+      }
+    | {
+        type: ActionTypes.SET_SERVER_DEFAULT;
+        payload: Record<string, never>;
+      };
 
-  const SettingsError = (err: string) => new Error(`useSettings: ${err}`);
-
-  const settingsReducer = (
-    state: typeof initialSettings,
-    action: {
-      type: keyof typeof SettingsActionList;
-      payload: Partial<typeof initialSettings>;
-    }
-  ) => {
+  const reducer = (state: typeof initialSettings, action: Action) => {
     switch (action.type) {
-      case SettingsActionList.SET_SERVER: {
+      case ActionTypes.SET_SERVER: {
         const { server } = action.payload;
-        if (R.isNil(server)) throw SettingsError("missing server");
 
         return {
           ...state,
           server,
         };
       }
-      case SettingsActionList.SET_SERVER_DEFAULT:
+      case ActionTypes.SET_SERVER_DEFAULT:
         return {
           ...state,
           server: initialSettings.server,
         };
-      default:
-        throw SettingsError(`Unhandled action type: ${action.type}`);
     }
   };
 
-  const [get, dispatch] = useReducer(settingsReducer, initialSettings);
+  const [get, dispatch] = useReducer(reducer, initialSettings);
 
   return { get, dispatch };
 };
 
-const SettingsContext = createContext(null as any as ReturnType<typeof useSettings>);
+const SettingsContext = createContext(
+  null as any as ReturnType<typeof useSettings>
+);
 
 export default useSettings;
-export { SettingsContext };
+export { SettingsContext, ActionTypes };

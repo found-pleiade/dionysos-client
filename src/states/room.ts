@@ -1,5 +1,9 @@
-import * as R from 'ramda';
-import { useReducer, createContext } from 'react';
+import { useReducer, createContext } from "react";
+
+enum ActionTypes {
+  SET_URI_AND_ID = "SET_URI_AND_ID",
+  SET_NAME = "SET_NAME",
+}
 
 const useRoom = () => {
   const baseRoom = {
@@ -8,27 +12,24 @@ const useRoom = () => {
     name: "",
   };
 
-  const RoomError = (err: string) => new Error(`useRoom: ${err}`);
+  // Specify the type of the payload based on the type
+  type Action =
+    | {
+        type: ActionTypes.SET_URI_AND_ID;
+        payload: {
+          uri: typeof baseRoom.uri;
+        };
+      }
+    | {
+        type: ActionTypes.SET_NAME;
+        payload: Record<string, never>;
+      };
 
-  enum RoomActionList {
-    SET_URI_AND_ID = "SET_URI_AND_ID",
-    SET_NAME = "SET_NAME",
-  }
-
-  const roomReducer = (
-    state: typeof baseRoom,
-    action: {
-      type: keyof typeof RoomActionList;
-      payload: Partial<typeof baseRoom>;
-    }
-  ) => {
+  const reducer = (state: typeof baseRoom, action: Action) => {
     switch (action.type) {
-      case RoomActionList.SET_URI_AND_ID: {
+      case ActionTypes.SET_URI_AND_ID: {
         const { uri } = action.payload;
-        if (!uri) throw RoomError("missing uri");
-
         const id = Number(uri.split("/").pop());
-        if (!id) throw RoomError("missing id in uri");
 
         return {
           ...state,
@@ -36,21 +37,18 @@ const useRoom = () => {
           id,
         };
       }
-      case RoomActionList.SET_NAME: {
+      case ActionTypes.SET_NAME: {
         const { name } = action.payload;
-        if (R.isNil(name)) throw RoomError("missing name");
 
         return {
           ...state,
           name,
         };
       }
-      default:
-        throw RoomError(`unhandled action type: ${action.type}`);
     }
   };
 
-  const [get, dispatch] = useReducer(roomReducer, baseRoom);
+  const [get, dispatch] = useReducer(reducer, baseRoom);
 
   return { get, dispatch };
 };
@@ -58,4 +56,4 @@ const useRoom = () => {
 const RoomContext = createContext(null as any as ReturnType<typeof useRoom>);
 
 export default useRoom;
-export { RoomContext };
+export { RoomContext, ActionTypes };
