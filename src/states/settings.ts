@@ -9,7 +9,7 @@ enum ActionTypes {
 const useSettings = () => {
   const initialSettings = {
     server: "https://dionysos-test.yannlacroix.fr/api/v0",
-    token: "",
+    password: "",
   };
 
   // Specify the type of the payload based on the type
