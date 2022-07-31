@@ -46,12 +46,12 @@ const useSettings = () => {
           ...state,
           server: initialSettings.server,
         };
-      case ActionTypes.SET_TOKEN: {
-        const { token } = action.payload;
+      case ActionTypes.SET_PASSWORD: {
+        const { password } = action.payload;
 
         return {
           ...state,
-          token,
+          password,
         };
       }
     }
