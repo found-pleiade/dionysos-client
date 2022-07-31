@@ -1,7 +1,7 @@
-import { useContext } from 'react';
-import { useMutation } from 'react-query';
-import { SettingsContext } from '../settings';
-import { UserContext } from '.';
+import { useContext } from "react";
+import { useMutation } from "react-query";
+import { SettingsContext } from "../settings";
+import { UserContext } from ".";
 
 const useRenameUser = (name: string) => {
   const settings = useContext(SettingsContext);
@@ -12,6 +12,9 @@ const useRenameUser = (name: string) => {
     () =>
       fetch(`${settings.get.server}${user.get.uri}`, {
         method: "PATCH",
+        headers: new Headers({
+          Authorization: `Basic ${user.get.id}:${settings.get.token}`,
+        }),
         body: JSON.stringify({ name }),
       }).then((res) => res)
   );
