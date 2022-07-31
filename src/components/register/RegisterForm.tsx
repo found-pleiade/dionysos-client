@@ -37,7 +37,7 @@ const RegisterForm = () => {
       settings.dispatch({
         type: SettingsActionTypes.SET_PASSWORD,
         payload: {
-          token: data.password,
+          password: data.password,
         },
       });
 
