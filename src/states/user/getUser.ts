@@ -10,7 +10,7 @@ const useGetUser = () => {
   const { isLoading, error, data } = useQuery("getUser", () =>
     fetch(`${settings.get.server}${user.get.uri}`, {
       headers: new Headers({
-        Authorization: `Basic ${user.get.id}:${settings.get.token}`,
+        Authorization: `Basic ${user.get.id}:${settings.get.password}`,
       }),
     }).then((res) => res.json())
   );
