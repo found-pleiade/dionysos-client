@@ -6,16 +6,13 @@ import Button from "../Button";
 import Input from "../Input";
 import RowGroup from "../../layouts/RowGroup";
 import { isValid } from "../../utils";
-import {
-  SettingsContext,
-  ActionTypes as SettingsActionTypes,
-} from "../../states/settings";
+import { AuthContext } from "../../features/auth";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
   const { isLoading, error, data, safeMutate } = useCreateUser(name);
   const user = useContext(UserContext);
-  const settings = useContext(SettingsContext);
+  const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,12 +31,7 @@ const RegisterForm = () => {
         },
       });
 
-      settings.dispatch({
-        type: SettingsActionTypes.SET_PASSWORD,
-        payload: {
-          password: data.password,
-        },
-      });
+      auth.setPassword(data.password);
 
       navigate("/home");
     }
