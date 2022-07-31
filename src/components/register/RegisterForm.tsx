@@ -17,21 +17,19 @@ const RegisterForm = () => {
 
   useEffect(() => {
     if (data) {
+      const { uri, password } = data;
+
       user.dispatch({
         type: UserActionTypes.SET_URI_AND_ID,
-        payload: {
-          uri: data.uri,
-        },
+        payload: { uri },
       });
 
       user.dispatch({
         type: UserActionTypes.SET_NAME,
-        payload: {
-          name,
-        },
+        payload: { name },
       });
 
-      auth.setPassword(data.password);
+      auth.setPassword(password);
 
       navigate("/home");
     }
