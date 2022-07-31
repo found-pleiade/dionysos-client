@@ -6,11 +6,16 @@ import Button from "../Button";
 import Input from "../Input";
 import RowGroup from "../../layouts/RowGroup";
 import { isValid } from "../../utils";
+import {
+  SettingsContext,
+  ActionTypes as SettingsActionTypes,
+} from "../../states/settings";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
   const { isLoading, error, data, safeMutate } = useCreateUser(name);
   const user = useContext(UserContext);
+  const settings = useContext(SettingsContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +31,13 @@ const RegisterForm = () => {
         type: UserActionTypes.SET_NAME,
         payload: {
           name,
+        },
+      });
+
+      settings.dispatch({
+        type: SettingsActionTypes.SET_TOKEN,
+        payload: {
+          token: data.password,
         },
       });
 
