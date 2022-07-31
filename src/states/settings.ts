@@ -25,9 +25,9 @@ const useSettings = () => {
         payload: Record<string, never>;
       }
     | {
-        type: ActionTypes.SET_TOKEN;
+        type: ActionTypes.SET_PASSWORD;
         payload: {
-          token: typeof initialSettings.token;
+          password: typeof initialSettings.password;
         };
       };
 
