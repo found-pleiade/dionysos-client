@@ -3,11 +3,13 @@ import { useReducer, createContext } from "react";
 enum ActionTypes {
   SET_SERVER = "SET_SERVER",
   SET_SERVER_DEFAULT = "SET_SERVER_DEFAULT",
+  SET_TOKEN = "",
 }
 
 const useSettings = () => {
   const initialSettings = {
     server: "https://dionysos-test.yannlacroix.fr/api/v0",
+    token: "",
   };
 
   // Specify the type of the payload based on the type
@@ -21,6 +23,12 @@ const useSettings = () => {
     | {
         type: ActionTypes.SET_SERVER_DEFAULT;
         payload: Record<string, never>;
+      }
+    | {
+        type: ActionTypes.SET_TOKEN;
+        payload: {
+          token: typeof initialSettings.token;
+        };
       };
 
   const reducer = (state: typeof initialSettings, action: Action) => {
@@ -38,6 +46,14 @@ const useSettings = () => {
           ...state,
           server: initialSettings.server,
         };
+      case ActionTypes.SET_TOKEN: {
+        const { token } = action.payload;
+
+        return {
+          ...state,
+          token,
+        };
+      }
     }
   };
 
