@@ -13,7 +13,7 @@ const useRenameUser = (name: string) => {
       fetch(`${settings.get.server}${user.get.uri}`, {
         method: "PATCH",
         headers: new Headers({
-          Authorization: `Basic ${user.get.id}:${settings.get.token}`,
+          Authorization: `Basic ${user.get.id}:${settings.get.password}`,
         }),
         body: JSON.stringify({ name }),
       }).then((res) => res)
