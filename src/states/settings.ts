@@ -3,7 +3,7 @@ import { useReducer, createContext } from "react";
 enum ActionTypes {
   SET_SERVER = "SET_SERVER",
   SET_SERVER_DEFAULT = "SET_SERVER_DEFAULT",
-  SET_TOKEN = "",
+  SET_PASSWORD = "SET_PASSWORD",
 }
 
 const useSettings = () => {
