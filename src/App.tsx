@@ -5,6 +5,7 @@ import Register from './pages/register';
 import Home from './pages/home';
 import useSettings, { SettingsContext } from './states/settings';
 import useUser, { UserContext } from './states/user';
+import useAuth, { AuthContext } from './features/auth';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -18,22 +19,25 @@ const App = () => {
 
   const settings = useSettings();
   const user = useUser();
+  const auth = useAuth();
 
   return (
-    <SettingsContext.Provider value={settings}>
-      <UserContext.Provider value={user}>
-        <QueryClientProvider client={queryClient}>
-          <div className="dark:text-dark-secondary h-screen cursor-default relative">
-            <MemoryRouter>
-              <Routes>
-                <Route path="/" element={<Register />} />
-                <Route path="/home" element={<Home />} />
-              </Routes>
-            </MemoryRouter>
-          </div>
-        </QueryClientProvider>
-      </UserContext.Provider>
-    </SettingsContext.Provider>
+    <AuthContext.Provider value={auth}>
+      <SettingsContext.Provider value={settings}>
+        <UserContext.Provider value={user}>
+          <QueryClientProvider client={queryClient}>
+            <div className="dark:text-dark-secondary h-screen cursor-default relative">
+              <MemoryRouter>
+                <Routes>
+                  <Route path="/" element={<Register />} />
+                  <Route path="/home" element={<Home />} />
+                </Routes>
+              </MemoryRouter>
+            </div>
+          </QueryClientProvider>
+        </UserContext.Provider>
+      </SettingsContext.Provider>
+    </AuthContext.Provider> 
   );
 };
 

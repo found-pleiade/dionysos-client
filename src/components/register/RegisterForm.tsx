@@ -6,28 +6,30 @@ import Button from "../Button";
 import Input from "../Input";
 import RowGroup from "../../layouts/RowGroup";
 import { isValid } from "../../utils";
+import { AuthContext } from "../../features/auth";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
   const { isLoading, error, data, safeMutate } = useCreateUser(name);
   const user = useContext(UserContext);
+  const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (data) {
+      const { uri, password } = data;
+
       user.dispatch({
         type: UserActionTypes.SET_URI_AND_ID,
-        payload: {
-          uri: data.uri,
-        },
+        payload: { uri },
       });
 
       user.dispatch({
         type: UserActionTypes.SET_NAME,
-        payload: {
-          name,
-        },
+        payload: { name },
       });
+
+      auth.setPassword(password);
 
       navigate("/home");
     }
