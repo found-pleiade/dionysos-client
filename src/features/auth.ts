@@ -9,7 +9,7 @@ const useAuth = () => {
   
   // Headers abstraction that handle auth.
   const newHeaders = (
-    user: Pick<ReturnType<typeof useUser>, "get">,
+    user: ReturnType<typeof useUser>,
     headers = {} as Headers
   ) =>
     new Headers({
