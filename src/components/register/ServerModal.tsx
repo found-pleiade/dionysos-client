@@ -42,12 +42,12 @@ const ServerModal = () => {
   const setInitialServerAddress = () => {
     settings.dispatch({
       type: SettingsActionTypes.SET_SERVER_DEFAULT,
-      payload: {}
+      payload: {},
     });
 
     setServerAddress(settings.getInitial.server);
     setServerAddressBackup(settings.getInitial.server);
-  }
+  };
 
   useEffect(() => {
     settings.dispatch({
@@ -135,10 +135,14 @@ const ServerModal = () => {
                   </Dialog.Title>
 
                   <RowGroup>
-                    <Button className="self-center flex-1 rounded-r-none h-10 px-5 grid place-items-center" onClick={setInitialServerAddress} title="Restore default address">
+                    <Button
+                      className="self-center flex-1 rounded-r-none h-10 px-5 grid place-items-center"
+                      onClick={setInitialServerAddress}
+                      title="Restore default address"
+                    >
                       <ReplyIcon className="h-5" />
                     </Button>
-                    
+
                     <Input
                       disabled={isLoading}
                       className="my-4 rounded-l-none"
