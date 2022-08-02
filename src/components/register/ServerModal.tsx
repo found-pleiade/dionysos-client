@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { GlobeAltIcon } from "@heroicons/react/solid";
+import { GlobeAltIcon, ReplyIcon } from "@heroicons/react/solid";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";
@@ -11,6 +11,7 @@ import {
   ActionTypes as SettingsActionTypes,
 } from "../../states/settings";
 import { notNil } from "../../utils";
+import RowGroup from "../../layouts/RowGroup";
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,16 @@ const ServerModal = () => {
     setServerAddressBackup(serverAddress);
     refetch();
   };
+
+  const setInitialServerAddress = () => {
+    settings.dispatch({
+      type: SettingsActionTypes.SET_SERVER_DEFAULT,
+      payload: {}
+    });
+
+    setServerAddress(settings.getInitial.server);
+    setServerAddressBackup(settings.getInitial.server);
+  }
 
   useEffect(() => {
     settings.dispatch({
@@ -118,17 +129,23 @@ const ServerModal = () => {
                 <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 mb-4"
+                    className="text-lg font-medium leading-6"
                   >
                     Server address
                   </Dialog.Title>
 
-                  <Input
-                    disabled={isLoading}
-                    className="mb-4"
-                    value={serverAddress}
-                    setValue={setServerAddress}
-                  />
+                  <RowGroup>
+                    <Button className="self-center flex-1 rounded-r-none h-10 px-5 grid place-items-center" onClick={setInitialServerAddress} title="Restore default address">
+                      <ReplyIcon className="h-5" />
+                    </Button>
+                    
+                    <Input
+                      disabled={isLoading}
+                      className="my-4 rounded-l-none"
+                      value={serverAddress}
+                      setValue={setServerAddress}
+                    />
+                  </RowGroup>
 
                   {errorMessage()}
 
