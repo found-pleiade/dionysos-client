@@ -10,7 +10,7 @@ import { AuthContext } from "../../features/auth";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
-  const { isLoading, error, data, safeMutate } = useCreateUser(name);
+  const { isLoading, error, data, mutate } = useCreateUser(name);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
@@ -54,8 +54,8 @@ const RegisterForm = () => {
       />
 
       <Button
-        className="rounded-l-none w-[12ch] flex items-center justify-center"
-        onClick={safeMutate}
+        className="rounded-l-none"
+        onClick={mutate}
         loading={isLoading}
         disabled={!isValid(name)}
       >
