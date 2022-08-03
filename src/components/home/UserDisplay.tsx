@@ -103,20 +103,6 @@ const UserDisplay = () => {
 
   const closeDelayClass = data ? `delay-${closeOnSuccessDelay}` : "";
 
-  const errorMessage = () => {
-    if (isLenZero(username)) {
-      return <ErrorCard>Empty names are not allowed.</ErrorCard>;
-    }
-
-    if (error) {
-      return (
-        <ErrorCard>An error occurred while trying to rename you.</ErrorCard>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <>
       <Button headless onClick={openModal} className="text-left">
@@ -163,7 +149,9 @@ const UserDisplay = () => {
                     setValue={setUsername}
                   />
 
-                  {errorMessage()}
+                  <ErrorCard show={isLenZero(username)}>Empty names are not allowed.</ErrorCard>
+
+                  <ErrorCard show={error ? true : false}>An error occurred while trying to rename you.</ErrorCard>
 
                   <SpaceBetween>
                     <Button onClick={exitModal} colorless>
