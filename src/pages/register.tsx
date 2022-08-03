@@ -1,12 +1,18 @@
-import React from 'react';
-import { PropagateLoader } from 'react-spinners';
-import CenterCard from '../components/register/CenterCard';
-import RegisterForm from '../components/register/RegisterForm';
-import ServerModal from '../components/register/ServerModal';
-import useVersion from '../states/getVersion';
+import React, { useContext, useEffect } from "react";
+import { PropagateLoader } from "react-spinners";
+import CenterCard from "../components/register/CenterCard";
+import RegisterForm from "../components/register/RegisterForm";
+import ServerModal from "../components/register/ServerModal";
+import { ShareContext } from "../features/shareRoom";
+import useVersion from "../states/getVersion";
 
 const Register = () => {
   const { isLoading, error, data } = useVersion();
+  const share = useContext(ShareContext);
+
+  useEffect(() => {
+    share.setParam();
+  }, []);
 
   const pageSkeleton = (template: JSX.Element) => (
     <div className="page">
