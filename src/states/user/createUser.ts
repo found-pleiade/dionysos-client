@@ -12,16 +12,11 @@ const useCreateUser = (name: string) => {
     }).then((res) => res.json())
   );
 
-  const safeMutate = () => {
-    if (data || isLoading) return;
-    mutate();
-  };
-
   return {
     isLoading,
     error,
     data,
-    safeMutate,
+    mutate,
   };
 };
 
