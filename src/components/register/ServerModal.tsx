@@ -46,7 +46,6 @@ const ServerModal = () => {
     });
 
     setServerAddress(settings.getInitial.server);
-    setServerAddressBackup(settings.getInitial.server);
   };
 
   useEffect(() => {
