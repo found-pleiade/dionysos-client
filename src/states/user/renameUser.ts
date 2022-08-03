@@ -19,16 +19,11 @@ const useRenameUser = (name: string) => {
       }).then((res) => res)
   );
 
-  const safeMutate = () => {
-    if (data || isLoading) return;
-    mutate();
-  };
-
   return {
     isLoading,
     error,
     data,
-    safeMutate,
+    mutate,
     reset,
   };
 };
