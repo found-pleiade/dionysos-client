@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useMutation } from 'react-query';
-import useAuth, { AuthContext } from '../../features/auth';
+import { AuthContext } from '../../features/auth';
 import { SettingsContext } from '../settings';
 import { UserContext } from '../user';
 
