@@ -41,7 +41,7 @@ const UserDisplay = () => {
    * the data and errors when the user closes the modal so
    * it can be run again.
    */
-  const { data, isLoading, error, safeMutate, reset } = useRenameUser(username);
+  const { data, isLoading, error, mutate, reset } = useRenameUser(username);
 
   /**
    * Change the state of the modal with some effects.
@@ -60,7 +60,7 @@ const UserDisplay = () => {
    * Fire the mutation on save.
    */
   const saveModalOnClick = () => {
-    safeMutate();
+    mutate();
   };
 
   /**
