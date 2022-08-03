@@ -11,7 +11,7 @@ const Register = () => {
   const share = useContext(ShareContext);
 
   useEffect(() => {
-    share.setParam();
+    share.scanUrl();
   }, []);
 
   const pageSkeleton = (template: JSX.Element) => (

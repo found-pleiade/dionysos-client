@@ -3,15 +3,19 @@ import { createContext, useState } from "react";
 const useShareRoom = () => {
   const [id, setId] = useState("");
 
-  const setParam = () => {
+  const scanUrl = () => {
     const share = new URLSearchParams(window.location.search).get("share");
 
     if (share) setId(share);
   };
 
+  const createUrl = (id: string) => {
+    return `${window.location.href}?share=${id}`;
+  }
+
   const isJoining = id.length > 0 ? true : false;
 
-  return { id, setParam, isJoining };
+  return { id, scanUrl, createUrl, isJoining };
 };
 
 const ShareContext = createContext(null as any as ReturnType<typeof useShareRoom>);

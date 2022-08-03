@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { ShareContext } from "../../features/shareRoom";
 import useCreateRoom from "../../states/room/createRoom";
 import Button from "../Button";
 
 const CreateRoom = () => {
   const { data, isLoading, error, mutate } = useCreateRoom();
+  const { createUrl } = useContext(ShareContext);
+  const [url, setUrl] = useState("");
 
-  const url = data ? `${window.location.href}?share=${data.id}` : "";
+  useEffect(() => {
+    if (!data) return;
+    setUrl(createUrl(data.id));
+  }, [data]);
 
   const copyUrl = () => {
     navigator.clipboard.writeText(url);
