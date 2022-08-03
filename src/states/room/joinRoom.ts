@@ -10,7 +10,7 @@ const useJoinRoom = (roomId: string) => {
   const auth = useContext(AuthContext);
 
   const { isLoading, error, data, mutate } = useMutation("joinRoom", () =>
-    fetch(`${settings.get.server}/rooms/join/${roomId}`, {
+    fetch(`${settings.get.server}/rooms/${roomId}/join`, {
       headers: auth.newHeaders(user),
       method: "POST",
     }).then((res) => res.json())
