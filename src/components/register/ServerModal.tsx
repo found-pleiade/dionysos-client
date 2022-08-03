@@ -69,28 +69,6 @@ const ServerModal = () => {
 
   const leaveDelay = data && !isStale ? "delay-500" : "";
 
-  const errorMessage = () => {
-    if (error) {
-      return (
-        <ErrorCard>
-          An error occurred while fetching the version.
-          <br />
-          Check your internet connection and the url.
-        </ErrorCard>
-      );
-    }
-
-    if (data !== "0.1.0") {
-      return (
-        <ErrorCard>
-          Version mismatch between the client and the server api.
-        </ErrorCard>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <>
       <Button
@@ -150,7 +128,15 @@ const ServerModal = () => {
                     />
                   </RowGroup>
 
-                  {errorMessage()}
+                  <ErrorCard show={error ? true : false}>
+                    An error occurred while fetching the version.
+                    <br />
+                    Check your internet connection and the url.
+                  </ErrorCard>
+
+                  <ErrorCard show={data !== "0.1.0"}>
+                    Version mismatch between the client and the server api.
+                  </ErrorCard>
 
                   <SpaceBetween>
                     <Button onClick={exitModal} colorless>
