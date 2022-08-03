@@ -20,7 +20,7 @@ const Home = () => {
     <div className="page">
       <div className="h-screen w-screen truncate flex">
         <Panel state={panel}>
-          <CreateRoom></CreateRoom>
+          <CreateRoom />
 
           <UserDisplay />
         </Panel>
