@@ -172,7 +172,6 @@ const UserDisplay = () => {
 
                     <Button
                       onClick={saveModalOnClick}
-                      className="w-[12ch] flex items-center justify-center"
                       success={notNil(data)}
                       disabled={isLenZero(username)}
                       loading={isLoading}

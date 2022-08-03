@@ -95,7 +95,7 @@ const ServerModal = () => {
   return (
     <>
       <Button
-        className="absolute top-0 right-0 w-10 h-10 px-2 rounded-none rounded-bl-lg"
+        className="absolute top-0 right-0 min-w-0 w-10 h-10 px-2 rounded-none rounded-bl-lg"
         onClick={openModal}
       >
         <GlobeAltIcon />
@@ -136,7 +136,7 @@ const ServerModal = () => {
 
                   <RowGroup>
                     <Button
-                      className="self-center flex-1 rounded-r-none h-10 px-5 grid place-items-center"
+                      className="min-w-0 self-center flex-1 rounded-r-none px-5"
                       onClick={setInitialServerAddress}
                       title="Restore default address"
                     >
@@ -160,7 +160,6 @@ const ServerModal = () => {
 
                     <Button
                       onClick={saveModalOnClick}
-                      className="w-[12ch] flex items-center justify-center"
                       success={notNil(data) && !isStale}
                       loading={isLoading}
                     >

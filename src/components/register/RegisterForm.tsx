@@ -54,7 +54,7 @@ const RegisterForm = () => {
       />
 
       <Button
-        className="rounded-l-none w-[12ch] flex items-center justify-center"
+        className="rounded-l-none"
         onClick={safeMutate}
         loading={isLoading}
         disabled={!isValid(name)}

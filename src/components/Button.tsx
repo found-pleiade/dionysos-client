@@ -33,13 +33,13 @@ const Button = ({
   // Used for navigation buttons when needing a single right aligned button.
   if (Children.toArray(children).length <= 0) return <div role="none" />;
 
-  // Tailwind classes based on props. As observed, classes added later override
+  // Tailwind classes based on props. Classes added later override
   // earlier classes style.
   const style = () => {
     if (headless) return className;
 
     const base =
-      "px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400";
+      "min-w-[12ch] h-10 grid place-items-center px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400";
 
     const c = colorless
       ? "text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500"
