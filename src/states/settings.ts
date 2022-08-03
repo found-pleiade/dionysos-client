@@ -43,7 +43,7 @@ const useSettings = () => {
 
   const [get, dispatch] = useReducer(reducer, initialSettings);
 
-  return { get, dispatch };
+  return { get, getInitial: initialSettings, dispatch };
 };
 
 const SettingsContext = createContext(
