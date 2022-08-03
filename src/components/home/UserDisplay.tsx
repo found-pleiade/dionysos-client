@@ -149,9 +149,13 @@ const UserDisplay = () => {
                     setValue={setUsername}
                   />
 
-                  <ErrorCard show={isLenZero(username)}>Empty names are not allowed.</ErrorCard>
+                  <ErrorCard show={isLenZero(username)}>
+                    Empty names are not allowed.
+                  </ErrorCard>
 
-                  <ErrorCard show={error ? true : false}>An error occurred while trying to rename you.</ErrorCard>
+                  <ErrorCard show={error ? true : false}>
+                    An error occurred while trying to rename you.
+                  </ErrorCard>
 
                   <SpaceBetween>
                     <Button onClick={exitModal} colorless>

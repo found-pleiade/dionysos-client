@@ -1,8 +1,14 @@
 import { Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 
-const ErrorCard = ({ show, children }: { show: boolean, children: React.ReactNode }) => (
-  <Transition 
+const ErrorCard = ({
+  show,
+  children,
+}: {
+  show: boolean;
+  children: React.ReactNode;
+}) => (
+  <Transition
     show={show}
     as={Fragment}
     enter="ease-out duration-300"
