@@ -6,15 +6,22 @@ import UserDisplay from "../components/home/UserDisplay";
 import CreateRoom from "../components/home/CreateRoom";
 import { ShareContext } from "../features/shareRoom";
 import useJoinRoom from "../states/room/joinRoom";
+import useDeleteUser from "../states/user/deleteUser";
 
 const Home = () => {
   const panel = useSideMenu(true);
   const share = useContext(ShareContext);
-  const { mutate } = useJoinRoom(share.id);
+  const joinRoom = useJoinRoom(share.id);
 
   useEffect(() => {
-    if (share.isJoining) mutate();
+    if (share.isJoining) joinRoom.mutate();
   }, []);
+
+  const deleteUser = useDeleteUser();
+
+  window.onunload = () => {
+    deleteUser.mutate();
+  };
 
   return (
     <div className="page">
