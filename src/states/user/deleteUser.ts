@@ -9,21 +9,16 @@ const useDeleteUser = () => {
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, error, data, mutate, reset } = useMutation(
-    "deleteUser",
-    () =>
-      fetch(`${settings.get.server}${user.get.uri}`, {
-        method: "DELETE",
-        headers: auth.newHeaders(user),
-      }).then((res) => res)
+  const { mutate } = useMutation("deleteUser", () =>
+    fetch(`${settings.get.server}${user.get.uri}`, {
+      method: "DELETE",
+      headers: auth.newHeaders(user),
+      keepalive: true,
+    }).then((res) => res)
   );
 
   return {
-    isLoading,
-    error,
-    data,
     mutate,
-    reset,
   };
 };
 

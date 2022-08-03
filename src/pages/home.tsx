@@ -21,7 +21,7 @@ const Home = () => {
 
   window.onunload = () => {
     deleteUser.mutate();
-  }
+  };
 
   return (
     <div className="page">
