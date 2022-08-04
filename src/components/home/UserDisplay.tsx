@@ -6,7 +6,7 @@ import SpaceBetween from "../../layouts/SpaceBetween";
 import { UserContext, ActionTypes as UserActionTypes } from "../../states/user";
 import useRenameUser from "../../states/user/renameUser";
 import ErrorCard from "../ErrorCard";
-import { isLenZero, notNil } from "../../utils";
+import { isValid, isValidConditions, notNil } from "../../utils";
 
 const UserDisplay = () => {
   /**
@@ -149,8 +149,12 @@ const UserDisplay = () => {
                     setValue={setUsername}
                   />
 
-                  <ErrorCard show={isLenZero(username)}>
-                    Empty names are not allowed.
+                  <ErrorCard show={!isValidConditions.gteTwo(username)}>
+                    Minimum length is 2 chars
+                  </ErrorCard>
+
+                  <ErrorCard show={!isValidConditions.lteTwenty(username)}>
+                    Maximum length is 20 chars
                   </ErrorCard>
 
                   <ErrorCard show={error ? true : false}>
@@ -165,7 +169,7 @@ const UserDisplay = () => {
                     <Button
                       onClick={saveModalOnClick}
                       success={notNil(data)}
-                      disabled={isLenZero(username)}
+                      disabled={!isValid(username)}
                       loading={isLoading}
                     >
                       {saveButtonContent()}
