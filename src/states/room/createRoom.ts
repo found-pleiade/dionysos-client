@@ -1,8 +1,8 @@
-import { useContext } from 'react';
-import { useMutation } from 'react-query';
-import { AuthContext } from '../../features/auth';
-import { SettingsContext } from '../settings';
-import { UserContext } from '../user';
+import { useContext } from "react";
+import { useMutation } from "react-query";
+import { AuthContext } from "../../features/auth";
+import { SettingsContext } from "../settings";
+import { UserContext } from "../user";
 
 const useCreateRoom = () => {
   const settings = useContext(SettingsContext);
