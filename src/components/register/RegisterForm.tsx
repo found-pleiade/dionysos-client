@@ -1,11 +1,11 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext, ActionTypes as UserActionTypes } from "../../states/user";
 import useCreateUser from "../../states/user/createUser";
 import Button from "../Button";
 import Input from "../Input";
 import RowGroup from "../../layouts/RowGroup";
-import { isLenZero, isValid, isValidConditions } from "../../utils";
+import { isValid, isValidConditions } from "../../utils";
 import { AuthContext } from "../../features/auth";
 import ErrorCard from "../ErrorCard";
 
