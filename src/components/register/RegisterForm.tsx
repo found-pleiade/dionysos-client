@@ -45,7 +45,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-4">
+    <div className="flex flex-col w-full gap-1">
       <RowGroup>
         <Input
           id="connect"
