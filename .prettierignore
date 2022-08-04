@@ -20,6 +20,7 @@ dist-ssr
 !.yarn/versions
 
 coverage
+pnpm-lock.yaml
 
 # Editor directories and files
 .vscode/*

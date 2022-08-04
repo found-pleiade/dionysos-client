@@ -11,14 +11,16 @@ const useShareRoom = () => {
 
   const createUrl = (id: string) => {
     return `${window.location.href}?share=${id}`;
-  }
+  };
 
   const isJoining = id.length > 0 ? true : false;
 
   return { id, scanUrl, createUrl, isJoining };
 };
 
-const ShareContext = createContext(null as any as ReturnType<typeof useShareRoom>);
+const ShareContext = createContext(
+  null as any as ReturnType<typeof useShareRoom>
+);
 
 export default useShareRoom;
 export { ShareContext };

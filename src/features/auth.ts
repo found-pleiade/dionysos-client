@@ -6,7 +6,7 @@ import useUser from "../states/user";
 // requests.
 const useAuth = () => {
   const [password, setPassword] = useState("");
-  
+
   // Headers abstraction that handle auth.
   const newHeaders = (
     user: ReturnType<typeof useUser>,
