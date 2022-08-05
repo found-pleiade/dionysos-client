@@ -4,11 +4,11 @@ import CenterCard from "../components/register/CenterCard";
 import RegisterForm from "../components/register/RegisterForm";
 import ServerModal from "../components/register/ServerModal";
 import { ShareContext } from "../features/shareRoom";
-import useVersion from "../states/getVersion";
+import useVersion from "../features/version";
 
 const Register = () => {
-  const { isLoading, error, data } = useVersion();
   const share = useContext(ShareContext);
+  const { isLoading, error, isCorrect, isCompatible } = useVersion();
 
   useEffect(() => {
     share.scanUrl();
@@ -61,12 +61,16 @@ const Register = () => {
     );
   }
 
-  if (data !== "0.1.0") {
+  if (!isCompatible && isCorrect) {
     return pageSkeleton(
       <CenterCard>
-        Version mismatch between the client and the server api.
+        Version mismatch between the client and the server.
       </CenterCard>
     );
+  }
+
+  if (!isCompatible && !isCorrect) {
+    return pageSkeleton(<CenterCard>The server url seems wrong.</CenterCard>);
   }
 
   return pageSkeleton(<RegisterForm />);
