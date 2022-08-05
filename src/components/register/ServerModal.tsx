@@ -4,7 +4,6 @@ import { GlobeAltIcon, ReplyIcon } from "@heroicons/react/solid";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";
-import useVersion from "../../states/getVersion";
 import ErrorCard from "../ErrorCard";
 import {
   SettingsContext,
@@ -12,6 +11,8 @@ import {
 } from "../../states/settings";
 import { notNil } from "../../utils";
 import RowGroup from "../../layouts/RowGroup";
+import useGetVersion from "../../states/getVersion";
+import useVersion from "../../features/version";
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,11 @@ const ServerModal = () => {
   const settings = useContext(SettingsContext);
   const [serverAddress, setServerAddress] = useState(settings.get.server);
   const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
-  const { isStale, isLoading, error, data, refetch } = useVersion(false);
+  const { isStale, isLoading, error, data, refetch } = useGetVersion(false);
+  const version = useVersion(data);
+
+  const isSuccess =
+    notNil(data) && !isStale && version.isCompatible() && version.isCorrect();
 
   const exitModal = () => {
     if (data) setServerAddress(serverAddressBackup);
@@ -48,16 +53,14 @@ const ServerModal = () => {
     setServerAddress(settings.getInitial.server);
   };
 
+  if (isSuccess && isOpen) closeModal();
+
   useEffect(() => {
     settings.dispatch({
       type: SettingsActionTypes.SET_SERVER,
       payload: { server: serverAddress },
     });
   }, [serverAddress]);
-
-  if (data && !isStale && isOpen) {
-    closeModal();
-  }
 
   const saveButtonContent = () => {
     if (error) {
@@ -134,7 +137,15 @@ const ServerModal = () => {
                     Check your internet connection and the url.
                   </ErrorCard>
 
-                  <ErrorCard show={data !== "0.1.0"}>
+                  <ErrorCard
+                    show={!error && !version.isCorrect()}
+                  >
+                    Incorrect data, is the uri correct?
+                  </ErrorCard>
+
+                  <ErrorCard
+                    show={!error && !version.isCompatible() && version.isCorrect()}
+                  >
                     Version mismatch between the client and the server api.
                   </ErrorCard>
 
@@ -145,7 +156,7 @@ const ServerModal = () => {
 
                     <Button
                       onClick={saveModalOnClick}
-                      success={notNil(data) && !isStale}
+                      success={isSuccess}
                       loading={isLoading}
                     >
                       {saveButtonContent()}
