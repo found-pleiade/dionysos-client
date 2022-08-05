@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { SettingsContext } from "./settings";
 
-const useVersion = (enabled = true) => {
+const useGetVersion = (enabled = true) => {
   const settings = useContext(SettingsContext);
 
   const { isStale, isLoading, isFetching, error, data, refetch } = useQuery(
@@ -23,4 +23,4 @@ const useVersion = (enabled = true) => {
   };
 };
 
-export default useVersion;
+export default useGetVersion;
