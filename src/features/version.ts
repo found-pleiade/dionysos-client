@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 const useVersion = (serverVersion = "x.x.x") => {
-  const [version] = useState("0.1.0");
+  const version = "0.1.0";
 
   const isCompatible = () => {
     const [major, minor] = version.split(".");
