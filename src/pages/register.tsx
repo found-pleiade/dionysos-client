@@ -5,12 +5,10 @@ import RegisterForm from "../components/register/RegisterForm";
 import ServerModal from "../components/register/ServerModal";
 import { ShareContext } from "../features/shareRoom";
 import useVersion from "../features/version";
-import useGetVersion from "../states/getVersion";
 
 const Register = () => {
-  const { isLoading, error, data } = useGetVersion();
   const share = useContext(ShareContext);
-  const version = useVersion(data);
+  const { isLoading, error, isCorrect, isCompatible } = useVersion();
 
   useEffect(() => {
     share.scanUrl();
@@ -63,7 +61,7 @@ const Register = () => {
     );
   }
 
-  if (!version.isCompatible() && version.isCorrect()) {
+  if (!isCompatible && isCorrect) {
     return pageSkeleton(
       <CenterCard>
         Version mismatch between the client and the server.
@@ -71,7 +69,7 @@ const Register = () => {
     );
   }
 
-  if (!version.isCompatible() && !version.isCorrect()) {
+  if (!isCompatible && !isCorrect) {
     return pageSkeleton(<CenterCard>The server url seems wrong.</CenterCard>);
   }
 

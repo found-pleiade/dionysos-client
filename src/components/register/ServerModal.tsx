@@ -9,9 +9,7 @@ import {
   SettingsContext,
   ActionTypes as SettingsActionTypes,
 } from "../../states/settings";
-import { notNil } from "../../utils";
 import RowGroup from "../../layouts/RowGroup";
-import useGetVersion from "../../states/getVersion";
 import useVersion from "../../features/version";
 
 const ServerModal = () => {
@@ -28,14 +26,11 @@ const ServerModal = () => {
   const settings = useContext(SettingsContext);
   const [serverAddress, setServerAddress] = useState(settings.get.server);
   const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
-  const { isStale, isLoading, error, data, refetch } = useGetVersion(false);
-  const version = useVersion(data);
-
-  const isSuccess =
-    notNil(data) && !isStale && version.isCompatible() && version.isCorrect();
+  const { isSuccess, isCompatible, isCorrect, refetch, error, isLoading } =
+    useVersion(true);
 
   const exitModal = () => {
-    if (data) setServerAddress(serverAddressBackup);
+    if (isCorrect) setServerAddress(serverAddressBackup);
     closeModal();
   };
 
@@ -62,15 +57,7 @@ const ServerModal = () => {
     });
   }, [serverAddress]);
 
-  const saveButtonContent = () => {
-    if (error) {
-      return "Retry";
-    }
-
-    return "Save";
-  };
-
-  const leaveDelay = data && !isStale ? "delay-500" : "";
+  const leaveDelay = isSuccess ? "delay-500" : "";
 
   return (
     <>
@@ -137,15 +124,11 @@ const ServerModal = () => {
                     Check your internet connection and the url.
                   </ErrorCard>
 
-                  <ErrorCard show={!error && !version.isCorrect()}>
+                  <ErrorCard show={!error && !isCorrect}>
                     Incorrect data, is the uri correct?
                   </ErrorCard>
 
-                  <ErrorCard
-                    show={
-                      !error && !version.isCompatible() && version.isCorrect()
-                    }
-                  >
+                  <ErrorCard show={!error && !isCompatible && isCorrect}>
                     Version mismatch between the client and the server api.
                   </ErrorCard>
 
@@ -159,7 +142,7 @@ const ServerModal = () => {
                       success={isSuccess}
                       loading={isLoading}
                     >
-                      {saveButtonContent()}
+                      {error || !isCorrect ? "Retry" : "Save"}
                     </Button>
                   </SpaceBetween>
                 </Dialog.Panel>
