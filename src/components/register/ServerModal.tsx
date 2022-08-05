@@ -30,7 +30,7 @@ const ServerModal = () => {
     useVersion();
 
   const exitModal = () => {
-    if (isCorrect) setServerAddress(serverAddressBackup);
+    if (!error) setServerAddress(serverAddressBackup);
     closeModal();
   };
 
