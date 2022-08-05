@@ -3,12 +3,9 @@ const useVersion = (serverVersion = "x.x.x") => {
 
   const isCompatible = () => {
     const [major, minor] = version.split(".");
-    const [majorServer, minorServer] = serverVersion.split(".");
+    const [serverMajor, serverMinor] = serverVersion.split(".");
 
-    if (major !== majorServer) return false;
-    if (minor >= minorServer) return true;
-
-    return true;
+    return (major === serverMajor) && (minor >= serverMinor);
   };
 
   const isCorrect = () => serverVersion.split(".").length === 3;
