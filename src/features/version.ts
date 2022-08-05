@@ -5,7 +5,7 @@ const useVersion = (serverVersion = "x.x.x") => {
     const [major, minor] = version.split(".");
     const [serverMajor, serverMinor] = serverVersion.split(".");
 
-    return (major === serverMajor) && (minor >= serverMinor);
+    return major === serverMajor && minor >= serverMinor;
   };
 
   const isCorrect = () => serverVersion.split(".").length === 3;

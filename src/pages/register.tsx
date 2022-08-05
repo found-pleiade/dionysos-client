@@ -72,11 +72,7 @@ const Register = () => {
   }
 
   if (!version.isCompatible() && !version.isCorrect()) {
-    return pageSkeleton(
-      <CenterCard>
-        The server url seems wrong.
-      </CenterCard>
-    );
+    return pageSkeleton(<CenterCard>The server url seems wrong.</CenterCard>);
   }
 
   return pageSkeleton(<RegisterForm />);

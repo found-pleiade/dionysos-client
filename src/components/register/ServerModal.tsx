@@ -137,14 +137,14 @@ const ServerModal = () => {
                     Check your internet connection and the url.
                   </ErrorCard>
 
-                  <ErrorCard
-                    show={!error && !version.isCorrect()}
-                  >
+                  <ErrorCard show={!error && !version.isCorrect()}>
                     Incorrect data, is the uri correct?
                   </ErrorCard>
 
                   <ErrorCard
-                    show={!error && !version.isCompatible() && version.isCorrect()}
+                    show={
+                      !error && !version.isCompatible() && version.isCorrect()
+                    }
                   >
                     Version mismatch between the client and the server api.
                   </ErrorCard>
