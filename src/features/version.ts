@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { SettingsContext } from "../states/settings";
 
-const useVersion = (enabled = true) => {
+const useVersion = () => {
   const settings = useContext(SettingsContext);
   const version = "0.1.0";
 
@@ -10,7 +10,6 @@ const useVersion = (enabled = true) => {
     "getVersion",
     () => fetch(`${settings.get.server}/version`).then((res) => res.text()),
     {
-      enabled,
       staleTime: 800,
     }
   );

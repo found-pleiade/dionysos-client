@@ -27,7 +27,7 @@ const ServerModal = () => {
   const [serverAddress, setServerAddress] = useState(settings.get.server);
   const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
   const { isSuccess, isCompatible, isCorrect, refetch, error, isLoading } =
-    useVersion(true);
+    useVersion();
 
   const exitModal = () => {
     if (isCorrect) setServerAddress(serverAddressBackup);
