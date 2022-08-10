@@ -10,7 +10,7 @@ const useDisconnectUser = () => {
   const auth = useContext(AuthContext);
 
   const { mutate } = useMutation("disconnectUser", () =>
-    fetch(`${settings.get.server}${user.get.uri}`, {
+    fetch(`${settings.get.server}${user.get.uri}/disconnect`, {
       method: "PATCH",
       headers: auth.newHeaders(user),
       keepalive: true,
