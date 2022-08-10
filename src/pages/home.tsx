@@ -6,7 +6,7 @@ import UserDisplay from "../components/home/UserDisplay";
 import CreateRoom from "../components/home/CreateRoom";
 import { ShareContext } from "../features/shareRoom";
 import useJoinRoom from "../states/room/joinRoom";
-import useDisconnectUser from "../states/user/disconnectUser";
+import useDisconnectUser from "../states/room/disconnectUser";
 
 const Home = () => {
   const panel = useSideMenu(true);
