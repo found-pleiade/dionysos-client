@@ -20,7 +20,7 @@ const useJoinRoom = (roomId: string) => {
     isLoading,
     error,
     mutate,
-    isSuccess
+    isSuccess,
   };
 };
 
