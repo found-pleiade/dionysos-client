@@ -64,7 +64,7 @@ const UserDisplay = () => {
   };
 
   /**
-   * Update the backup and close the modal on success.
+   * Update the user, the backup and close the modal on success.
    * Add a timeout with a reset to clear the data after
    * the animation is done.
    */
