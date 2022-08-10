@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "../Button";
 import Input from "../Input";
@@ -34,7 +34,6 @@ const UserDisplay = () => {
    */
   const user = useContext(UserContext);
   const [username, setUsername] = useState(user.get.name);
-  const [usernameBackup, setUsernameBackup] = useState(username);
 
   /**
    * Mutation to rename the user. The reset is used to clear
@@ -48,7 +47,7 @@ const UserDisplay = () => {
    * Reset to clear errors after the close animation.
    */
   const exitModal = () => {
-    if (!isSuccess) setUsername(usernameBackup);
+    if (!isSuccess) setUsername(user.get.name);
     closeModal();
 
     setTimeout(() => {
@@ -61,20 +60,20 @@ const UserDisplay = () => {
    * Add a timeout with a reset to clear the data after
    * the animation is done.
    */
-  if (isSuccess && isOpen) {
-    setUsernameBackup(username);
+  useEffect(() => {
+    if (isSuccess && isOpen) {
+      user.dispatch({
+        type: UserActionTypes.SET_NAME,
+        payload: { name: username },
+      });
 
-    user.dispatch({
-      type: UserActionTypes.SET_NAME,
-      payload: { name: username },
-    });
+      closeModal();
 
-    closeModal();
-
-    setTimeout(() => {
-      reset();
-    }, closeOnSuccessDelay + closeDuration);
-  }
+      setTimeout(() => {
+        reset();
+      }, closeOnSuccessDelay + closeDuration);
+    }
+  }, [isSuccess]);
 
   const closeDurationClass = `duration-${closeDuration}`;
 
