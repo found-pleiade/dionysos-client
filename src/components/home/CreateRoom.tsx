@@ -5,17 +5,19 @@ import Button from "../Button";
 
 const CreateRoom = () => {
   const { data, isLoading, error, mutate } = useCreateRoom();
-  const { createUrl } = useContext(ShareContext);
+  const { createUrl, isJoining } = useContext(ShareContext);
   const [url, setUrl] = useState("");
 
   useEffect(() => {
     if (!data) return;
-    setUrl(createUrl(data.id));
+    setUrl(createUrl(data.uri.split("/").pop()));
   }, [data]);
 
   const copyUrl = () => {
     navigator.clipboard.writeText(url);
   };
+
+  if (isJoining) return <div role={"none"}></div>;
 
   return data ? (
     <Button headless onClick={copyUrl}>

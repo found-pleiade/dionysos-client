@@ -13,6 +13,9 @@ const useCreateRoom = () => {
     fetch(`${settings.get.server}/rooms`, {
       headers: auth.newHeaders(user),
       method: "POST",
+      body: JSON.stringify({
+        name: "miaou"
+      }),
     }).then((res) => res.json())
   );
 

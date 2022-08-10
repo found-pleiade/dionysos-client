@@ -9,18 +9,18 @@ const useJoinRoom = (roomId: string) => {
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, error, data, mutate } = useMutation("joinRoom", () =>
-    fetch(`${settings.get.server}/rooms/${roomId}/join`, {
+  const { isLoading, error, isSuccess, mutate } = useMutation("joinRoom", () =>
+    fetch(`${settings.get.server}/rooms/${roomId}/connect`, {
       headers: auth.newHeaders(user),
-      method: "POST",
-    }).then((res) => res.json())
+      method: "PATCH",
+    })
   );
 
   return {
     isLoading,
     error,
-    data,
     mutate,
+    isSuccess
   };
 };
 
