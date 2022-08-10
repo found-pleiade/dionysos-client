@@ -19,6 +19,7 @@ const Panel = ({
       className="block absolute top-[50%] right-3 z-10 p-1 h-8 w-8 bg-light-primary-300 dark:bg-dark-primary-500 rounded-full cursor-pointer text-center translate-y-[-50%]"
       onClick={state.toggle}
     />
+
     {children}
   </div>
 );
