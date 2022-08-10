@@ -1,7 +1,7 @@
+import { ChevronLeftIcon } from "@heroicons/react/solid";
 import React from "react";
 import useSideMenu from "../../states/sideMenu";
 import { translate } from "../../utils";
-import MinimizeIcon from "./MinimizeIcon";
 
 const Panel = ({
   state,
@@ -15,7 +15,11 @@ const Panel = ({
       state.isOpen
     )} shadow-xl shadow-light-primary-400/90 dark:shadow-dark-primary-800 z-[1]`}
   >
-    <MinimizeIcon toggle={state.toggle} />
+    <ChevronLeftIcon
+      className="block absolute top-[50%] right-3 z-10 p-1 h-8 w-8 bg-light-primary-300 dark:bg-dark-primary-500 rounded-full cursor-pointer text-center translate-y-[-50%]"
+      onClick={state.toggle}
+    />
+
     {children}
   </div>
 );
