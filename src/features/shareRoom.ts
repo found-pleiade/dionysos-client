@@ -13,7 +13,7 @@ const useShareRoom = () => {
     return `${window.location.href}?share=${id}`;
   };
 
-  const isJoining = id.length > 0 ? true : false;
+  const isJoining = id.length > 0;
 
   return { id, scanUrl, createUrl, isJoining };
 };
