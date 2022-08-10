@@ -18,12 +18,14 @@ Pnpm is used as the packet manager for it’s speed and space efficiency.
 
 ### 3. Clone and install JS dependencies
 
-Clone the project, go into it and install the Javascript dependencies.
+Clone the project, go into it, install the Javascript dependencies
+and prepare your git hooks.
 
 ```
 git clone git@github.com:found-pleiade/dionysos-client.git
 cd dionysos-client
 pnpm i
+pnpm prepare
 ```
 
 ## Commands
@@ -32,11 +34,6 @@ pnpm i
 
 You can now run the app with hot-reloading.  
 `pnpm dev`
-
-### Prettier
-
-Run Prettier on specified file or folder.  
-`pnpm prettier {file/folder}`
 
 ### Test
 
