@@ -8,13 +8,16 @@ const useVersion = (serverAddress?: string) => {
 
   const { isStale, isLoading, isFetching, error, data, refetch } = useQuery(
     "getVersion",
-    () => fetch(`${serverAddress || settings.get.server}/version`).then((res) => res.text()),
+    () =>
+      fetch(`${serverAddress || settings.get.server}/version`).then((res) =>
+        res.text()
+      ),
     {
       staleTime: 800,
     }
   );
 
-  const serverVersion = data ? data : "x.x.x";
+  const serverVersion = data ? data : "x.x.x";
 
   const isCompatible = () => {
     const [major, minor] = version.split(".");
