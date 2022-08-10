@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "../Button";
 import Input from "../Input";
@@ -6,7 +6,7 @@ import SpaceBetween from "../../layouts/SpaceBetween";
 import { UserContext, ActionTypes as UserActionTypes } from "../../states/user";
 import useRenameUser from "../../states/user/renameUser";
 import ErrorCard from "../ErrorCard";
-import { isValid, isValidConditions, notNil } from "../../utils";
+import { isValid, isValidConditions } from "../../utils";
 
 const UserDisplay = () => {
   /**
@@ -41,14 +41,14 @@ const UserDisplay = () => {
    * the data and errors when the user closes the modal so
    * it can be run again.
    */
-  const { data, isLoading, error, mutate, reset } = useRenameUser();
+  const { isSuccess, isLoading, error, mutate, reset } = useRenameUser();
 
   /**
    * Change the state of the modal with some effects.
    * Reset to clear errors after the close animation.
    */
   const exitModal = () => {
-    if (!data) setUsername(usernameBackup);
+    if (!isSuccess) setUsername(usernameBackup);
     closeModal();
 
     setTimeout(() => {
@@ -57,19 +57,13 @@ const UserDisplay = () => {
   };
 
   /**
-   * Fire the mutation on save.
-   */
-  const saveModalOnClick = () => {
-    mutate(username);
-  };
-
-  /**
    * Update the user, the backup and close the modal on success.
    * Add a timeout with a reset to clear the data after
    * the animation is done.
    */
-  useEffect(() => {
+  if (isSuccess && isOpen) {
     setUsernameBackup(username);
+
     user.dispatch({
       type: UserActionTypes.SET_NAME,
       payload: { name: username },
@@ -80,23 +74,11 @@ const UserDisplay = () => {
     setTimeout(() => {
       reset();
     }, closeOnSuccessDelay + closeDuration);
-  }, [data]);
-
-  /**
-   * Change the visuals of the modal based on
-   * the state of the server.
-   */
-  const saveButtonContent = () => {
-    if (error) {
-      return "Retry";
-    }
-
-    return "Save";
-  };
+  }
 
   const closeDurationClass = `duration-${closeDuration}`;
 
-  const closeDelayClass = data ? `delay-${closeOnSuccessDelay}` : "";
+  const closeDelayClass = isSuccess ? `delay-${closeOnSuccessDelay}` : "";
 
   return (
     <>
@@ -162,12 +144,14 @@ const UserDisplay = () => {
                     </Button>
 
                     <Button
-                      onClick={saveModalOnClick}
-                      success={notNil(data)}
+                      onClick={() => {
+                        mutate(username);
+                      }}
+                      success={isSuccess}
                       disabled={!isValid(username)}
                       loading={isLoading}
                     >
-                      {saveButtonContent()}
+                      {error ? "Retry" : "Save"}
                     </Button>
                   </SpaceBetween>
                 </Dialog.Panel>

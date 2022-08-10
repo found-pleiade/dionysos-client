@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { SettingsContext } from "../states/settings";
 
-const useVersion = () => {
+const useVersion = (serverAddress: string) => {
   const settings = useContext(SettingsContext);
   const version = "0.1.0";
 
   const { isStale, isLoading, isFetching, error, data, refetch } = useQuery(
     "getVersion",
-    () => fetch(`${settings.get.server}/version`).then((res) => res.text()),
+    () => fetch(`${serverAddress || settings.get.server}/version`).then((res) => res.text()),
     {
       staleTime: 800,
     }
@@ -20,7 +20,7 @@ const useVersion = () => {
     const [major, minor] = version.split(".");
     const [serverMajor, serverMinor] = serverVersion.split(".");
 
-    return major === serverMajor && minor >= serverMinor;
+    return major === serverMajor && minor <= serverMinor;
   };
 
   const isCorrect = serverVersion.split(".").length === 3;

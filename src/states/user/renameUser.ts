@@ -9,7 +9,7 @@ const useRenameUser = () => {
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, error, data, mutate, reset } = useMutation(
+  const { isLoading, error, isSuccess, mutate, reset } = useMutation(
     "renameUser",
     (name: string) =>
       fetch(`${settings.get.server}${user.get.uri}`, {
@@ -20,9 +20,9 @@ const useRenameUser = () => {
   );
 
   return {
+    isSuccess,
     isLoading,
     error,
-    data,
     mutate,
     reset,
   };
