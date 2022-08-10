@@ -14,7 +14,7 @@ const useCreateRoom = () => {
       headers: auth.newHeaders(user),
       method: "POST",
       body: JSON.stringify({
-        name: "miaou"
+        name: "miaou",
       }),
     }).then((res) => res.json())
   );
