@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm exec prettier --write .
-pnpm exec vitest run
+pnpm exec pretty-quick
+pnpm exec vitest run --changed
