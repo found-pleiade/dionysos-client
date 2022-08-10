@@ -117,42 +117,46 @@ const UserDisplay = () => {
                   >
                     Username
                   </Dialog.Title>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      mutate(username);
+                    }}
+                  >
+                    <Input
+                      disabled={isLoading}
+                      className="mb-4"
+                      value={username}
+                      setValue={setUsername}
+                    />
 
-                  <Input
-                    disabled={isLoading}
-                    className="mb-4"
-                    value={username}
-                    setValue={setUsername}
-                  />
+                    <ErrorCard show={!isValidConditions.gteTwo(username)}>
+                      Minimum length is 2 chars
+                    </ErrorCard>
 
-                  <ErrorCard show={!isValidConditions.gteTwo(username)}>
-                    Minimum length is 2 chars
-                  </ErrorCard>
+                    <ErrorCard show={!isValidConditions.lteTwenty(username)}>
+                      Maximum length is 20 chars
+                    </ErrorCard>
 
-                  <ErrorCard show={!isValidConditions.lteTwenty(username)}>
-                    Maximum length is 20 chars
-                  </ErrorCard>
+                    <ErrorCard show={error ? true : false}>
+                      An error occurred while trying to rename you.
+                    </ErrorCard>
 
-                  <ErrorCard show={error ? true : false}>
-                    An error occurred while trying to rename you.
-                  </ErrorCard>
+                    <SpaceBetween>
+                      <Button onClick={exitModal} colorless>
+                        Back
+                      </Button>
 
-                  <SpaceBetween>
-                    <Button onClick={exitModal} colorless>
-                      Back
-                    </Button>
-
-                    <Button
-                      onClick={() => {
-                        mutate(username);
-                      }}
-                      success={isSuccess}
-                      disabled={!isValid(username)}
-                      loading={isLoading}
-                    >
-                      {error ? "Retry" : "Save"}
-                    </Button>
-                  </SpaceBetween>
+                      <Button
+                        type="submit"
+                        success={isSuccess}
+                        disabled={!isValid(username)}
+                        loading={isLoading}
+                      >
+                        {error ? "Retry" : "Save"}
+                      </Button>
+                    </SpaceBetween>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

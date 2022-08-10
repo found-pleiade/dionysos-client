@@ -36,16 +36,14 @@ const RegisterForm = () => {
     }
   }, [data]);
 
-  const buttonText = () => {
-    if (error) {
-      return "Try again";
-    }
-
-    return "Next";
-  };
-
   return (
-    <div className="flex flex-col w-full gap-1">
+    <form
+      className="flex flex-col w-full gap-1"
+      onSubmit={(e) => {
+        e.preventDefault();
+        mutate();
+      }}
+    >
       <RowGroup>
         <Input
           id="connect"
@@ -56,19 +54,19 @@ const RegisterForm = () => {
         />
 
         <Button
+          type="submit"
           className="rounded-l-none"
-          onClick={mutate}
           loading={isLoading}
           disabled={!isValid(name)}
         >
-          {buttonText()}
+          {error ? "Try again" : "Next"}
         </Button>
       </RowGroup>
 
       <ErrorCard show={!isValidConditions.lteTwenty(name)}>
         Maximum length is 20 chars
       </ErrorCard>
-    </div>
+    </form>
   );
 };
 
