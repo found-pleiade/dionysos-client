@@ -21,7 +21,7 @@ const Button = ({
   id?: string;
   className?: string;
   title?: string;
-  type?: string;
+  type?: "button" | "submit";
   to?: To;
   colorless?: boolean;
   onClick?: any;
@@ -83,6 +83,7 @@ const Button = ({
   const linkComp = (
     <Link
       id={id}
+      type={type}
       className={style()}
       onClick={onClick}
       title={title}
