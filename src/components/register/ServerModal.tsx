@@ -25,18 +25,12 @@ const ServerModal = () => {
 
   const settings = useContext(SettingsContext);
   const [serverAddress, setServerAddress] = useState(settings.get.server);
-  const [serverAddressBackup, setServerAddressBackup] = useState(serverAddress);
   const { isSuccess, isCompatible, isCorrect, refetch, error, isLoading } =
-    useVersion();
+    useVersion(serverAddress);
 
   const exitModal = () => {
-    if (!error) setServerAddress(serverAddressBackup);
+    if (!error) setServerAddress(settings.get.server);
     closeModal();
-  };
-
-  const saveModalOnClick = () => {
-    setServerAddressBackup(serverAddress);
-    refetch();
   };
 
   const setInitialServerAddress = () => {
@@ -48,14 +42,16 @@ const ServerModal = () => {
     setServerAddress(settings.getInitial.server);
   };
 
-  if (isSuccess && isOpen) closeModal();
-
   useEffect(() => {
-    settings.dispatch({
-      type: SettingsActionTypes.SET_SERVER,
-      payload: { server: serverAddress },
-    });
-  }, [serverAddress]);
+    if (isSuccess && isOpen) {
+      settings.dispatch({
+        type: SettingsActionTypes.SET_SERVER,
+        payload: { server: serverAddress },
+      });
+
+      closeModal();
+    }
+  }, [isSuccess]);
 
   const leaveDelay = isSuccess ? "delay-500" : "";
 
@@ -138,7 +134,7 @@ const ServerModal = () => {
                     </Button>
 
                     <Button
-                      onClick={saveModalOnClick}
+                      onClick={refetch}
                       success={isSuccess}
                       loading={isLoading}
                     >

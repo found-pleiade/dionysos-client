@@ -4,14 +4,14 @@ import { SettingsContext } from "../settings";
 import { UserContext } from ".";
 import { AuthContext } from "../../features/auth";
 
-const useRenameUser = (name: string) => {
+const useRenameUser = () => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, error, data, mutate, reset } = useMutation(
+  const { isLoading, error, isSuccess, mutate, reset } = useMutation(
     "renameUser",
-    () =>
+    (name: string) =>
       fetch(`${settings.get.server}${user.get.uri}`, {
         method: "PATCH",
         headers: auth.newHeaders(user),
@@ -20,9 +20,9 @@ const useRenameUser = (name: string) => {
   );
 
   return {
+    isSuccess,
     isLoading,
     error,
-    data,
     mutate,
     reset,
   };
