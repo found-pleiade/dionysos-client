@@ -97,50 +97,57 @@ const ServerModal = () => {
                     Server address
                   </Dialog.Title>
 
-                  <RowGroup>
-                    <Button
-                      className="min-w-0 self-center flex-1 rounded-r-none px-5"
-                      onClick={setInitialServerAddress}
-                      title="Restore default address"
-                    >
-                      <ReplyIcon className="h-5" />
-                    </Button>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      refetch();
+                    }}
+                  >
+                    <RowGroup>
+                      <Button
+                        className="min-w-0 self-center flex-1 rounded-r-none px-5"
+                        onClick={setInitialServerAddress}
+                        title="Restore default address"
+                      >
+                        <ReplyIcon className="h-5" />
+                      </Button>
 
-                    <Input
-                      disabled={isLoading}
-                      className="my-4 rounded-l-none"
-                      value={serverAddress}
-                      setValue={setServerAddress}
-                    />
-                  </RowGroup>
+                      <Input
+                        disabled={isLoading}
+                        className="my-4 rounded-l-none"
+                        value={serverAddress}
+                        setValue={setServerAddress}
+                      />
+                    </RowGroup>
 
-                  <ErrorCard show={error ? true : false}>
-                    An error occurred while fetching the version.
-                    <br />
-                    Check your internet connection and the url.
-                  </ErrorCard>
+                    <ErrorCard show={error ? true : false}>
+                      An error occurred while fetching the version.
+                      <br />
+                      Check your internet connection and the url.
+                    </ErrorCard>
 
-                  <ErrorCard show={!error && !isCorrect}>
-                    Incorrect data, is the uri correct?
-                  </ErrorCard>
+                    <ErrorCard show={!error && !isCorrect}>
+                      Incorrect data, is the uri correct?
+                    </ErrorCard>
 
-                  <ErrorCard show={!error && !isCompatible && isCorrect}>
-                    Version mismatch between the client and the server api.
-                  </ErrorCard>
+                    <ErrorCard show={!error && !isCompatible && isCorrect}>
+                      Version mismatch between the client and the server api.
+                    </ErrorCard>
 
-                  <SpaceBetween>
-                    <Button onClick={exitModal} colorless>
-                      Back
-                    </Button>
+                    <SpaceBetween>
+                      <Button onClick={exitModal} colorless>
+                        Back
+                      </Button>
 
-                    <Button
-                      onClick={refetch}
-                      success={isSuccess}
-                      loading={isLoading}
-                    >
-                      {error || !isCorrect ? "Retry" : "Save"}
-                    </Button>
-                  </SpaceBetween>
+                      <Button
+                        type="submit"
+                        success={isSuccess}
+                        loading={isLoading}
+                      >
+                        {error || !isCorrect ? "Retry" : "Save"}
+                      </Button>
+                    </SpaceBetween>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
