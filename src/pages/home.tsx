@@ -10,7 +10,6 @@ import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
 import { ShareIcon } from "@heroicons/react/solid";
 import { Dialog, Transition } from "@headlessui/react";
-import { visibility } from "../utils";
 
 const Home = () => {
   const share = useContext(ShareContext);
@@ -39,7 +38,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
+    if (!share.isJoining) setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
   }, [createRoom]);
 
   const disconnectUser = useDisconnectUser();
@@ -54,15 +53,11 @@ const Home = () => {
         <Panel state={panel}>
           <>
             <Button
-              className={`ml-auto min-w-0 w-10 h-10 px-2.5 rounded-full ${visibility(
-                !share.isJoining
-              )}`}
+              className="ml-auto min-w-0 w-10 h-10 px-2.5 rounded-full"
               onClick={openModal}
             >
               <ShareIcon />
             </Button>
-
-            <div role={"none"} className={`${visibility(share.isJoining)}`} />
 
             <Transition show={isOpen} as={Fragment}>
               <Dialog
@@ -110,7 +105,7 @@ const Home = () => {
                             navigator.clipboard.writeText(sharableUrl);
                           }}
                         >
-                          {sharableUrl}
+                          {sharableUrl || window.location.href}
                         </Button>
 
                         <p className="text-base font-medium opacity-60">
