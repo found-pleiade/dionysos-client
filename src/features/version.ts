@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { SettingsContext } from "../states/settings";
 
-const useVersion = (serverAddress: string) => {
+const useVersion = (serverAddress?: string) => {
   const settings = useContext(SettingsContext);
   const version = "0.1.0";
 
