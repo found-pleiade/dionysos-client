@@ -6,6 +6,20 @@ Share and watch movies with your friends.
 
 ## Project setup
 
+### 1. Install pre-commit
+
+Python:  
+`pip install pre-commit`
+
+Fedora:  
+`sudo dnf install pre-commit`
+
+Arch:  
+On AUR as `python-pre-commit`
+
+MacOs:  
+`brew install pre-commit`
+
 ### 1. Install NodeJS
 
 The best way to get NodeJS is with [nvm](https://github.com/nvm-sh/nvm) or [nvm for Windows](https://github.com/coreybutler/nvm-windows).  
