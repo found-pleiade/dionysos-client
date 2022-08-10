@@ -10,6 +10,7 @@ const useSideMenu = (open: boolean) => {
   return {
     isOpen,
     toggle,
+    setIsOpen
   };
 };
 
