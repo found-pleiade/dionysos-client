@@ -21,6 +21,8 @@ const Home = () => {
   const panel = useSideMenu(share.isJoining);
   const [isOpen, setIsOpen] = useState(!share.isJoining);
 
+  const [urlCopied, setUrlCopied] = useState(false);
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -38,7 +40,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (!share.isJoining) setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
+    if (!share.isJoining)
+      setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
   }, [createRoom]);
 
   const disconnectUser = useDisconnectUser();
@@ -46,6 +49,8 @@ const Home = () => {
   window.onunload = () => {
     disconnectUser.mutate();
   };
+
+  const url = sharableUrl || window.location.href;
 
   return (
     <div className="page">
@@ -91,7 +96,7 @@ const Home = () => {
                       leaveFrom="opacity-100 scale-100"
                       leaveTo="opacity-0 scale-95"
                     >
-                      <Dialog.Panel className="transform overflow-hidden rounded-2xl p-6 text-center align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
+                      <Dialog.Panel className="max-w-5xl transform rounded-2xl p-6 text-center align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
                         <p className="text-xl font-bold">
                           Share the following link to your friends:
                         </p>
@@ -102,15 +107,20 @@ const Home = () => {
                           headless
                           className="text-lg font-mono"
                           onClick={() => {
-                            navigator.clipboard.writeText(sharableUrl);
+                            navigator.clipboard.writeText(url);
+                            setUrlCopied(true);
+
+                            setTimeout(() => {
+                              setUrlCopied(false);
+                            }, 3000);
                           }}
                         >
-                          {sharableUrl || window.location.href}
-                        </Button>
+                          <p>{url}</p>
 
-                        <p className="text-base font-medium opacity-60">
-                          click to copy
-                        </p>
+                          <p className={`text-base font-medium opacity-60 ${urlCopied ? "text-light-accent-400 opacity-100" : ""}`}>
+                            {urlCopied ? "copied!" : "click to copy"}
+                          </p>
+                        </Button>
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
