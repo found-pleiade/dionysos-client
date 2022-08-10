@@ -4,14 +4,14 @@ import { SettingsContext } from "../settings";
 import { UserContext } from ".";
 import { AuthContext } from "../../features/auth";
 
-const useDeleteUser = () => {
+const useDisconnectUser = () => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { mutate } = useMutation("deleteUser", () =>
+  const { mutate } = useMutation("disconnectUser", () =>
     fetch(`${settings.get.server}${user.get.uri}`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: auth.newHeaders(user),
       keepalive: true,
     }).then((res) => res)
@@ -22,4 +22,4 @@ const useDeleteUser = () => {
   };
 };
 
-export default useDeleteUser;
+export default useDisconnectUser;
