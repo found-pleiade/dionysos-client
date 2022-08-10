@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "prettier": "prettier --write",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
@@ -43,6 +43,7 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.1",
     "jsdom": "^19.0.0",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4",
