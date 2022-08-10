@@ -12,7 +12,7 @@ Python:
 `pip install pre-commit`
 
 Fedora:  
-`sudo dnf install pre-commit`
+`sudo dnf install pre-commit` with RPM
 
 Arch:  
 On AUR as `python-pre-commit`
