@@ -13,7 +13,7 @@ import { Dialog, Transition } from "@headlessui/react";
 
 const Home = () => {
   const share = useContext(ShareContext);
-  const joinRoom = useJoinRoom(share.id);
+  const joinRoom = useJoinRoom();
   const createRoom = useCreateRoom();
 
   const [sharableUrl, setSharableUrl] = useState("");
@@ -30,14 +30,6 @@ const Home = () => {
   const openModal = () => {
     setIsOpen(true);
   };
-
-  useEffect(() => {
-    if (share.isJoining) {
-      joinRoom.mutate();
-    } else {
-      createRoom.mutate();
-    }
-  }, []);
 
   useEffect(() => {
     if (!share.isJoining)
