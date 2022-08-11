@@ -51,8 +51,8 @@ const UserDisplay = () => {
     }
   }, [renameUser.isSuccess]);
 
+  // Classes based on timeouts durations
   const closeDurationClass = `duration-${closeDuration}`;
-
   const closeDelayClass = renameUser.isSuccess
     ? `delay-${closeOnSuccessDelay}`
     : "";
