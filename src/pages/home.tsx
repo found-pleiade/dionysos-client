@@ -10,6 +10,7 @@ import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
 import { ShareIcon } from "@heroicons/react/solid";
 import { Dialog, Transition } from "@headlessui/react";
+import SpaceBetween from "../layouts/SpaceBetween";
 
 const Home = () => {
   const share = useContext(ShareContext);
@@ -87,11 +88,9 @@ const Home = () => {
                           Share the following link to your friends:
                         </p>
 
-                        <br />
-
                         <Button
                           headless
-                          className="text-lg font-mono"
+                          className="text-lg font-mono mt-3 mb-6"
                           onClick={() => {
                             navigator.clipboard.writeText(url);
                             setUrlCopied(true);
@@ -113,6 +112,19 @@ const Home = () => {
                             {urlCopied ? "copied!" : "click to copy"}
                           </p>
                         </Button>
+
+                        <SpaceBetween>
+                          <div />
+                          <Button
+                            onClick={() => {
+                              panel.setIsOpen(true);
+                              setIsDialogOpen(false);
+                            }}
+                            colorless
+                          >
+                            Done
+                          </Button>
+                        </SpaceBetween>
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
