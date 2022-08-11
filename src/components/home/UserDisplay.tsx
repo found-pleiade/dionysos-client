@@ -8,6 +8,7 @@ import ErrorCard from "../ErrorCard";
 import { isValid, isValidConditions } from "../../utils";
 import useGetUser from "../../states/user/getUser";
 import { useQueryClient } from "react-query";
+import { PencilAltIcon } from "@heroicons/react/solid";
 
 const UserDisplay = () => {
   // Used to invalidate getUser on renaming
@@ -59,8 +60,9 @@ const UserDisplay = () => {
 
   return (
     <>
-      <Button headless onClick={openModal} className="text-left">
+      <Button headless onClick={openModal} className="text-left flex" title="Change your name">
         {getUser.data?.name}
+        <PencilAltIcon className="ml-1 h-5"/>
       </Button>
 
       <Transition show={isDialogOpen} as={Fragment}>
