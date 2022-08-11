@@ -49,7 +49,7 @@ const Button = ({
 
     const d = disabled ? "cursor-not-allowed opacity-50" : "";
 
-    const s = success ? "bg-light-success-400 dark:bg-dark-success-500" : "";
+    const s = success ? "bg-light-success-400 hover:bg-light-success-400 dark:bg-dark-success-500 hover:dark:bg-dark-success-500" : "";
 
     return `${base} ${c} ${d} ${s} ${className}`;
   };
