@@ -9,23 +9,15 @@ const useUser = () => {
   const baseUser = {
     uri: "",
     id: 0,
-    name: "",
   };
 
   // Specify the type of the payload based on the type
-  type Action =
-    | {
-        type: ActionTypes.SET_URI_AND_ID;
-        payload: {
-          uri: typeof baseUser.uri;
-        };
-      }
-    | {
-        type: ActionTypes.SET_NAME;
-        payload: {
-          name: typeof baseUser.name;
-        };
-      };
+  type Action = {
+    type: ActionTypes.SET_URI_AND_ID;
+    payload: {
+      uri: typeof baseUser.uri;
+    };
+  };
 
   const reducer = (state: typeof baseUser, action: Action) => {
     switch (action.type) {
@@ -37,14 +29,6 @@ const useUser = () => {
           ...state,
           uri,
           id,
-        };
-      }
-      case ActionTypes.SET_NAME: {
-        const { name } = action.payload;
-
-        return {
-          ...state,
-          name,
         };
       }
     }

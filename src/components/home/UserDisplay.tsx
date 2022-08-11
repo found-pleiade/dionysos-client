@@ -1,92 +1,70 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";
-import { UserContext, ActionTypes as UserActionTypes } from "../../states/user";
 import useRenameUser from "../../states/user/renameUser";
 import ErrorCard from "../ErrorCard";
 import { isValid, isValidConditions } from "../../utils";
+import useGetUser from "../../states/user/getUser";
+import { useQueryClient } from "react-query";
 
 const UserDisplay = () => {
-  /**
-   * Those are values used for setTimeouts, and the close animation.
-   */
+  // Used to invalidate getUser on renaming
+  const queryClient = useQueryClient();
+
+  // Those are values used for setTimeouts, and the close animation.
   const closeOnSuccessDelay = 500;
   const closeDuration = 200;
 
-  /**
-   * State of the modal with it's setters.
-   */
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const getUser = useGetUser();
+  const renameUser = useRenameUser();
+  const [username, setUsername] = useState("");
+
+  // Use a timeout to clear errors
+  // after the animation is done.
   const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  /**
-   * The user in the context, the state of the input and
-   * a backup in case there is errors or edits without saving.
-   */
-  const user = useContext(UserContext);
-  const [username, setUsername] = useState(user.get.name);
-
-  /**
-   * Mutation to rename the user. The reset is used to clear
-   * the data and errors when the user closes the modal so
-   * it can be run again.
-   */
-  const { isSuccess, isLoading, error, mutate, reset } = useRenameUser();
-
-  /**
-   * Change the state of the modal with some effects.
-   * Reset to clear errors after the close animation.
-   */
-  const exitModal = () => {
-    if (!isSuccess) setUsername(user.get.name);
-    closeModal();
+    setIsDialogOpen(false);
 
     setTimeout(() => {
-      reset();
+      renameUser.reset();
     }, closeDuration);
   };
 
-  /**
-   * Update the user, the backup and close the modal on success.
-   * Add a timeout with a reset to clear the data after
-   * the animation is done.
-   */
-  useEffect(() => {
-    if (isSuccess && isOpen) {
-      user.dispatch({
-        type: UserActionTypes.SET_NAME,
-        payload: { name: username },
-      });
+  const openModal = () => {
+    setUsername(getUser.data?.name);
+    setIsDialogOpen(true);
+  };
 
-      closeModal();
+  // Use a timeout to clear data
+  // after the animation is done.
+  useEffect(() => {
+    if (renameUser.isSuccess && isDialogOpen) {
+      queryClient.invalidateQueries(["getUser"]);
+      setIsDialogOpen(false);
 
       setTimeout(() => {
-        reset();
+        renameUser.reset();
       }, closeOnSuccessDelay + closeDuration);
     }
-  }, [isSuccess]);
+  }, [renameUser.isSuccess]);
 
+  // Classes based on timeouts durations
   const closeDurationClass = `duration-${closeDuration}`;
-
-  const closeDelayClass = isSuccess ? `delay-${closeOnSuccessDelay}` : "";
+  const closeDelayClass = renameUser.isSuccess
+    ? `delay-${closeOnSuccessDelay}`
+    : "";
 
   return (
     <>
       <Button headless onClick={openModal} className="text-left">
-        {user.get.name}
+        {getUser.data?.name}
       </Button>
 
-      <Transition show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={exitModal}>
+      <Transition show={isDialogOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -117,14 +95,15 @@ const UserDisplay = () => {
                   >
                     Username
                   </Dialog.Title>
+
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      mutate(username);
+                      renameUser.mutate(username);
                     }}
                   >
                     <Input
-                      disabled={isLoading}
+                      disabled={renameUser.isLoading}
                       className="mb-4"
                       value={username}
                       setValue={setUsername}
@@ -138,22 +117,22 @@ const UserDisplay = () => {
                       Maximum length is 20 chars
                     </ErrorCard>
 
-                    <ErrorCard show={error ? true : false}>
+                    <ErrorCard show={renameUser.error ? true : false}>
                       An error occurred while trying to rename you.
                     </ErrorCard>
 
                     <SpaceBetween>
-                      <Button onClick={exitModal} colorless>
+                      <Button onClick={closeModal} colorless>
                         Back
                       </Button>
 
                       <Button
                         type="submit"
-                        success={isSuccess}
+                        success={renameUser.isSuccess}
                         disabled={!isValid(username)}
-                        loading={isLoading}
+                        loading={renameUser.isLoading}
                       >
-                        {error ? "Retry" : "Save"}
+                        {renameUser.error ? "Retry" : "Save"}
                       </Button>
                     </SpaceBetween>
                   </form>

@@ -25,11 +25,6 @@ const RegisterForm = () => {
         payload: { uri },
       });
 
-      user.dispatch({
-        type: UserActionTypes.SET_NAME,
-        payload: { name },
-      });
-
       auth.setPassword(password);
 
       navigate("/home");
