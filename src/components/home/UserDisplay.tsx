@@ -38,7 +38,7 @@ const UserDisplay = () => {
     setIsDialogOpen(true);
   };
 
-  // Use a timeout to clear data 
+  // Use a timeout to clear data
   // after the animation is done.
   useEffect(() => {
     if (renameUser.isSuccess && isDialogOpen) {
