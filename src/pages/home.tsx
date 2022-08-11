@@ -104,10 +104,10 @@ const Home = () => {
                           <p>{url}</p>
 
                           <p
-                            className={`text-base font-medium opacity-60 ${
+                            className={`text-base font-medium ${
                               urlCopied
-                                ? "text-light-accent-400 opacity-100"
-                                : ""
+                                ? "text-light-accent-400 dark:text-dark-accent-400 opacity-100"
+                                : "opacity-60"
                             }`}
                           >
                             {urlCopied ? "copied!" : "click to copy"}
