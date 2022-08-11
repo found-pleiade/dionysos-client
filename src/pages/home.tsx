@@ -19,17 +19,9 @@ const Home = () => {
   const [sharableUrl, setSharableUrl] = useState("");
 
   const panel = useSideMenu(share.isJoining);
-  const [isOpen, setIsOpen] = useState(!share.isJoining);
+  const [isDialogOpen, setIsDialogOpen] = useState(!share.isJoining);
 
   const [urlCopied, setUrlCopied] = useState(false);
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
 
   useEffect(() => {
     if (!share.isJoining)
@@ -51,18 +43,20 @@ const Home = () => {
           <>
             <Button
               className="ml-auto min-w-0 w-10 h-10 px-2.5 rounded-full"
-              onClick={openModal}
+              onClick={() => {
+                setIsDialogOpen(true);
+              }}
             >
               <ShareIcon />
             </Button>
 
-            <Transition show={isOpen} as={Fragment}>
+            <Transition show={isDialogOpen} as={Fragment}>
               <Dialog
                 as="div"
                 className="relative z-10"
                 onClose={() => {
                   panel.setIsOpen(true);
-                  closeModal();
+                  setIsDialogOpen(false);
                 }}
               >
                 <Transition.Child
@@ -109,7 +103,13 @@ const Home = () => {
                         >
                           <p>{url}</p>
 
-                          <p className={`text-base font-medium opacity-60 ${urlCopied ? "text-light-accent-400 opacity-100" : ""}`}>
+                          <p
+                            className={`text-base font-medium opacity-60 ${
+                              urlCopied
+                                ? "text-light-accent-400 opacity-100"
+                                : ""
+                            }`}
+                          >
                             {urlCopied ? "copied!" : "click to copy"}
                           </p>
                         </Button>
