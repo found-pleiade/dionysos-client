@@ -13,7 +13,7 @@ import { Dialog, Transition } from "@headlessui/react";
 
 const Home = () => {
   const share = useContext(ShareContext);
-  const joinRoom = useJoinRoom();
+  useJoinRoom();
   const createRoom = useCreateRoom();
 
   const [sharableUrl, setSharableUrl] = useState("");
