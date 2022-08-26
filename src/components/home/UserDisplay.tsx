@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import OverlayMenu from "../components/home/OverlayMenu";
 import Panel from "../components/home/Panel";
 import useSideMenu from "../states/sideMenu";
@@ -9,7 +9,6 @@ import useDisconnectUser from "../states/room/disconnectUser";
 import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
 import { ShareIcon } from "@heroicons/react/solid";
-import { Dialog, Transition } from "@headlessui/react";
 import SpaceBetween from "../layouts/SpaceBetween";
 import SimpleDialog from "../components/SimpleDialog";
 

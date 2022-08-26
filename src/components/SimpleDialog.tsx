@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, ReactElement, ReactNode } from "react";
+import React, { Fragment, ReactNode } from "react";
 
 const SimpleDialog = ({
   children,
