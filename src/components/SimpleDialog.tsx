@@ -23,7 +23,18 @@ const SimpleDialog = ({
   const closeDurationClass = closeDuration
     ? `duration-${closeDuration}`
     : "duration-300";
-  const closeDelayClass = closeDelayCondition ? `delay-${closeDelay}` : "";
+
+  const closeDelayClass = () => {
+    if (closeDelayCondition === undefined && closeDelay !== undefined) {
+      return `delay-${closeDelay}`;
+    }
+
+    if (closeDelayCondition) {
+      return `delay-${closeDelay}`;
+    }
+
+    return "";
+  };
 
   const titleElement = title ? (
     <Dialog.Title as="h3" className="text-lg font-medium leading-6 mb-4">
@@ -41,7 +52,7 @@ const SimpleDialog = ({
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave={`ease-in ${closeDurationClass} ${closeDelayClass}`}
+          leave={`ease-in ${closeDurationClass} ${closeDelayClass()}`}
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -55,7 +66,7 @@ const SimpleDialog = ({
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
-              leave={`ease-in ${closeDurationClass} ${closeDelayClass}`}
+              leave={`ease-in ${closeDurationClass} ${closeDelayClass()}`}
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
