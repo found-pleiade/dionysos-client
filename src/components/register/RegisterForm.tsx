@@ -8,6 +8,7 @@ import RowGroup from "../../layouts/RowGroup";
 import { isValid, isValidConditions } from "../../utils";
 import { AuthContext } from "../../features/auth";
 import ErrorCard from "../ErrorCard";
+import Form from "../Form";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -32,13 +33,7 @@ const RegisterForm = () => {
   }, [data]);
 
   return (
-    <form
-      className="flex flex-col w-full gap-1"
-      onSubmit={(e) => {
-        e.preventDefault();
-        mutate();
-      }}
-    >
+    <Form onSubmit={() => mutate()} className="flex flex-col w-full gap-1">
       <RowGroup>
         <Input
           id="connect"
@@ -61,7 +56,7 @@ const RegisterForm = () => {
       <ErrorCard show={!isValidConditions.lteTwenty(name)}>
         Maximum length is 20 chars
       </ErrorCard>
-    </form>
+    </Form>
   );
 };
 

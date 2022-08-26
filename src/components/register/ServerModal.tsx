@@ -1,5 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobeAltIcon, ReplyIcon } from "@heroicons/react/solid";
 import Button from "../Button";
 import Input from "../Input";
@@ -11,6 +10,8 @@ import {
 } from "../../states/settings";
 import RowGroup from "../../layouts/RowGroup";
 import useVersion from "../../features/version";
+import Form from "../Form";
+import SimpleDialog from "../SimpleDialog";
 
 const ServerModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,8 +54,6 @@ const ServerModal = () => {
     }
   }, [isSuccess]);
 
-  const leaveDelay = isSuccess ? "delay-500" : "";
-
   return (
     <>
       <Button
@@ -64,96 +63,56 @@ const ServerModal = () => {
         <GlobeAltIcon />
       </Button>
 
-      <Transition show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={exitModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave={`ease-in duration-200 ${leaveDelay}`}
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+      <SimpleDialog
+        show={isOpen}
+        closeFunction={exitModal}
+        title="Server address"
+        closeDelay={500}
+        closeDelayCondition={isSuccess}
+      >
+        <Form onSubmit={() => refetch()}>
+          <RowGroup>
+            <Button
+              className="min-w-0 self-center flex-1 rounded-r-none px-5"
+              onClick={setInitialServerAddress}
+              title="Restore default address"
+            >
+              <ReplyIcon className="h-5" />
+            </Button>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave={`ease-in duration-200 ${leaveDelay}`}
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6"
-                  >
-                    Server address
-                  </Dialog.Title>
+            <Input
+              disabled={isLoading}
+              className="my-4 rounded-l-none"
+              value={serverAddress}
+              setValue={setServerAddress}
+            />
+          </RowGroup>
 
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      refetch();
-                    }}
-                  >
-                    <RowGroup>
-                      <Button
-                        className="min-w-0 self-center flex-1 rounded-r-none px-5"
-                        onClick={setInitialServerAddress}
-                        title="Restore default address"
-                      >
-                        <ReplyIcon className="h-5" />
-                      </Button>
+          <ErrorCard show={error ? true : false}>
+            An error occurred while fetching the version.
+            <br />
+            Check your internet connection and the url.
+          </ErrorCard>
 
-                      <Input
-                        disabled={isLoading}
-                        className="my-4 rounded-l-none"
-                        value={serverAddress}
-                        setValue={setServerAddress}
-                      />
-                    </RowGroup>
+          <ErrorCard show={!error && !isCorrect}>
+            Incorrect data, is the uri correct?
+          </ErrorCard>
 
-                    <ErrorCard show={error ? true : false}>
-                      An error occurred while fetching the version.
-                      <br />
-                      Check your internet connection and the url.
-                    </ErrorCard>
+          <ErrorCard show={!error && !isCompatible && isCorrect}>
+            Version mismatch between the client and the server api.
+          </ErrorCard>
 
-                    <ErrorCard show={!error && !isCorrect}>
-                      Incorrect data, is the uri correct?
-                    </ErrorCard>
+          <SpaceBetween>
+            <Button onClick={exitModal} colorless>
+              Back
+            </Button>
 
-                    <ErrorCard show={!error && !isCompatible && isCorrect}>
-                      Version mismatch between the client and the server api.
-                    </ErrorCard>
-
-                    <SpaceBetween>
-                      <Button onClick={exitModal} colorless>
-                        Back
-                      </Button>
-
-                      <Button
-                        type="submit"
-                        success={isSuccess}
-                        loading={isLoading}
-                      >
-                        {error || !isCorrect ? "Retry" : "Save"}
-                      </Button>
-                    </SpaceBetween>
-                  </form>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+            <Button type="submit" success={isSuccess} loading={isLoading}>
+              {error || !isCorrect ? "Retry" : "Save"}
+            </Button>
+          </SpaceBetween>
+        </Form>
+      </SimpleDialog>
     </>
   );
 };
