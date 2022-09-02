@@ -16,7 +16,11 @@ const SimpleDialog = ({
   closeFunction: () => void;
   closeDelayCondition?: boolean;
 }) => {
-  const closeDelayClass = closeDelayCondition ? "delay-500" : "";
+  const duration = 300;
+  const delay = 500;
+
+  const closeDelayClass = closeDelayCondition ? `delay-[${delay}ms]` : "";
+  const durationClass = `delay-[${duration}ms]`;
 
   const titleElement = title ? (
     <Dialog.Title as="h3" className="text-lg font-medium leading-6 mb-4">
@@ -31,10 +35,10 @@ const SimpleDialog = ({
       <Dialog as="div" className="relative z-10" onClose={closeFunction}>
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
+          enter={`ease-out ${durationClass}`}
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave={`ease-in duration-300 ${closeDelayClass}`}
+          leave={`ease-in ${durationClass} ${closeDelayClass}`}
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -45,10 +49,10 @@ const SimpleDialog = ({
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
+              enter={`ease-out ${durationClass}`}
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
-              leave={`ease-in duration-300 ${closeDelayClass}`}
+              leave={`ease-in ${durationClass} ${closeDelayClass}`}
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
