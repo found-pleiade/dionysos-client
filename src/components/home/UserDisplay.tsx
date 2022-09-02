@@ -69,8 +69,6 @@ const UserDisplay = () => {
         show={isDialogOpen}
         title="Username"
         closeFunction={closeModal}
-        closeDuration={closeDuration}
-        closeDelay={closeOnSuccessDelay}
         closeDelayCondition={renameUser.isSuccess}
       >
         <Form onSubmit={() => renameUser.mutate(username)}>

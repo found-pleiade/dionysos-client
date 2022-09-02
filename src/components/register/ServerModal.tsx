@@ -67,7 +67,6 @@ const ServerModal = () => {
         show={isOpen}
         closeFunction={exitModal}
         title="Server address"
-        closeDelay={500}
         closeDelayCondition={isSuccess}
       >
         <Form onSubmit={() => refetch()}>
