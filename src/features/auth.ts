@@ -17,9 +17,18 @@ const useAuth = () => {
       Authorization: `Basic ${window.btoa(`${user.get.id}:${password}`)}`,
     });
 
+  const newSseHeaders = (
+    user: ReturnType<typeof useUser>,
+    headers?: Record<string, string>
+  ) => ({
+    ...headers,
+    Authorization: `Basic ${window.btoa(`${user.get.id}:${password}`)}`,
+  });
+
   return {
     setPassword,
     newHeaders,
+    newSseHeaders,
   };
 };
 

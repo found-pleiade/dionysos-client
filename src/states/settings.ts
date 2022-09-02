@@ -7,7 +7,7 @@ enum ActionTypes {
 
 const useSettings = () => {
   const initialSettings = {
-    server: "https://ipa.dionysos.live",
+    server: "https://dionysos-api-pr-112.onrender.com",
   };
 
   // Specify the type of the payload based on the type

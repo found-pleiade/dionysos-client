@@ -10,6 +10,8 @@ const useShareRoom = () => {
   };
 
   const createUrl = (id: string) => {
+    if (!id) return "";
+    setId(id);
     return `${window.location.href}?share=${id}`;
   };
 

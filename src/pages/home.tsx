@@ -11,6 +11,10 @@ import Button from "../components/Button";
 import { ShareIcon } from "@heroicons/react/solid";
 import { Dialog, Transition } from "@headlessui/react";
 import SpaceBetween from "../layouts/SpaceBetween";
+import { SettingsContext } from "../states/settings";
+import { AuthContext } from "../features/auth";
+import { UserContext } from "../states/user";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 const Home = () => {
   const share = useContext(ShareContext);
@@ -36,6 +40,34 @@ const Home = () => {
   };
 
   const url = sharableUrl || window.location.href;
+
+  const settings = useContext(SettingsContext);
+  const auth = useContext(AuthContext);
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    if (!share.id) return;
+
+    const eventSource = async () => {
+      await fetchEventSource(
+        `${settings.get.server}/rooms/${share.id}/stream`,
+        {
+          headers: auth.newSseHeaders(user),
+          async onopen(event) {
+            console.log(event);
+          },
+          onmessage(event) {
+            console.log(event);
+          },
+          onerror(event) {
+            console.log(event);
+          },
+        }
+      );
+    };
+
+    eventSource();
+  }, [share]);
 
   return (
     <div className="page">
