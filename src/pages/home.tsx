@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import OverlayMenu from "../components/home/OverlayMenu";
 import Panel from "../components/home/Panel";
 import useSideMenu from "../states/sideMenu";
@@ -9,8 +9,8 @@ import useDisconnectUser from "../states/room/disconnectUser";
 import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
 import { ShareIcon } from "@heroicons/react/solid";
-import { Dialog, Transition } from "@headlessui/react";
 import SpaceBetween from "../layouts/SpaceBetween";
+import SimpleDialog from "../components/SimpleDialog";
 
 const Home = () => {
   const share = useContext(ShareContext);
@@ -51,86 +51,56 @@ const Home = () => {
               <ShareIcon />
             </Button>
 
-            <Transition show={isDialogOpen} as={Fragment}>
-              <Dialog
-                as="div"
-                className="relative z-10"
-                onClose={() => {
-                  panel.setIsOpen(true);
-                  setIsDialogOpen(false);
+            <SimpleDialog
+              show={isDialogOpen}
+              closeFunction={() => {
+                panel.setIsOpen(true);
+                setIsDialogOpen(false);
+              }}
+              className="text-center max-w-3xl w-auto"
+            >
+              <p className="text-xl font-bold">
+                Share the following link to your friends:
+              </p>
+
+              <Button
+                headless
+                className="text-lg font-mono mt-3 mb-6"
+                onClick={() => {
+                  navigator.clipboard.writeText(url);
+                  setUrlCopied(true);
+
+                  setTimeout(() => {
+                    setUrlCopied(false);
+                  }, 3000);
                 }}
               >
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave={`ease-in duration-200`}
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
+                <p>{url}</p>
+
+                <p
+                  className={`text-base font-medium ${
+                    urlCopied
+                      ? "text-light-accent-400 dark:text-dark-accent-400 opacity-100"
+                      : "opacity-60"
+                  }`}
                 >
-                  <div className="fixed inset-0 bg-black bg-opacity-25" />
-                </Transition.Child>
+                  {urlCopied ? "copied!" : "click to copy"}
+                </p>
+              </Button>
 
-                <div className="fixed inset-0 overflow-y-auto">
-                  <div className="flex min-h-full items-center justify-center p-4 text-center">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="ease-out duration-300"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave={`ease-in duration-200`}
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
-                      <Dialog.Panel className="max-w-5xl transform rounded-2xl p-6 text-center align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
-                        <p className="text-xl font-bold">
-                          Share the following link to your friends:
-                        </p>
-
-                        <Button
-                          headless
-                          className="text-lg font-mono mt-3 mb-6"
-                          onClick={() => {
-                            navigator.clipboard.writeText(url);
-                            setUrlCopied(true);
-
-                            setTimeout(() => {
-                              setUrlCopied(false);
-                            }, 3000);
-                          }}
-                        >
-                          <p>{url}</p>
-
-                          <p
-                            className={`text-base font-medium ${
-                              urlCopied
-                                ? "text-light-accent-400 dark:text-dark-accent-400 opacity-100"
-                                : "opacity-60"
-                            }`}
-                          >
-                            {urlCopied ? "copied!" : "click to copy"}
-                          </p>
-                        </Button>
-
-                        <SpaceBetween>
-                          <div />
-                          <Button
-                            onClick={() => {
-                              panel.setIsOpen(true);
-                              setIsDialogOpen(false);
-                            }}
-                            colorless
-                          >
-                            Done
-                          </Button>
-                        </SpaceBetween>
-                      </Dialog.Panel>
-                    </Transition.Child>
-                  </div>
-                </div>
-              </Dialog>
-            </Transition>
+              <SpaceBetween>
+                <div />
+                <Button
+                  onClick={() => {
+                    panel.setIsOpen(true);
+                    setIsDialogOpen(false);
+                  }}
+                  colorless
+                >
+                  Done
+                </Button>
+              </SpaceBetween>
+            </SimpleDialog>
           </>
 
           <UserDisplay />
