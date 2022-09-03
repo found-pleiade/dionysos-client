@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";
@@ -9,6 +8,8 @@ import { isValid, isValidConditions } from "../../utils";
 import useGetUser from "../../states/user/getUser";
 import { useQueryClient } from "react-query";
 import { PencilAltIcon } from "@heroicons/react/solid";
+import Form from "../Form";
+import SimpleDialog from "../SimpleDialog";
 
 const UserDisplay = () => {
   // Used to invalidate getUser on renaming
@@ -52,98 +53,60 @@ const UserDisplay = () => {
     }
   }, [renameUser.isSuccess]);
 
-  // Classes based on timeouts durations
-  const closeDurationClass = `duration-${closeDuration}`;
-  const closeDelayClass = renameUser.isSuccess
-    ? `delay-${closeOnSuccessDelay}`
-    : "";
-
   return (
     <>
-      <Button headless onClick={openModal} className="text-left flex" title="Change your name">
+      <Button
+        headless
+        onClick={openModal}
+        className="text-left flex"
+        title="Change your name"
+      >
         {getUser.data?.name}
-        <PencilAltIcon className="ml-1 h-5"/>
+        <PencilAltIcon className="ml-1 h-5" />
       </Button>
 
-      <Transition show={isDialogOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave={`ease-in ${closeDurationClass} ${closeDelayClass}`}
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+      <SimpleDialog
+        show={isDialogOpen}
+        title="Username"
+        closeFunction={closeModal}
+        closeDelayCondition={renameUser.isSuccess}
+      >
+        <Form onSubmit={() => renameUser.mutate(username)}>
+          <Input
+            disabled={renameUser.isLoading}
+            className="mb-4"
+            value={username}
+            setValue={setUsername}
+          />
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave={`ease-in ${closeDurationClass} ${closeDelayClass}`}
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 mb-4"
-                  >
-                    Username
-                  </Dialog.Title>
+          <ErrorCard show={!isValidConditions.gteTwo(username)}>
+            Minimum length is 2 chars
+          </ErrorCard>
 
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      renameUser.mutate(username);
-                    }}
-                  >
-                    <Input
-                      disabled={renameUser.isLoading}
-                      className="mb-4"
-                      value={username}
-                      setValue={setUsername}
-                    />
+          <ErrorCard show={!isValidConditions.lteTwenty(username)}>
+            Maximum length is 20 chars
+          </ErrorCard>
 
-                    <ErrorCard show={!isValidConditions.gteTwo(username)}>
-                      Minimum length is 2 chars
-                    </ErrorCard>
+          <ErrorCard show={renameUser.error ? true : false}>
+            An error occurred while trying to rename you.
+          </ErrorCard>
 
-                    <ErrorCard show={!isValidConditions.lteTwenty(username)}>
-                      Maximum length is 20 chars
-                    </ErrorCard>
+          <SpaceBetween>
+            <Button onClick={closeModal} colorless>
+              Back
+            </Button>
 
-                    <ErrorCard show={renameUser.error ? true : false}>
-                      An error occurred while trying to rename you.
-                    </ErrorCard>
-
-                    <SpaceBetween>
-                      <Button onClick={closeModal} colorless>
-                        Back
-                      </Button>
-
-                      <Button
-                        type="submit"
-                        success={renameUser.isSuccess}
-                        disabled={!isValid(username)}
-                        loading={renameUser.isLoading}
-                      >
-                        {renameUser.error ? "Retry" : "Save"}
-                      </Button>
-                    </SpaceBetween>
-                  </form>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+            <Button
+              type="submit"
+              success={renameUser.isSuccess}
+              disabled={!isValid(username)}
+              loading={renameUser.isLoading}
+            >
+              {renameUser.error ? "Retry" : "Save"}
+            </Button>
+          </SpaceBetween>
+        </Form>
+      </SimpleDialog>
     </>
   );
 };
