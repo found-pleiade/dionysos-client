@@ -46,26 +46,6 @@ const Home = () => {
     setUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
   }, [createRoom.data]);
 
-  // Get the room when possible.
-  // While users joining will have the room id already set,
-  // users creating a room need to wait for the server response.
-  useEffect(() => {
-    if (!share.id) return;
-    getRoom.refetch();
-  }, [share.id]);
-
-  // Try to notify the server a user is leaving,
-  // but it's not reliable and subject to change.
-  useEffect(() => {
-    window.onunload = () => {
-      disconnectUser.mutate();
-    };
-
-    return () => {
-      window.onunload = null;
-    };
-  }, []);
-
   // Handle SSE events, the query gettings users
   // gets invalidated on server event, as it
   // means a user joined or left the room.
@@ -81,6 +61,18 @@ const Home = () => {
       openWhenHidden: true,
     });
   }, [share.id]);
+
+  // Try to notify the server a user is leaving,
+  // but it's not reliable and subject to change.
+  useEffect(() => {
+    window.onunload = () => {
+      disconnectUser.mutate();
+    };
+
+    return () => {
+      window.onunload = null;
+    };
+  }, []);
 
   return (
     <div className="page">
