@@ -13,8 +13,10 @@ import SpaceBetween from "../layouts/SpaceBetween";
 import { SettingsContext } from "../states/settings";
 import SimpleDialog from "../components/SimpleDialog";
 import useGetRoom from "../states/room/getRoom";
+import { useQueryClient } from "react-query";
 
 const Home = () => {
+  const queryClient = useQueryClient();
   const share = useContext(ShareContext);
   const settings = useContext(SettingsContext);
 
@@ -62,6 +64,10 @@ const Home = () => {
 
     source.onopen = (event: any) => {
       console.log(event);
+    };
+
+    source.onmessage = () => {
+      queryClient.invalidateQueries(["getRoom"]);
     };
   }, [share.id]);
 
