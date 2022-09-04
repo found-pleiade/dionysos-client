@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   '@headlessui/react': ^1.6.6
   '@heroicons/react': ^1.0.6
-  '@microsoft/fetch-event-source': ^2.0.1
   '@testing-library/jest-dom': ^5.16.4
   '@testing-library/react': ^13.3.0
   '@types/node': ^18.6.0
@@ -32,6 +31,7 @@ specifiers:
   react-query: ^3.39.2
   react-router-dom: ^6.3.0
   react-spinners: ^0.13.3
+  sse.js: ^0.6.0
   tailwindcss: ^3.1.6
   typescript: ^4.7.4
   uuid: ^8.3.2
@@ -41,7 +41,6 @@ specifiers:
 dependencies:
   '@headlessui/react': 1.6.6_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 1.0.6_react@18.2.0
-  '@microsoft/fetch-event-source': 2.0.1
   '@types/react': 18.0.15
   '@vitejs/plugin-react': 1.3.2
   autoprefixer: 10.4.7_postcss@8.4.14
@@ -52,6 +51,7 @@ dependencies:
   react-query: 3.39.2_biqbaboplfbrettd7655fr4n2y
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
   react-spinners: 0.13.3_biqbaboplfbrettd7655fr4n2y
+  sse.js: 0.6.0
   tailwindcss: 3.1.6
   uuid: 8.3.2
   vite: 2.9.14
@@ -453,10 +453,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
-
-  /@microsoft/fetch-event-source/2.0.1:
-    resolution: {integrity: sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==}
-    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3308,6 +3304,10 @@ packages:
     engines: {node: '>=0.10.0'}
     requiresBuild: true
     dev: true
+
+  /sse.js/0.6.0:
+    resolution: {integrity: sha512-D8ti429DeGwzHGpEPX4Uf0aIrmMhUFLQLhnJB+9GHKJcOpNfWtFN5XSFPntESq8Duvj9RYWjuu1SxkUiT9TpTA==}
+    dev: false
 
   /string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
