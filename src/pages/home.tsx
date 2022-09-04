@@ -18,12 +18,12 @@ const Home = () => {
   const share = useContext(ShareContext);
   const settings = useContext(SettingsContext);
 
-  const joinRoom = useJoinRoom();
   const createRoom = useCreateRoom();
-  const getRoom = useGetRoom();
-  const disconnectUser = useDisconnectUser();
+  const joinRoom = useJoinRoom(share.id);
+  const getRoom = useGetRoom(share.id);
+  const disconnectUser = useDisconnectUser(share.id);
 
-  const [sharableUrl, setSharableUrl] = useState(window.location.href);
+  const [url, setUrl] = useState(window.location.href);
   const [urlCopied, setUrlCopied] = useState(false);
 
   const panel = useSideMenu(share.isJoining);
@@ -40,7 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     if (share.isJoining) return;
-    setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
+    setUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
   }, [createRoom.data]);
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const Home = () => {
                 headless
                 className="text-lg font-mono mt-3 mb-6"
                 onClick={() => {
-                  navigator.clipboard.writeText(sharableUrl);
+                  navigator.clipboard.writeText(url);
                   setUrlCopied(true);
 
                   setTimeout(() => {
@@ -103,7 +103,7 @@ const Home = () => {
                   }, 3000);
                 }}
               >
-                <p>{sharableUrl}</p>
+                <p>{url}</p>
 
                 <p
                   className={`text-base font-medium ${

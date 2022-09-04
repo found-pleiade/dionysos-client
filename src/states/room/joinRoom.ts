@@ -1,20 +1,18 @@
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import { AuthContext } from "../../features/auth";
-import { ShareContext } from "../../features/shareRoom";
 import { SettingsContext } from "../settings";
 import { UserContext } from "../user";
 
-const useJoinRoom = () => {
+const useJoinRoom = (shareId: string) => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
-  const share = useContext(ShareContext);
 
   const { isLoading, error, isSuccess, refetch } = useQuery(
     "joinRoom",
     () => {
-      return fetch(`${settings.get.server}/rooms/${share.id}/connect`, {
+      return fetch(`${settings.get.server}/rooms/${shareId}/connect`, {
         headers: auth.newHeaders(user),
         method: "PATCH",
       });
