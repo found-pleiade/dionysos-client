@@ -11,15 +11,14 @@ const useCreateRoom = () => {
 
   const { isLoading, error, data, refetch } = useQuery(
     "createRoom",
-    () => {
-      return fetch(`${settings.get.server}/rooms`, {
+    () =>
+      fetch(`${settings.get.server}/rooms`, {
         headers: auth.newHeaders(user),
         method: "POST",
         body: JSON.stringify({
           name: "miaou",
         }),
-      }).then((res) => res.json());
-    },
+      }).then((res) => res.json()),
     {
       enabled: false,
     }

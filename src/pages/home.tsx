@@ -31,6 +31,8 @@ const Home = () => {
   const panel = useSideMenu(share.isJoining);
   const [isDialogOpen, setIsDialogOpen] = useState(!share.isJoining);
 
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
     share.isJoining ? joinRoom.refetch() : createRoom.refetch();
   }, []);
@@ -39,6 +41,11 @@ const Home = () => {
     if (!share.id) return;
     getRoom.refetch();
   }, [share.id]);
+
+  useEffect(() => {
+    if (!getRoom.data) return;
+    setUsers(getRoom.data.users);
+  }, [getRoom.data]);
 
   useEffect(() => {
     if (share.isJoining) return;
@@ -148,6 +155,12 @@ const Home = () => {
               </SpaceBetween>
             </SimpleDialog>
           </>
+
+          <ul>
+            {users.map((user: any) => {
+              return <li key={user.ID}>{user.name}</li>;
+            })}
+          </ul>
 
           <UserDisplay />
         </Panel>

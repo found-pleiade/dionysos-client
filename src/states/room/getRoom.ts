@@ -13,11 +13,10 @@ const useGetRoom = () => {
 
   const { isLoading, error, data, refetch } = useQuery(
     "getRoom",
-    () => {
+    () =>
       fetch(`${settings.get.server}/rooms/${share.id}`, {
         headers: auth.newHeaders(user),
-      }).then((res) => res.json());
-    },
+      }).then((res) => res.json()),
     {
       enabled: false,
     }
