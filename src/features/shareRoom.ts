@@ -2,20 +2,21 @@ import { createContext, useState } from "react";
 
 const useShareRoom = () => {
   const [id, setId] = useState("");
+  const [isJoining, setIsJoining] = useState(false);
 
   const scanUrl = () => {
-    const share = new URLSearchParams(window.location.search).get("share");
-
-    if (share) setId(share);
+    const scannedId = new URLSearchParams(window.location.search).get("share");
+    if (scannedId) {
+      setId(scannedId);
+      setIsJoining(true);
+    }
   };
 
-  const createUrl = (id: string) => {
-    if (!id) return "";
-    setId(id);
-    return `${window.location.href}?share=${id}`;
+  const createUrl = (roomId: string) => {
+    if (!roomId) return "";
+    setId(roomId);
+    return `${window.location.href}?share=${roomId}`;
   };
-
-  const isJoining = id.length > 0;
 
   return { id, scanUrl, createUrl, isJoining };
 };
