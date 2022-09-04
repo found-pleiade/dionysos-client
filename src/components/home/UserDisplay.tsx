@@ -6,7 +6,7 @@ import useRenameUser from "../../states/user/renameUser";
 import ErrorCard from "../ErrorCard";
 import { isValid, isValidConditions } from "../../utils";
 import useGetUser from "../../states/user/getUser";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { PencilAltIcon } from "@heroicons/react/solid";
 import Form from "../Form";
 import SimpleDialog from "../SimpleDialog";

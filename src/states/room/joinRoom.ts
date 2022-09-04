@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../features/auth";
 import { SettingsContext } from "../settings";
 import { UserContext } from "../user";
@@ -10,7 +10,7 @@ const useJoinRoom = (shareId: string) => {
   const auth = useContext(AuthContext);
 
   const { isLoading, error, isSuccess, refetch } = useQuery(
-    "joinRoom",
+    ["joinRoom"],
     () => {
       return fetch(`${settings.get.server}/rooms/${shareId}/connect`, {
         headers: auth.newHeaders(user),
