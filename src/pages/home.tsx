@@ -61,7 +61,7 @@ const Home = () => {
       disconnectUser.mutate();
     };
 
-    () => {
+    return () => {
       window.onunload = null;
     };
   }, []);
