@@ -11,14 +11,12 @@ import Button from "../components/Button";
 import { ShareIcon } from "@heroicons/react/solid";
 import SpaceBetween from "../layouts/SpaceBetween";
 import { SettingsContext } from "../states/settings";
-import { AuthContext } from "../features/auth";
-import { UserContext } from "../states/user";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
 import SimpleDialog from "../components/SimpleDialog";
 import useGetRoom from "../states/room/getRoom";
 
 const Home = () => {
   const share = useContext(ShareContext);
+  const settings = useContext(SettingsContext);
 
   const joinRoom = useJoinRoom();
   const createRoom = useCreateRoom();
@@ -31,8 +29,6 @@ const Home = () => {
   const panel = useSideMenu(share.isJoining);
   const [isDialogOpen, setIsDialogOpen] = useState(!share.isJoining);
 
-  const [users, setUsers] = useState([]);
-
   useEffect(() => {
     share.isJoining ? joinRoom.refetch() : createRoom.refetch();
   }, []);
@@ -41,11 +37,6 @@ const Home = () => {
     if (!share.id) return;
     getRoom.refetch();
   }, [share.id]);
-
-  useEffect(() => {
-    if (!getRoom.data) return;
-    setUsers(getRoom.data.users);
-  }, [getRoom.data]);
 
   useEffect(() => {
     if (share.isJoining) return;
@@ -62,33 +53,17 @@ const Home = () => {
     };
   }, []);
 
-  const settings = useContext(SettingsContext);
-  const auth = useContext(AuthContext);
-  const user = useContext(UserContext);
-
   useEffect(() => {
     if (!share.id) return;
 
-    const eventSource = async () => {
-      await fetchEventSource(
-        `${settings.get.server}/rooms/${share.id}/stream`,
-        {
-          headers: auth.newSseHeaders(user),
-          async onopen(event) {
-            console.log(event);
-          },
-          onmessage(event) {
-            console.log(event);
-          },
-          onerror(event) {
-            console.log(event);
-          },
-        }
-      );
-    };
+    const source = new EventSource(
+      `${settings.get.server}/rooms/${share.id}/stream`
+    );
 
-    eventSource();
-  }, [share]);
+    source.onopen = (event: any) => {
+      console.log(event);
+    };
+  }, [share.id]);
 
   return (
     <div className="page">
@@ -157,7 +132,7 @@ const Home = () => {
           </>
 
           <ul>
-            {users.map((user: any) => {
+            {getRoom.data?.users.map((user: any) => {
               return <li key={user.ID}>{user.name}</li>;
             })}
           </ul>
