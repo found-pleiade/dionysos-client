@@ -15,31 +15,45 @@ import { AuthContext } from "../features/auth";
 import { UserContext } from "../states/user";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import SimpleDialog from "../components/SimpleDialog";
+import useGetRoom from "../states/room/getRoom";
 
 const Home = () => {
   const share = useContext(ShareContext);
-  useJoinRoom();
-  const createRoom = useCreateRoom();
 
-  const [sharableUrl, setSharableUrl] = useState("");
+  const joinRoom = useJoinRoom();
+  const createRoom = useCreateRoom();
+  const getRoom = useGetRoom();
+  const disconnectUser = useDisconnectUser();
+
+  const [sharableUrl, setSharableUrl] = useState(window.location.href);
+  const [urlCopied, setUrlCopied] = useState(false);
 
   const panel = useSideMenu(share.isJoining);
   const [isDialogOpen, setIsDialogOpen] = useState(!share.isJoining);
 
-  const [urlCopied, setUrlCopied] = useState(false);
+  useEffect(() => {
+    share.isJoining ? joinRoom.refetch() : createRoom.refetch();
+  }, []);
 
   useEffect(() => {
-    if (!share.isJoining)
-      setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
-  }, [createRoom]);
+    if (!share.id) return;
+    getRoom.refetch();
+  }, [share.id]);
 
-  const disconnectUser = useDisconnectUser();
+  useEffect(() => {
+    if (share.isJoining) return;
+    setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
+  }, [createRoom.data]);
 
-  window.onunload = () => {
-    disconnectUser.mutate();
-  };
+  useEffect(() => {
+    window.onunload = () => {
+      disconnectUser.mutate();
+    };
 
-  const url = sharableUrl || window.location.href;
+    () => {
+      window.onunload = null;
+    };
+  }, []);
 
   const settings = useContext(SettingsContext);
   const auth = useContext(AuthContext);
@@ -99,7 +113,7 @@ const Home = () => {
                 headless
                 className="text-lg font-mono mt-3 mb-6"
                 onClick={() => {
-                  navigator.clipboard.writeText(url);
+                  navigator.clipboard.writeText(sharableUrl);
                   setUrlCopied(true);
 
                   setTimeout(() => {
@@ -107,7 +121,7 @@ const Home = () => {
                   }, 3000);
                 }}
               >
-                <p>{url}</p>
+                <p>{sharableUrl}</p>
 
                 <p
                   className={`text-base font-medium ${

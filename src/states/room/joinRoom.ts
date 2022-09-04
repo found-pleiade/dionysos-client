@@ -11,18 +11,24 @@ const useJoinRoom = () => {
   const auth = useContext(AuthContext);
   const share = useContext(ShareContext);
 
-  const { isLoading, error, isSuccess } = useQuery("joinRoom", () => {
-    if (!share.isJoining) return;
-    return fetch(`${settings.get.server}/rooms/${share.id}/connect`, {
-      headers: auth.newHeaders(user),
-      method: "PATCH",
-    });
-  });
+  const { isLoading, error, isSuccess, refetch } = useQuery(
+    "joinRoom",
+    () => {
+      return fetch(`${settings.get.server}/rooms/${share.id}/connect`, {
+        headers: auth.newHeaders(user),
+        method: "PATCH",
+      });
+    },
+    {
+      enabled: false,
+    }
+  );
 
   return {
     isLoading,
     error,
     isSuccess,
+    refetch,
   };
 };
 
