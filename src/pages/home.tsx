@@ -13,12 +13,15 @@ import SpaceBetween from "../layouts/SpaceBetween";
 import { SettingsContext } from "../states/settings";
 import SimpleDialog from "../components/SimpleDialog";
 import useGetRoom from "../states/room/getRoom";
-import { useQueryClient } from "react-query";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { AuthContext } from "../features/auth";
+import { UserContext } from "../states/user";
 
 const Home = () => {
-  const queryClient = useQueryClient();
   const share = useContext(ShareContext);
   const settings = useContext(SettingsContext);
+  const auth = useContext(AuthContext);
+  const user = useContext(UserContext);
 
   const createRoom = useCreateRoom();
   const joinRoom = useJoinRoom(share.id);
@@ -69,17 +72,14 @@ const Home = () => {
   useEffect(() => {
     if (!share.id) return;
 
-    const source = new EventSource(
-      `${settings.get.server}/rooms/${share.id}/stream`
-    );
-
-    source.onopen = (event: any) => {
-      console.log(event);
-    };
-
-    source.onmessage = () => {
-      queryClient.invalidateQueries(["getRoom"]);
-    };
+    fetchEventSource(`${settings.get.server}/rooms/${share.id}/stream`, {
+      headers: auth.newSseHeaders(user),
+      onmessage() {
+        console.log("message");
+        getRoom.refetch();
+      },
+      openWhenHidden: true,
+    });
   }, [share.id]);
 
   return (

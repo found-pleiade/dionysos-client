@@ -16,7 +16,7 @@ const useGetRoom = (shareId: string) => {
         headers: auth.newHeaders(user),
       }).then((res) => res.json()),
     {
-      enabled: false,
+      enabled: shareId ? true : false,
     }
   );
 
