@@ -35,16 +35,24 @@ const Home = () => {
     share.isJoining ? joinRoom.refetch() : createRoom.refetch();
   }, []);
 
-  useEffect(() => {
-    if (!share.id) return;
-    getRoom.refetch();
-  }, [share.id]);
-
+  // Create the url to share. Only needed as a room
+  // creator, users joining can just use their own url.
+  // This step create the share.id for user creating a room.
   useEffect(() => {
     if (share.isJoining) return;
     setUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
   }, [createRoom.data]);
 
+  // Get the room when possible.
+  // While users joining will have the room id already set,
+  // users creating a room need to wait for the server response.
+  useEffect(() => {
+    if (!share.id) return;
+    getRoom.refetch();
+  }, [share.id]);
+
+  // Try to notify the server a user is leaving,
+  // but it's not reliable and subject to change.
   useEffect(() => {
     window.onunload = () => {
       disconnectUser.mutate();
@@ -55,6 +63,9 @@ const Home = () => {
     };
   }, []);
 
+  // Handle SSE events, the query gettings users
+  // gets invalidated on server event, as it
+  // means a user joined or left the room.
   useEffect(() => {
     if (!share.id) return;
 
