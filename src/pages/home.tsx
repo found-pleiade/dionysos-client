@@ -15,10 +15,6 @@ import { AuthContext } from "../features/auth";
 import { UserContext } from "../states/user";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import SimpleDialog from "../components/SimpleDialog";
-import { SettingsContext } from "../states/settings";
-import { AuthContext } from "../features/auth";
-import { UserContext } from "../states/user";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 const Home = () => {
   const share = useContext(ShareContext);
