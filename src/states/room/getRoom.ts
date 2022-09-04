@@ -4,7 +4,7 @@ import { SettingsContext } from "../settings";
 import { UserContext } from "../user";
 import { AuthContext } from "../../features/auth";
 
-const useGetRoom = (shareId: string) => {
+const useGetRoom = (shareId: string, isReady: boolean) => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
@@ -16,7 +16,7 @@ const useGetRoom = (shareId: string) => {
         headers: auth.newHeaders(user),
       }).then((res) => res.json()),
     {
-      enabled: shareId !== "",
+      enabled: isReady,
     }
   );
 
