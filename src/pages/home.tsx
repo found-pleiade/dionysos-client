@@ -56,7 +56,7 @@ const Home = () => {
     if (!isReady && !getRoom.data) return;
 
     fetchEventSource(`${settings.get.server}/rooms/${share.id}/stream`, {
-      headers: auth.newSseHeaders(user),
+      headers: auth.newHeaders(user),
       onmessage() {
         getRoom.refetch();
       },
