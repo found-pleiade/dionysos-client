@@ -25,10 +25,10 @@ const Home = () => {
 
   const createRoom = useCreateRoom();
   const joinRoom = useJoinRoom(share.id);
-  const isReady =
+  const joinedOrCreated =
     share.id !== "" && (createRoom.data !== undefined || joinRoom.isSuccess);
 
-  const getRoom = useGetRoom(share.id, isReady);
+  const getRoom = useGetRoom(share.id, joinedOrCreated);
   const disconnectUser = useDisconnectUser(share.id);
 
   const [url, setUrl] = useState(window.location.href);
@@ -53,7 +53,7 @@ const Home = () => {
   // gets invalidated on server event, as it
   // means a user joined or left the room.
   useEffect(() => {
-    if (!isReady && !getRoom.data) return;
+    if (!joinedOrCreated) return;
 
     fetchEventSource(`${settings.get.server}/rooms/${share.id}/stream`, {
       headers: auth.newHeaders(user),
@@ -62,7 +62,7 @@ const Home = () => {
       },
       openWhenHidden: true,
     });
-  }, [isReady, getRoom.data]);
+  }, [joinedOrCreated]);
 
   // Try to notify the server a user is leaving,
   // but it's not reliable and subject to change.
