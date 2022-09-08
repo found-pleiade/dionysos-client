@@ -8,7 +8,7 @@ import useJoinRoom from "../states/room/joinRoom";
 import useDisconnectUser from "../states/room/disconnectUser";
 import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
-import { ShareIcon } from "@heroicons/react/solid";
+import { ShareIcon, StarIcon } from "@heroicons/react/solid";
 import SpaceBetween from "../layouts/SpaceBetween";
 import { SettingsContext } from "../states/settings";
 import SimpleDialog from "../components/SimpleDialog";
@@ -141,9 +141,18 @@ const Home = () => {
             </SimpleDialog>
           </>
 
-          <ul>
+          <ul className="h-full">
             {getRoom.data?.users.map((user: any) => {
-              return <li key={user.ID}>{user.name}</li>;
+              return (
+                <li key={user.ID} className="pb-1 flex align-middle">
+                  {user.name}
+                  {user.ID === getRoom.data?.ownerID ? (
+                    <StarIcon className="py-1 h-6 w-4 ml-1" />
+                  ) : (
+                    <span />
+                  )}
+                </li>
+              );
             })}
           </ul>
 
