@@ -64,15 +64,14 @@ const Home = () => {
     });
   }, [joinedOrCreated]);
 
-  // Try to notify the server a user is leaving,
-  // but it's not reliable and subject to change.
+  // Try to notify the server a user is leaving.
   useEffect(() => {
-    window.onunload = () => {
+    window.onbeforeunload = () => {
       disconnectUser.mutate();
     };
 
     return () => {
-      window.onunload = null;
+      window.onbeforeunload = null;
     };
   }, []);
 
