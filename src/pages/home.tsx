@@ -78,7 +78,7 @@ const Home = () => {
     };
   }, []);
 
-  if (joinRoom.isLoading) {
+  if (joinRoom.isLoading && createRoom.isLoading) {
     return (
       <PlaceItemsCenter fullscreen>
         <CenterCard>
