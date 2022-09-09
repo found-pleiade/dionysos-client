@@ -9,7 +9,7 @@ const useJoinRoom = (shareId: string) => {
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, error, isSuccess, refetch } = useQuery(
+  const { isLoading, isError, isSuccess, refetch } = useQuery(
     ["joinRoom"],
     () => {
       return fetch(`${settings.get.server}/rooms/${shareId}/connect`, {
@@ -24,7 +24,7 @@ const useJoinRoom = (shareId: string) => {
 
   return {
     isLoading,
-    error,
+    isError,
     isSuccess,
     refetch,
   };
