@@ -1,26 +1,22 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { AuthContext } from "../../features/auth";
 import { SettingsContext } from "../settings";
 import { UserContext } from "../user";
+import { AuthContext } from "../../features/auth";
 
-const useCreateRoom = () => {
+const useGetRoom = (shareId: string, isReady: boolean) => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
   const { isLoading, error, data, refetch } = useQuery(
-    ["createRoom"],
+    ["getRoom"],
     () =>
-      fetch(`${settings.get.server}/rooms`, {
+      fetch(`${settings.get.server}/rooms/${shareId}`, {
         headers: auth.newHeaders(user),
-        method: "POST",
-        body: JSON.stringify({
-          name: "miaou",
-        }),
       }).then((res) => res.json()),
     {
-      enabled: false,
+      enabled: isReady,
     }
   );
 
@@ -32,4 +28,4 @@ const useCreateRoom = () => {
   };
 };
 
-export default useCreateRoom;
+export default useGetRoom;

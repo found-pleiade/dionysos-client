@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { SettingsContext } from "../states/settings";
 
 const useVersion = (serverAddress?: string) => {
@@ -7,7 +7,7 @@ const useVersion = (serverAddress?: string) => {
   const version = "0.1.0";
 
   const { isStale, isLoading, isFetching, error, data, refetch } = useQuery(
-    "getVersion",
+    ["getVersion"],
     () =>
       fetch(`${serverAddress || settings.get.server}/version`).then((res) =>
         res.text()

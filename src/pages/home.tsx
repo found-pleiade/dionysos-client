@@ -8,34 +8,72 @@ import useJoinRoom from "../states/room/joinRoom";
 import useDisconnectUser from "../states/room/disconnectUser";
 import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
-import { ShareIcon } from "@heroicons/react/solid";
+import { ShareIcon, StarIcon } from "@heroicons/react/solid";
 import SpaceBetween from "../layouts/SpaceBetween";
+import { SettingsContext } from "../states/settings";
 import SimpleDialog from "../components/SimpleDialog";
+import useGetRoom from "../states/room/getRoom";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { AuthContext } from "../features/auth";
+import { UserContext } from "../states/user";
 
 const Home = () => {
   const share = useContext(ShareContext);
-  useJoinRoom();
-  const createRoom = useCreateRoom();
+  const settings = useContext(SettingsContext);
+  const auth = useContext(AuthContext);
+  const user = useContext(UserContext);
 
-  const [sharableUrl, setSharableUrl] = useState("");
+  const createRoom = useCreateRoom();
+  const joinRoom = useJoinRoom(share.id);
+  const joinedOrCreated =
+    share.id !== "" && (createRoom.data !== undefined || joinRoom.isSuccess);
+
+  const getRoom = useGetRoom(share.id, joinedOrCreated);
+  const disconnectUser = useDisconnectUser(share.id);
+
+  const [url, setUrl] = useState(window.location.href);
+  const [urlCopied, setUrlCopied] = useState(false);
 
   const panel = useSideMenu(share.isJoining);
   const [isDialogOpen, setIsDialogOpen] = useState(!share.isJoining);
 
-  const [urlCopied, setUrlCopied] = useState(false);
-
   useEffect(() => {
-    if (!share.isJoining)
-      setSharableUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
-  }, [createRoom]);
+    share.isJoining ? joinRoom.refetch() : createRoom.refetch();
+  }, []);
 
-  const disconnectUser = useDisconnectUser();
+  // Create the url to share. Only needed as a room
+  // creator, users joining can just use their own url.
+  // This step create the share.id for user creating a room.
+  useEffect(() => {
+    if (share.isJoining) return;
+    setUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
+  }, [createRoom.data]);
 
-  window.onunload = () => {
-    disconnectUser.mutate();
-  };
+  // Handle SSE events, the query gettings users
+  // gets invalidated on server event, as it
+  // means a user joined or left the room.
+  useEffect(() => {
+    if (!joinedOrCreated) return;
 
-  const url = sharableUrl || window.location.href;
+    fetchEventSource(`${settings.get.server}/rooms/${share.id}/stream`, {
+      headers: auth.newHeaders(user),
+      onmessage() {
+        getRoom.refetch();
+      },
+      openWhenHidden: true,
+    });
+  }, [joinedOrCreated]);
+
+  // Try to notify the server a user is leaving.
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      disconnectUser.mutate();
+    };
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, []);
 
   return (
     <div className="page">
@@ -102,6 +140,21 @@ const Home = () => {
               </SpaceBetween>
             </SimpleDialog>
           </>
+
+          <ul className="h-full">
+            {getRoom.data?.users.map((user: any) => {
+              return (
+                <li key={user.ID} className="pb-1 flex align-middle">
+                  {user.name}
+                  {user.ID === getRoom.data?.ownerID ? (
+                    <StarIcon className="py-1 h-6 w-4 ml-1" />
+                  ) : (
+                    <span />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
 
           <UserDisplay />
         </Panel>

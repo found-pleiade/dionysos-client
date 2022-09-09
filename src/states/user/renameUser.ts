@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { SettingsContext } from "../settings";
 import { UserContext } from ".";
 import { AuthContext } from "../../features/auth";

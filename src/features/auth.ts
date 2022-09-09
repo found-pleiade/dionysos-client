@@ -10,12 +10,11 @@ const useAuth = () => {
   // Headers abstraction that handle auth.
   const newHeaders = (
     user: ReturnType<typeof useUser>,
-    headers = {} as Headers
-  ) =>
-    new Headers({
-      ...headers,
-      Authorization: `Basic ${window.btoa(`${user.get.id}:${password}`)}`,
-    });
+    headers?: Record<string, string>
+  ) => ({
+    ...headers,
+    Authorization: `Basic ${window.btoa(`${user.get.id}:${password}`)}`,
+  });
 
   return {
     setPassword,
