@@ -17,8 +17,8 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { AuthContext } from "../features/auth";
 import { UserContext } from "../states/user";
 import CenterCard from "../components/register/CenterCard";
-import { PropagateLoader } from "react-spinners";
 import PlaceItemsCenter from "../layouts/PlaceItemsCenter";
+import LinearLoader from "../components/LinearLoader";
 
 const Home = () => {
   const share = useContext(ShareContext);
@@ -78,20 +78,12 @@ const Home = () => {
     };
   }, []);
 
-  const color = window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "#fff"
-    : "#000";
-
   if (joinRoom.isLoading) {
     return (
       <PlaceItemsCenter fullscreen>
         <CenterCard>
           <p className="font-medium text-xl text-center">Joining the room</p>
-          <PropagateLoader
-            size=".65rem"
-            color={color}
-            cssOverride={{ paddingTop: ".65rem", paddingBottom: ".3rem" }}
-          />
+          <LinearLoader />
         </CenterCard>
       </PlaceItemsCenter>
     );

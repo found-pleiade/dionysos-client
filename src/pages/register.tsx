@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { PropagateLoader } from "react-spinners";
+import LinearLoader from "../components/LinearLoader";
 import CenterCard from "../components/register/CenterCard";
 import RegisterForm from "../components/register/RegisterForm";
 import ServerModal from "../components/register/ServerModal";
@@ -33,20 +33,12 @@ const Register = () => {
   );
 
   if (isLoading) {
-    const color = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "#fff"
-      : "#000";
-
     return pageSkeleton(
       <CenterCard>
         <p className="font-medium text-xl text-center">
           Connection to the server
         </p>
-        <PropagateLoader
-          size=".65rem"
-          color={color}
-          cssOverride={{ paddingTop: ".65rem", paddingBottom: ".3rem" }}
-        />
+        <LinearLoader />
       </CenterCard>
     );
   }
