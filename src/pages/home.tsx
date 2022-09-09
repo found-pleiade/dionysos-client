@@ -16,7 +16,7 @@ import useGetRoom from "../states/room/getRoom";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { AuthContext } from "../features/auth";
 import { UserContext } from "../states/user";
-import CenterCard from "../components/register/CenterCard";
+import CenterCard from "../components/CenterCard";
 import PlaceItemsCenter from "../layouts/PlaceItemsCenter";
 import LinearLoader from "../components/LinearLoader";
 

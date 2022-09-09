@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import LinearLoader from "../components/LinearLoader";
-import CenterCard from "../components/register/CenterCard";
+import CenterCard from "../components/CenterCard";
 import RegisterForm from "../components/register/RegisterForm";
 import ServerModal from "../components/register/ServerModal";
 import { ShareContext } from "../features/shareRoom";
