@@ -3,13 +3,21 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../features/auth";
 import { SettingsContext } from "../settings";
 import { UserContext } from "../user";
+import { isRequestValid } from "../../utils";
 
 const useCreateRoom = () => {
   const settings = useContext(SettingsContext);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, error, data, refetch } = useQuery(
+  const { isLoading, error, data, refetch, isSuccess } = useQuery<
+    | {
+        password: string;
+        uri: string;
+      }
+    | undefined,
+    Error
+  >(
     ["createRoom"],
     () =>
       fetch(`${settings.get.server}/rooms`, {
@@ -18,7 +26,10 @@ const useCreateRoom = () => {
         body: JSON.stringify({
           name: "miaou",
         }),
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (isRequestValid(res)) return res.json();
+        throw new Error("Something went wrong");
+      }),
     {
       enabled: false,
     }
@@ -29,6 +40,7 @@ const useCreateRoom = () => {
     error,
     data,
     refetch,
+    isSuccess,
   };
 };
 
