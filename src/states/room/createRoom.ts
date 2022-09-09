@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../features/auth";
 import { SettingsContext } from "../settings";
 import { UserContext } from "../user";
+import { isRequestValid } from "../../utils";
 
 const useCreateRoom = () => {
   const settings = useContext(SettingsContext);
@@ -18,7 +19,10 @@ const useCreateRoom = () => {
         body: JSON.stringify({
           name: "miaou",
         }),
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (isRequestValid(res)) return res.json();
+        throw new Error("Something went wrong");
+      }),
     {
       enabled: false,
     }

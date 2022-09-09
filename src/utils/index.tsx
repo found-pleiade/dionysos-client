@@ -52,6 +52,9 @@ export const invalidInput = (event: any) => {
 
 export const isLenZero = (x: string) => R.equals(R.length(x), 0);
 
+export const isRequestValid = (res: Response) =>
+  res.status >= 200 && res.status < 300;
+
 export const exportedForTesting = {
   gteTwo,
   lteTwenty,

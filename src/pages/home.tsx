@@ -16,6 +16,9 @@ import useGetRoom from "../states/room/getRoom";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { AuthContext } from "../features/auth";
 import { UserContext } from "../states/user";
+import CenterCard from "../components/register/CenterCard";
+import { PropagateLoader } from "react-spinners";
+import PlaceItemsCenter from "../layouts/PlaceItemsCenter";
 
 const Home = () => {
   const share = useContext(ShareContext);
@@ -26,7 +29,7 @@ const Home = () => {
   const createRoom = useCreateRoom();
   const joinRoom = useJoinRoom(share.id);
   const joinedOrCreated =
-    share.id !== "" && (createRoom.data !== undefined || joinRoom.isSuccess);
+    share.id !== "" && (createRoom.isSuccess || joinRoom.isSuccess);
 
   const getRoom = useGetRoom(share.id, joinedOrCreated);
   const disconnectUser = useDisconnectUser(share.id);
@@ -74,6 +77,49 @@ const Home = () => {
       window.onbeforeunload = null;
     };
   }, []);
+
+  const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "#fff"
+    : "#000";
+
+  if (joinRoom.isLoading) {
+    return (
+      <PlaceItemsCenter fullscreen>
+        <CenterCard>
+          <p className="font-medium text-xl text-center">Joining the room</p>
+          <PropagateLoader
+            size=".65rem"
+            color={color}
+            cssOverride={{ paddingTop: ".65rem", paddingBottom: ".3rem" }}
+          />
+        </CenterCard>
+      </PlaceItemsCenter>
+    );
+  }
+
+  if (createRoom.isError) {
+    return (
+      <PlaceItemsCenter fullscreen>
+        <CenterCard>
+          An error happened while creating the room.
+          <br />
+          Please refresh the page and try again
+        </CenterCard>
+      </PlaceItemsCenter>
+    );
+  }
+
+  if (joinRoom.isError) {
+    return (
+      <PlaceItemsCenter fullscreen>
+        <CenterCard>
+          An error happened while joining the room.
+          <br />
+          Please refresh the page and try again
+        </CenterCard>
+      </PlaceItemsCenter>
+    );
+  }
 
   return (
     <div className="page">
