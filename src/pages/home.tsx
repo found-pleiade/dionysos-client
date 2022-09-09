@@ -49,7 +49,7 @@ const Home = () => {
   // This step create the share.id for user creating a room.
   useEffect(() => {
     if (share.isJoining) return;
-    setUrl(share.createUrl(createRoom.data?.uri.split("/").pop()));
+    setUrl(share.createUrl(createRoom.data?.uri.split("/").pop() as string));
   }, [createRoom.data]);
 
   // Handle SSE events, the query gettings users
@@ -82,30 +82,21 @@ const Home = () => {
     return (
       <PlaceItemsCenter fullscreen>
         <CenterCard>
-          <p className="font-medium text-xl text-center">Joining the room</p>
+          <p className="font-medium text-xl text-center">
+            {share.isJoining ? "Joining the room" : "Creating the room"}
+          </p>
           <LinearLoader />
         </CenterCard>
       </PlaceItemsCenter>
     );
   }
 
-  if (createRoom.isError) {
+  if (createRoom.error || joinRoom.error) {
     return (
       <PlaceItemsCenter fullscreen>
         <CenterCard>
-          An error happened while creating the room.
-          <br />
-          Please refresh the page and try again
-        </CenterCard>
-      </PlaceItemsCenter>
-    );
-  }
-
-  if (joinRoom.isError) {
-    return (
-      <PlaceItemsCenter fullscreen>
-        <CenterCard>
-          An error happened while joining the room.
+          {createRoom.error?.message}
+          {joinRoom.error?.message}
           <br />
           Please refresh the page and try again
         </CenterCard>

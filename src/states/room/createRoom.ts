@@ -10,7 +10,14 @@ const useCreateRoom = () => {
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
 
-  const { isLoading, isError, data, refetch, isSuccess } = useQuery(
+  const { isLoading, error, data, refetch, isSuccess } = useQuery<
+    | {
+        password: string;
+        uri: string;
+      }
+    | undefined,
+    Error
+  >(
     ["createRoom"],
     () =>
       fetch(`${settings.get.server}/rooms`, {
@@ -30,7 +37,7 @@ const useCreateRoom = () => {
 
   return {
     isLoading,
-    isError,
+    error,
     data,
     refetch,
     isSuccess,
