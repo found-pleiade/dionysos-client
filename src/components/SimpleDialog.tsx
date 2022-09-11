@@ -23,7 +23,7 @@ const SimpleDialog = ({
   const durationClass = `delay-[${duration}ms]`;
 
   const titleElement = title ? (
-    <Dialog.Title as="h3" className="text-lg font-medium leading-6 mb-4">
+    <Dialog.Title as="h3" className="text-lg font-medium leading-6">
       {title}
     </Dialog.Title>
   ) : (
@@ -46,7 +46,7 @@ const SimpleDialog = ({
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter={`ease-out ${durationClass}`}
@@ -57,7 +57,7 @@ const SimpleDialog = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`w-full max-w-lg transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary ${className}`}
+                className={`w-full max-w-lg transform overflow-hidden md:rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary ${className}`}
               >
                 {titleElement}
                 {children}
