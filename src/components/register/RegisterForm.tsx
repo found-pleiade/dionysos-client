@@ -45,7 +45,7 @@ const RegisterForm = () => {
 
         <Button
           type="submit"
-          className="rounded-none md:rounded-md md:rounded-l-none"
+          className="rounded-md rounded-l-none hidden md:block"
           loading={isLoading}
           disabled={!isValid(name)}
         >
