@@ -56,9 +56,9 @@ const Register = () => {
     <div className="page">
       {/* Main content of the page. */}
       <div className="h-screen text-center pt-8">
-        <header className="mb-10">
-          <h1 className="text-[3rem] font-black uppercase">Dyonisos</h1>
-          <h2 className="text-[1.1rem] -mt-3 font-semibold">
+        <header className="mb-36">
+          <h1 className="text-[3.5rem] font-black uppercase">Dyonisos</h1>
+          <h2 className="text-[1.3rem] -mt-3 font-semibold">
             Share cinematic experiences.
           </h2>
         </header>
