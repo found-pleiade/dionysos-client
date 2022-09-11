@@ -37,7 +37,7 @@ const RegisterForm = () => {
       <RowGroup>
         <Input
           id="connect"
-          className="rounded-r-none bg-light-primary-100 focus:bg-light-primary-100"
+          className="rounded-none md:rounded-md md:rounded-r-none bg-light-primary-100 focus:bg-light-primary-100"
           placeholder="Username"
           value={name}
           setValue={setName}
@@ -45,7 +45,7 @@ const RegisterForm = () => {
 
         <Button
           type="submit"
-          className="rounded-l-none"
+          className="rounded-none md:rounded-md md:rounded-l-none"
           loading={isLoading}
           disabled={!isValid(name)}
         >
