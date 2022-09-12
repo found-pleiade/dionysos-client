@@ -17,7 +17,7 @@ const SimpleDialog = ({
   closeDelayCondition?: boolean;
 }) => {
   const closeDelayClass = closeDelayCondition ? `delay-[500ms]` : "";
-  const durationClass = `delay-[300ms]`;
+  const durationClass = `duration-[300ms]`;
 
   const titleElement = title ? (
     <Dialog.Title as="h3" className="text-lg font-semibold leading-6 mb-4">
