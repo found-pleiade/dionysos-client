@@ -9,10 +9,10 @@ type OverlayMenuProps = {
 
 const OverlayMenu = ({ panel }: OverlayMenuProps) => {
   const iconStyle =
-    "block p-2 h-8 w-8 bg-light-primary-400 dark:bg-dark-primary-600 rounded-full cursor-pointer text-center opacity-60 hover:opacity-100 transition-opacity";
+    "block p-2 h-10 w-10 bg-light-primary-400 dark:bg-dark-primary-600 rounded-full cursor-pointer text-center opacity-60 hover:opacity-100 transition-opacity";
 
   return (
-    <div className="absolute top-[50%] left-3 z-10 translate-y-[-50%]">
+    <div className="absolute top-3 left-3 z-10">
       <MenuIcon
         className={`${iconStyle} ${visibility(!panel.isOpen)}`}
         onClick={() => panel.toggle()}
