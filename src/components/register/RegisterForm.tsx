@@ -38,7 +38,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
       <RowGroup>
         <Input
           id="connect"
-          className="rounded-none md:rounded-md md:rounded-r-none bg-light-primary-200"
+          className="!rounded-none md:!rounded-md md:!rounded-r-none bg-light-primary-200"
           placeholder="Username"
           value={name}
           setValue={setName}
