@@ -45,7 +45,7 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen text-center relative">
+    <div className="h-screen text-center flex flex-col">
       <header>
         <h1
           className="text-[3.7rem] uppercase font-display font-semibold
@@ -62,7 +62,7 @@ const Register = () => {
         </h2>
       </header>
 
-      <div className="absolute bottom-[45%]">{pageState()}</div>
+      <div className="flex-1 grid place-items-center">{pageState()}</div>
     </div>
   );
 };
