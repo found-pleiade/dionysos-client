@@ -45,7 +45,7 @@ const Register = () => {
   };
 
   return (
-    <div className="h-svh text-center flex flex-col">
+    <div className="h-dvh text-center flex flex-col">
       <header>
         <h1
           className="text-[3.7rem] uppercase font-display font-semibold
