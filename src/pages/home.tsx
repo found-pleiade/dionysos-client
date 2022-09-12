@@ -126,7 +126,7 @@ const Home = () => {
               }}
               className="text-center max-w-3xl w-auto"
             >
-              <p className="text-xl font-bold">
+              <p className="text-xl font-semibold">
                 Share the following link to your friends:
               </p>
 

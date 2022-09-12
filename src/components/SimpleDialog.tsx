@@ -20,7 +20,7 @@ const SimpleDialog = ({
   const durationClass = `delay-[300ms]`;
 
   const titleElement = title ? (
-    <Dialog.Title as="h3" className="text-lg font-semibold leading-6">
+    <Dialog.Title as="h3" className="text-lg font-semibold leading-6 mb-4">
       {title}
     </Dialog.Title>
   ) : (

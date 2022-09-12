@@ -78,7 +78,7 @@ const ServerDialog = ({ className }: { className?: string }) => {
         <Form onSubmit={() => refetch()}>
           <Input
             disabled={isLoading}
-            className="my-3"
+            className="mb-4"
             value={serverAddress}
             setValue={setServerAddress}
           />
