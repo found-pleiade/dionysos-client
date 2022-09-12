@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GlobeAltIcon, ReplyIcon } from "@heroicons/react/solid";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";
@@ -8,7 +7,6 @@ import {
   SettingsContext,
   ActionTypes as SettingsActionTypes,
 } from "../../states/settings";
-import RowGroup from "../../layouts/RowGroup";
 import useVersion from "../../features/version";
 import Form from "../Form";
 import SimpleDialog from "../SimpleDialog";
@@ -67,7 +65,7 @@ const ServerModal = ({ className }: { className?: string }) => {
           <SpaceBetween>
             Server address
             <Button
-              className="text-base"
+              className="text-base font-normal"
               onClick={setInitialServerAddress}
               title="Restore default address"
             >
