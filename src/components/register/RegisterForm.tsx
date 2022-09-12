@@ -57,7 +57,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
 
       <ErrorCard
         show={!isValidConditions.lteTwenty(name)}
-        className="rounded-none text-light-primary-100"
+        className="!rounded-none md:!rounded-b-md text-light-primary-100"
       >
         Maximum length is 20 chars
       </ErrorCard>
