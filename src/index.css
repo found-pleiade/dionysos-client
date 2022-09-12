@@ -7,7 +7,7 @@
     font-family: "Source Sans Pro", sans-serif;
   }
 
-  *:focus {
+  *:focus-visible {
     outline: none;
     outline: solid theme("colors.light.complementary.400") 2px;
     border-radius: 2px;
