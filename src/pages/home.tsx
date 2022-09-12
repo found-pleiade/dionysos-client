@@ -111,7 +111,7 @@ const Home = () => {
         className="h-dvh w-screen truncate flex"
         onClick={(e) => {
           const target = e.target as HTMLDivElement;
-          if (target.id === "background") {
+          if (target.id === "background" || target.id === "video") {
             return panel.setIsOpen(false);
           }
         }}
@@ -206,7 +206,10 @@ const Home = () => {
         </Panel>
 
         {/* Video */}
-        <div className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center">
+        <div
+          id="video"
+          className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center"
+        >
           {/* Player */}
           <div className="video-max-width mx-auto w-[inherit]" />
 
