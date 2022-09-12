@@ -43,20 +43,26 @@ const Button = ({
     const base =
       "grid place-items-center ease-out transition-colors whitespace-nowrap text-light-accent-400 dark:text-dark-accent-400";
 
-    const c = colorless ? "text-light-secondary-900" : "";
+    const c = colorless
+      ? "text-light-secondary-900 dark:text-dark-secondary-100"
+      : "";
 
-    const d = disabled ? "cursor-not-allowed text-light-accent-400/50" : "";
+    const d = disabled ? "cursor-not-allowed opacity-50" : "";
 
     return `${base} ${c} ${d} ${className}`;
   };
 
   const buttonState = () => {
     if (loading) {
-      return <ClipLoader size="18px" color="black" />;
+      const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "#fff"
+        : "#000";
+
+      return <ClipLoader size="18px" color={color} />;
     }
 
     if (success) {
-      return <CheckIcon className="text-black w-6 h-6" />;
+      return <CheckIcon className="text-black dark:text-white w-6 h-6" />;
     }
 
     return children;

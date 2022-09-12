@@ -36,12 +36,17 @@ const App = () => {
         <AuthContext.Provider value={auth}>
           <SettingsContext.Provider value={settings}>
             <UserContext.Provider value={user}>
-              <MemoryRouter>
-                <Routes>
-                  <Route path="/" element={<Register />} />
-                  <Route path="/home" element={<Home />} />
-                </Routes>
-              </MemoryRouter>
+              <div
+                className="bg-light-primary-100 dark:bg-dark-primary-900
+              text-light-secondary-900 dark:text-dark-secondary-100"
+              >
+                <MemoryRouter>
+                  <Routes>
+                    <Route path="/" element={<Register />} />
+                    <Route path="/home" element={<Home />} />
+                  </Routes>
+                </MemoryRouter>
+              </div>
             </UserContext.Provider>
           </SettingsContext.Provider>
         </AuthContext.Provider>

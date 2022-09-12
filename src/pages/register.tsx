@@ -49,14 +49,14 @@ const Register = () => {
       <header>
         <h1
           className="text-[3.7rem] uppercase font-display font-semibold
-        text-light-secondary-900 -mt-3 pt-2"
+        text-light-secondary-900 dark:text-dark-secondary-100 -mt-3 pt-2"
         >
           Dionysos
         </h1>
 
         <h2
           className="text-[1.125rem] -mt-3 font-display font-medium
-        text-light-secondary-800"
+        text-light-secondary-800 dark:text-dark-secondary-200"
         >
           Share cinematic experiences.
         </h2>

@@ -166,7 +166,7 @@ const Home = () => {
                 className={`${
                   urlCopied
                     ? "text-light-accent-400 dark:text-dark-accent-400"
-                    : "text-light-secondary-500"
+                    : "text-light-secondary-500 dark:text-dark-secondary-500"
                 }`}
               >
                 {urlCopied ? "copied!" : "click to copy"}

@@ -20,7 +20,11 @@ const SimpleDialog = ({
   const durationClass = `duration-[300ms]`;
 
   const titleElement = title ? (
-    <Dialog.Title as="h3" className="text-lg font-semibold leading-6 mb-4">
+    <Dialog.Title
+      as="h3"
+      className="text-lg font-semibold leading-6 mb-4
+    dark:text-dark-secondary-100"
+    >
       {title}
     </Dialog.Title>
   ) : (
@@ -39,7 +43,7 @@ const SimpleDialog = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-25 dark:bg-opacity-30" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -54,7 +58,7 @@ const SimpleDialog = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`w-full max-w-lg transform overflow-hidden sm:rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary ${className}`}
+                className={`w-full max-w-lg transform overflow-hidden sm:rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100 dark:bg-dark-primary-900 dark:text-dark-secondary-100 ${className}`}
               >
                 {titleElement}
                 {children}
