@@ -38,7 +38,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
       <RowGroup>
         <Input
           id="connect"
-          className="!rounded-none md:!rounded-md md:!rounded-r-none bg-light-primary-200"
+          className="!rounded-none md:!rounded-md md:!rounded-r-none bg-light-primary-200 w-screen"
           placeholder="Username"
           value={name}
           setValue={setName}
@@ -47,7 +47,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
 
         <Button
           type="submit"
-          className="rounded-none md:rounded-md md:rounded-l-none bg-light-primary-200 text-light-accent-400 w-12 pl-2 pr-4"
+          className="rounded-none md:rounded-md md:rounded-l-none bg-light-primary-200 text-light-accent-400 w-12 pl-2 pr-4 -ml-12 z-10"
           loading={isLoading}
           disabled={!isValid(name) || disabled}
         >
