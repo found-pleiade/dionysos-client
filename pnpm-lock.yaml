@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@fontsource/fira-mono': ^4.5.9
   '@fontsource/montserrat': ^4.5.12
   '@fontsource/source-sans-pro': ^4.5.11
   '@headlessui/react': ^1.6.6
@@ -42,6 +43,7 @@ specifiers:
   vitest: ^0.14.2
 
 dependencies:
+  '@fontsource/fira-mono': 4.5.9
   '@fontsource/montserrat': 4.5.12
   '@fontsource/source-sans-pro': 4.5.11
   '@headlessui/react': 1.6.6_biqbaboplfbrettd7655fr4n2y
@@ -378,6 +380,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fontsource/fira-mono/4.5.9:
+    resolution: {integrity: sha512-DDhkRUjPHwPK/wB7GM/7LzGkcEC5JyTZM93YnFoP2Qfjffq3qX1asnXNqfglgZxXHXVmu3RI8OjRf87I97XCfA==}
+    dev: false
 
   /@fontsource/montserrat/4.5.12:
     resolution: {integrity: sha512-UQ+4ijm1sddIBtmEZ9bKgCB1rSi4Imog0YKz7wDLtMQ3Mw2ZaBseTgoLDfbWnfdowS0PLp+Z4T2KZ/1AySTlDQ==}

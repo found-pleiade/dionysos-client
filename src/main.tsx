@@ -7,6 +7,7 @@ import "@fontsource/source-sans-pro/600.css";
 import "@fontsource/montserrat";
 import "@fontsource/montserrat/500.css";
 import "@fontsource/montserrat/800.css";
+import "@fontsource/fira-mono";
 
 const root = ReactDOMClient.createRoot(
   document.getElementById("root") as Element | DocumentFragment
