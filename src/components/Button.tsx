@@ -47,18 +47,16 @@ const Button = ({
 
     const d = disabled ? "cursor-not-allowed text-light-accent-400/50" : "";
 
-    const s = success ? "bg-light-success-400 dark:bg-dark-success-400" : "";
-
-    return `${base} ${c} ${d} ${s} ${className}`;
+    return `${base} ${c} ${d} ${className}`;
   };
 
   const buttonState = () => {
     if (loading) {
-      return <ClipLoader size="18px" className="text-light-accent-400" />;
+      return <ClipLoader size="18px" color="black" />;
     }
 
     if (success) {
-      return <CheckIcon className="text-white w-6 h-6" />;
+      return <CheckIcon className="text-black w-6 h-6" />;
     }
 
     return children;

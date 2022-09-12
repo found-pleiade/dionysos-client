@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, ReactNode } from "react";
+import React, { Fragment, ReactElement, ReactNode } from "react";
 
 const SimpleDialog = ({
   children,
@@ -11,16 +11,13 @@ const SimpleDialog = ({
 }: {
   children: ReactNode;
   show: boolean;
-  title?: string;
+  title?: string | ReactElement;
   className?: string;
   closeFunction: () => void;
   closeDelayCondition?: boolean;
 }) => {
-  const duration = 300;
-  const delay = 500;
-
-  const closeDelayClass = closeDelayCondition ? `delay-[${delay}ms]` : "";
-  const durationClass = `delay-[${duration}ms]`;
+  const closeDelayClass = closeDelayCondition ? `delay-[500ms]` : "";
+  const durationClass = `delay-[300ms]`;
 
   const titleElement = title ? (
     <Dialog.Title as="h3" className="text-lg font-medium leading-6">

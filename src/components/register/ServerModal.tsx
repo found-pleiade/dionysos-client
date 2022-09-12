@@ -63,26 +63,27 @@ const ServerModal = ({ className }: { className?: string }) => {
       <SimpleDialog
         show={isOpen}
         closeFunction={exitModal}
-        title="Server address"
-        closeDelayCondition={isSuccess}
-      >
-        <Form onSubmit={() => refetch()}>
-          <RowGroup>
+        title={
+          <SpaceBetween>
+            Server address
             <Button
-              className="min-w-0 self-center flex-1 rounded-r-none px-5"
+              className="text-base"
               onClick={setInitialServerAddress}
               title="Restore default address"
             >
-              <ReplyIcon className="h-5" />
+              Restore default
             </Button>
-
-            <Input
-              disabled={isLoading}
-              className="my-4 rounded-l-none"
-              value={serverAddress}
-              setValue={setServerAddress}
-            />
-          </RowGroup>
+          </SpaceBetween>
+        }
+        closeDelayCondition={isSuccess}
+      >
+        <Form onSubmit={() => refetch()}>
+          <Input
+            disabled={isLoading}
+            className="my-3"
+            value={serverAddress}
+            setValue={setServerAddress}
+          />
 
           <ErrorCard show={error ? true : false}>
             An error occurred while fetching the version.

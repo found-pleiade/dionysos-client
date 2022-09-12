@@ -62,7 +62,7 @@ const Register = () => {
         </h2>
       </header>
 
-      <div className="absolute bottom-[50%]">{pageState()}</div>
+      <div className="absolute bottom-[45%]">{pageState()}</div>
     </div>
   );
 };
