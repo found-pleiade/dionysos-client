@@ -10,9 +10,9 @@ const Panel = ({
   children: React.ReactNode;
 }) => (
   <div
-    className={`flex flex-col justify-between bg-light-primary-100/70 dark:bg-dark-primary-800/70 relative transition-all py-3 ${translate(
+    className={`flex flex-col justify-between bg-light-primary-100 dark:bg-dark-primary-900 relative transition-all py-3 ${translate(
       state.isOpen
-    )} shadow-xl z-[1]`}
+    )} shadow-xl dark:shadow-black/50 z-[1]`}
   >
     {children}
   </div>
