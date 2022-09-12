@@ -127,7 +127,7 @@ const Home = () => {
               className="text-center max-w-3xl w-auto"
             >
               <p className="text-lg font-semibold">
-                Share the link with your friends
+                Share this link with your friends
               </p>
 
               <Button
