@@ -8,20 +8,7 @@
   }
 }
 
-/**
- * Prevent users from selecting text like in a browser
- * for a more native experience.
- */
-html {
-  user-select: none;
-}
-
 @layer components {
-  .page {
-    height: 100vh;
-    transition: transform ease-in-out;
-  }
-
   /**
    * Prevent the video to overflow in any container ratio.
    */
