@@ -126,13 +126,13 @@ const Home = () => {
               }}
               className="text-center max-w-3xl w-auto"
             >
-              <p className="text-xl font-semibold">
-                Share the following link to your friends:
+              <p className="text-lg font-semibold">
+                Share the link with your friends
               </p>
 
               <Button
                 headless
-                className="text-lg font-mono mt-3 mb-6"
+                className="font-mono my-3"
                 onClick={() => {
                   navigator.clipboard.writeText(url);
                   setUrlCopied(true);
@@ -145,10 +145,10 @@ const Home = () => {
                 <p>{url}</p>
 
                 <p
-                  className={`text-base ${
+                  className={`${
                     urlCopied
-                      ? "text-light-accent-400 dark:text-dark-accent-400 opacity-100"
-                      : "opacity-60"
+                      ? "text-light-accent-400 dark:text-dark-accent-400"
+                      : "text-light-secondary-500"
                   }`}
                 >
                   {urlCopied ? "copied!" : "click to copy"}
