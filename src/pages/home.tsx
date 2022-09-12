@@ -106,7 +106,16 @@ const Home = () => {
 
   return (
     <div className="page">
-      <div className="h-dvh w-screen truncate flex">
+      <div
+        id="background"
+        className="h-dvh w-screen truncate flex"
+        onClick={(e) => {
+          const target = e.target as HTMLDivElement;
+          if (target.id === "background") {
+            return panel.setIsOpen(false);
+          }
+        }}
+      >
         <Panel state={panel}>
           <div className="flex ml-auto">
             <Button
