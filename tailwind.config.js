@@ -2,6 +2,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        display: ["Montserrat"],
+        body: ["Source Sans Pro"],
+      },
       animation: {
         "pulse-slow": "pulse 2.5s linear infinite",
       },

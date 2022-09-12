@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@fontsource/montserrat': ^4.5.12
+  '@fontsource/source-sans-pro': ^4.5.11
   '@headlessui/react': ^1.6.6
   '@heroicons/react': ^1.0.6
   '@microsoft/fetch-event-source': ^2.0.1
@@ -40,6 +42,8 @@ specifiers:
   vitest: ^0.14.2
 
 dependencies:
+  '@fontsource/montserrat': 4.5.12
+  '@fontsource/source-sans-pro': 4.5.11
   '@headlessui/react': 1.6.6_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 1.0.6_react@18.2.0
   '@microsoft/fetch-event-source': 2.0.1
@@ -374,6 +378,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fontsource/montserrat/4.5.12:
+    resolution: {integrity: sha512-UQ+4ijm1sddIBtmEZ9bKgCB1rSi4Imog0YKz7wDLtMQ3Mw2ZaBseTgoLDfbWnfdowS0PLp+Z4T2KZ/1AySTlDQ==}
+    dev: false
+
+  /@fontsource/source-sans-pro/4.5.11:
+    resolution: {integrity: sha512-f7iw44q1EjBv3MNcHCGAgrW/QVyweaEouFsJzykPhTOGnZFSwFJRISToXornOmuAy7xUUGiVdqOLiykgZoYB8A==}
+    dev: false
 
   /@headlessui/react/1.6.6_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-MFJtmj9Xh/hhBMhLccGbBoSk+sk61BlP6sJe4uQcVMtXZhCgGqd2GyIQzzmsdPdTEWGSF434CBi8mnhR6um46Q==}
