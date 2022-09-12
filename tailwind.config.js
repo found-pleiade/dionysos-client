@@ -5,6 +5,7 @@ module.exports = {
       fontFamily: {
         display: ["Montserrat"],
         body: ["Source Sans Pro"],
+        mono: ["Fira Mono"],
       },
       animation: {
         "pulse-slow": "pulse 2.5s linear infinite",
