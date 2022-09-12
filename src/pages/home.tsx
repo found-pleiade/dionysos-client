@@ -82,7 +82,7 @@ const Home = () => {
     return (
       <PlaceItemsCenter fullscreen>
         <CenterCard>
-          <p className="font-medium text-xl text-center">
+          <p className="text-xl text-center">
             {share.isJoining ? "Joining the room" : "Creating the room"}
           </p>
           <LinearLoader />
@@ -145,7 +145,7 @@ const Home = () => {
                 <p>{url}</p>
 
                 <p
-                  className={`text-base font-medium ${
+                  className={`text-base ${
                     urlCopied
                       ? "text-light-accent-400 dark:text-dark-accent-400 opacity-100"
                       : "opacity-60"

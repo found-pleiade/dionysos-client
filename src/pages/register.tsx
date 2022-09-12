@@ -24,7 +24,7 @@ const Register = () => {
       );
     }
 
-    if (!isCompatible && isCorrect) {
+    if (!isLoading && !isCompatible && isCorrect) {
       return (
         <CenterCard>
           Version mismatch between the client and the server.
@@ -32,7 +32,7 @@ const Register = () => {
       );
     }
 
-    if (!isCompatible && !isCorrect) {
+    if (!isLoading && !isCompatible && !isCorrect) {
       return <CenterCard>The server url seems wrong.</CenterCard>;
     }
 

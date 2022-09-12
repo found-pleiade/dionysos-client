@@ -25,7 +25,7 @@ const Input = ({
     <input
       id={id}
       tabIndex={0}
-      className={`input rounded-md cursor-text transition-colors text-light-secondary-900 bg-light-primary-200 dark:text-dark-primary-900 dark:bg-dark-secondary/[.87] font-medium px-4 py-2 w-full ${className}`}
+      className={`input rounded-md cursor-text transition-colors text-light-secondary-900 bg-light-primary-200 dark:text-dark-primary-900 dark:bg-dark-secondary/[.87] px-4 py-2 w-full ${className}`}
       type="text"
       value={value}
       onChange={(event) => {
