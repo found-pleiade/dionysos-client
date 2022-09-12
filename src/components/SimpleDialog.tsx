@@ -54,7 +54,7 @@ const SimpleDialog = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`w-full max-w-lg transform overflow-hidden md:rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary ${className}`}
+                className={`w-full max-w-lg transform overflow-hidden sm:rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary ${className}`}
               >
                 {titleElement}
                 {children}
