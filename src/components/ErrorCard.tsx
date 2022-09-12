@@ -21,7 +21,7 @@ const ErrorCard = ({
     leaveTo="max-h-0 py-0"
   >
     <div
-      className={`rounded-md overflow-hidden px-4 py-2 mb-4 font-semibold text-light-error-100 bg-light-error-400 dark:text-dark-error-100 dark:bg-dark-error-900 select-text ${className}`}
+      className={`rounded-md overflow-hidden px-4 py-2 mb-4 font-semibold text-light-primary-100 bg-light-error-400 dark:text-dark-error-100 dark:bg-dark-error-900 select-text ${className}`}
     >
       {children}
     </div>
