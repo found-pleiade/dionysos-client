@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import LinearLoader from "../components/LinearLoader";
 import CenterCard from "../components/CenterCard";
 import RegisterForm from "../components/register/RegisterForm";
@@ -49,24 +49,33 @@ const Register = () => {
       return <CenterCard>The server url seems wrong.</CenterCard>;
     }
 
-    return <RegisterForm />;
+    return (
+      <Fragment>
+        <ServerModal />
+        <RegisterForm />
+      </Fragment>
+    );
   };
 
   return (
-    <div className="page">
-      {/* Main content of the page. */}
-      <div className="h-screen text-center pt-10">
-        <header className="mb-14">
-          <h1 className="text-[3.6rem] font-black uppercase">Dionysos</h1>
-          <h2 className="text-[1.3rem] -mt-3 font-semibold">
-            Share cinematic experiences.
-          </h2>
-        </header>
+    <div className="h-screen text-center">
+      <header className="mb-14 mt-4 mx-4">
+        <h1
+          className="text-[3.4375rem] uppercase font-display font-semibold
+        text-light-secondary-900 -mt-3"
+        >
+          Dionysos
+        </h1>
 
-        {pageState()}
-      </div>
+        <h2
+          className="text-[1.125rem] -mt-3 font-display font-medium
+        text-light-secondary-800"
+        >
+          Share cinematic experiences.
+        </h2>
+      </header>
 
-      <ServerModal />
+      {pageState()}
     </div>
   );
 };
