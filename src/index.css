@@ -24,7 +24,7 @@
 .input:not(:placeholder-shown) + .placeholder {
   transform: translateY(-140%);
   font-size: theme("fontSize.sm");
-  color: theme("colors.light.secondary");
+  color: theme("colors.light.secondary.900");
 }
 
 @media (prefers-color-scheme: dark) {
