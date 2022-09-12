@@ -1,5 +1,4 @@
 import React, { Fragment, useContext, useEffect } from "react";
-import LinearLoader from "../components/LinearLoader";
 import CenterCard from "../components/CenterCard";
 import RegisterForm from "../components/register/RegisterForm";
 import ServerModal from "../components/register/ServerModal";
@@ -15,18 +14,6 @@ const Register = () => {
   }, []);
 
   const pageState = () => {
-    if (isLoading) {
-      return (
-        <CenterCard>
-          <p className="font-medium text-xl text-center">
-            Connection to the server
-          </p>
-
-          <LinearLoader />
-        </CenterCard>
-      );
-    }
-
     if (error ? true : false) {
       return (
         <CenterCard>
@@ -50,19 +37,19 @@ const Register = () => {
     }
 
     return (
-      <Fragment>
-        <ServerModal />
-        <RegisterForm />
-      </Fragment>
+      <div className="w-screen">
+        <ServerModal className="ml-auto mr-4 mb-3" />
+        <RegisterForm disabled={isLoading} />
+      </div>
     );
   };
 
   return (
-    <div className="h-screen text-center">
-      <header className="mb-14 mt-4 mx-4">
+    <div className="h-screen text-center relative">
+      <header>
         <h1
-          className="text-[3.4375rem] uppercase font-display font-semibold
-        text-light-secondary-900 -mt-3"
+          className="text-[3.7rem] uppercase font-display font-semibold
+        text-light-secondary-900 -mt-3 pt-2"
         >
           Dionysos
         </h1>
@@ -75,7 +62,7 @@ const Register = () => {
         </h2>
       </header>
 
-      {pageState()}
+      <div className="absolute bottom-[50%]">{pageState()}</div>
     </div>
   );
 };

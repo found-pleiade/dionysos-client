@@ -13,7 +13,7 @@ import useVersion from "../../features/version";
 import Form from "../Form";
 import SimpleDialog from "../SimpleDialog";
 
-const ServerModal = () => {
+const ServerModal = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -56,11 +56,8 @@ const ServerModal = () => {
 
   return (
     <>
-      <Button
-        className="absolute top-0 right-0 min-w-0 w-10 h-10 px-2 rounded-none rounded-bl-lg"
-        onClick={openModal}
-      >
-        <GlobeAltIcon />
+      <Button onClick={openModal} className={className}>
+        Change server
       </Button>
 
       <SimpleDialog

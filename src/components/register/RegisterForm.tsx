@@ -9,8 +9,9 @@ import { isValid, isValidConditions } from "../../utils";
 import { AuthContext } from "../../features/auth";
 import ErrorCard from "../ErrorCard";
 import Form from "../Form";
+import { ArrowRightIcon } from "@heroicons/react/solid";
 
-const RegisterForm = () => {
+const RegisterForm = ({ disabled }: { disabled: boolean }) => {
   const [name, setName] = useState("");
   const { isLoading, error, data, mutate } = useCreateUser(name);
   const user = useContext(UserContext);
@@ -33,27 +34,32 @@ const RegisterForm = () => {
   }, [data]);
 
   return (
-    <Form onSubmit={() => mutate()} className="flex flex-col w-full gap-1">
+    <Form onSubmit={() => mutate()} className="flex flex-col w-full">
       <RowGroup>
         <Input
           id="connect"
-          className="rounded-none md:rounded-md md:rounded-r-none bg-light-primary-100 focus:bg-light-primary-100"
+          className="rounded-none md:rounded-md md:rounded-r-none
+          bg-light-primary-200"
           placeholder="Username"
           value={name}
           setValue={setName}
+          disabled={disabled}
         />
 
         <Button
           type="submit"
-          className="rounded-md rounded-l-none hidden md:block"
+          className="rounded-none md:rounded-md md:rounded-l-none bg-light-primary-200 text-light-accent-400 w-12 pl-2 pr-4"
           loading={isLoading}
-          disabled={!isValid(name)}
+          disabled={!isValid(name) || disabled}
         >
-          {error ? "Try again" : "Next"}
+          <ArrowRightIcon />
         </Button>
       </RowGroup>
 
-      <ErrorCard show={!isValidConditions.lteTwenty(name)}>
+      <ErrorCard
+        show={!isValidConditions.lteTwenty(name)}
+        className="rounded-none text-light-primary-100"
+      >
         Maximum length is 20 chars
       </ErrorCard>
     </Form>
