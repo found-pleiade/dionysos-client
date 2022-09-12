@@ -106,7 +106,7 @@ const Home = () => {
 
   return (
     <div className="page">
-      <div className="h-screen w-screen truncate flex">
+      <div className="h-dvh w-screen truncate flex">
         <Panel state={panel}>
           <>
             <Button
