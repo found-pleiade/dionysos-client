@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import CenterCard from "../components/CenterCard";
 import RegisterForm from "../components/register/RegisterForm";
-import ServerModal from "../components/register/ServerModal";
+import ServerDialog from "../components/register/ServerDialog";
 import { ShareContext } from "../features/shareRoom";
 import useVersion from "../features/version";
 
@@ -38,7 +38,7 @@ const Register = () => {
 
     return (
       <div className="w-screen">
-        <ServerModal className="ml-auto mr-4 mb-3" />
+        <ServerDialog className="ml-auto mr-4 mb-3" />
         <RegisterForm disabled={isLoading} />
       </div>
     );

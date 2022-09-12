@@ -11,7 +11,7 @@ import useVersion from "../../features/version";
 import Form from "../Form";
 import SimpleDialog from "../SimpleDialog";
 
-const ServerModal = ({ className }: { className?: string }) => {
+const ServerDialog = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -112,4 +112,4 @@ const ServerModal = ({ className }: { className?: string }) => {
   );
 };
 
-export default ServerModal;
+export default ServerDialog;
