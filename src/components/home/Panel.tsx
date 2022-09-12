@@ -12,7 +12,7 @@ const Panel = ({
   <div
     className={`flex flex-col justify-between bg-light-primary-100/70 dark:bg-dark-primary-800/70 relative transition-all py-3 ${translate(
       state.isOpen
-    )} shadow-xl shadow-light-secondary-900/25 dark:shadow-dark-primary-800 z-[1]`}
+    )} shadow-xl z-[1]`}
   >
     {children}
   </div>
