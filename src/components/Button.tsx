@@ -41,24 +41,20 @@ const Button = ({
     if (headless) return className;
 
     const base =
-      "min-w-[12ch] h-10 grid place-items-center px-8 py-2 rounded-md ease-out transition-colors dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400";
+      "grid place-items-center ease-out transition-colors whitespace-nowrap text-light-accent-400 dark:text-dark-accent-400";
 
-    const c = colorless
-      ? "text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500"
-      : "";
+    const c = colorless ? "text-light-secondary-900" : "";
 
-    const d = disabled ? "cursor-not-allowed opacity-50" : "";
+    const d = disabled ? "cursor-not-allowed text-light-accent-400/50" : "";
 
-    const s = success
-      ? "bg-light-success-400 hover:bg-light-success-400 dark:bg-dark-success-500 hover:dark:bg-dark-success-500"
-      : "";
+    const s = success ? "bg-light-success-400 dark:bg-dark-success-400" : "";
 
     return `${base} ${c} ${d} ${s} ${className}`;
   };
 
   const buttonState = () => {
     if (loading) {
-      return <ClipLoader size="18px" color="white" />;
+      return <ClipLoader size="18px" className="text-light-accent-400" />;
     }
 
     if (success) {
