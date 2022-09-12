@@ -44,7 +44,7 @@ const Button = ({
       "grid place-items-center ease-out transition-colors whitespace-nowrap text-light-accent-400 dark:text-dark-accent-400";
 
     const c = colorless
-      ? "text-light-secondary-900 dark:text-dark-secondary-100"
+      ? "!text-light-secondary-900 dark:!text-dark-secondary-100"
       : "";
 
     const d = disabled ? "cursor-not-allowed opacity-50" : "";
