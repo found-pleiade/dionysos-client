@@ -1,11 +1,5 @@
 import * as R from "ramda";
 
-/**
- * Toggle 'visible' and 'hidden' classes based on the boolean value.
- */
-export const visibility = (condition: boolean) =>
-  condition ? "visible" : "hidden";
-
 const gteTwo = (x: string) => R.gte(R.length(x), 2);
 
 const lteTwenty = (x: string) => R.lte(R.length(x), 20);

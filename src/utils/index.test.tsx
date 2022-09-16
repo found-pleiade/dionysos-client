@@ -4,13 +4,6 @@ import "@testing-library/jest-dom";
 import { expect, describe, it } from "vitest";
 import * as utils from ".";
 
-describe("visibility", () => {
-  it("Output visible or hidden if true or false", () => {
-    expect(utils.visibility(true)).toBe("visible");
-    expect(utils.visibility(false)).toBe("hidden");
-  });
-});
-
 describe("gteTwo", () => {
   it("True if x >= 2", () => {
     expect(utils.exportedForTesting.gteTwo("")).toBe(false);
