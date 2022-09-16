@@ -20,6 +20,8 @@ const useVersion = (serverAddress?: string) => {
   const serverVersion = data ? data : "x.x.x";
 
   const isCompatible = () => {
+    if (isLoading) return true;
+
     const [major, minor] = version.split(".");
     const [serverMajor, serverMinor] = serverVersion.split(".");
 
