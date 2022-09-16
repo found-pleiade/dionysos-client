@@ -38,7 +38,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
       <RowGroup>
         <Input
           id="connect"
-          className="!rounded-none md:!rounded-md md:!rounded-r-none bg-light-primary-200 w-screen"
+          className="!rounded-none sm:!rounded-md bg-light-primary-200 w-full"
           placeholder="Username"
           value={name}
           setValue={setName}
@@ -57,7 +57,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
 
       <ErrorCard
         show={!isValidConditions.lteTwenty(name)}
-        className="!rounded-none md:!rounded-b-md"
+        className="!rounded-none sm:!rounded-md sm:mt-4"
       >
         Maximum length is 20 chars
       </ErrorCard>

@@ -37,32 +37,36 @@ const Register = () => {
     }
 
     return (
-      <div className="w-screen">
-        <ServerDialog className="ml-auto mr-4 mb-3" />
+      <Fragment>
+        <ServerDialog className="ml-auto mr-4 md:mr-0 mb-3" />
         <RegisterForm disabled={isLoading} />
-      </div>
+      </Fragment>
     );
   };
 
   return (
     <div className="h-dvh text-center flex flex-col">
-      <header>
+      <header className="sm:mt-36">
         <h1
-          className="text-[3.7rem] uppercase font-display font-semibold
+          className="text-[3.7rem] sm:text-[4.995rem] uppercase font-display font-semibold
         text-light-secondary-900 dark:text-dark-secondary-100 -mt-3 pt-2"
         >
           Dionysos
         </h1>
 
         <h2
-          className="text-[1.125rem] -mt-3 font-display font-medium
+          className="text-[1.125rem] sm:text-[1.51875rem] -mt-3 font-display font-medium
         text-light-secondary-800 dark:text-dark-secondary-200"
         >
           Share cinematic experiences.
         </h2>
       </header>
 
-      <div className="flex-1 grid place-items-center">{pageState()}</div>
+      <div className="flex-1 grid place-items-center lg:max-h-80">
+        <div className="grid place-items-center w-screen sm:max-w-md">
+          {pageState()}
+        </div>
+      </div>
     </div>
   );
 };
