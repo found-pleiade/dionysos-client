@@ -28,7 +28,7 @@ const ServerDialog = ({ className }: { className?: string }) => {
     useVersion(serverAddress);
 
   const exitModal = () => {
-    if (!error) setServerAddress(settings.get.server);
+    if (!error && !isLoading) setServerAddress(settings.get.server);
     closeModal();
   };
 
