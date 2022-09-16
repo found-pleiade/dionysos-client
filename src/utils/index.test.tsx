@@ -120,15 +120,3 @@ describe("invalidInput", () => {
     fireEvent.keyDown(node, { code: "Space", charCode: 32 });
   });
 });
-
-describe("isLenZero", () => {
-  it("True if length of string === 0", () => {
-    expect(utils.isLenZero("")).toBe(true);
-    expect(utils.isLenZero("abc")).toBe(false);
-    expect(
-      utils.isLenZero(`
-    `)
-    ).toBe(false);
-    expect(utils.isLenZero(" ")).toBe(false);
-  });
-});

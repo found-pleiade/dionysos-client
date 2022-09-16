@@ -39,8 +39,6 @@ export const invalidInput = (event: any) => {
   return !(isClick || (isKeyDown && isEnter && isFocused));
 };
 
-export const isLenZero = (x: string) => R.equals(R.length(x), 0);
-
 export const isRequestValid = (res: Response) =>
   res.status >= 200 && res.status < 300;
 
