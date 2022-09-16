@@ -38,7 +38,7 @@ const App = () => {
             <UserContext.Provider value={user}>
               <div
                 className="bg-light-primary-100 dark:bg-dark-primary-900
-              text-light-secondary-900 dark:text-dark-secondary-100"
+              text-light-secondary-900 dark:text-dark-secondary-100 h-full"
               >
                 <MemoryRouter>
                   <Routes>

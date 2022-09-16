@@ -7,6 +7,12 @@
     font-family: "Source Sans Pro", sans-serif;
   }
 
+  html,
+  body,
+  body > div {
+    height: 100%;
+  }
+
   *:focus-visible {
     outline: none;
     outline: solid theme("colors.light.complementary.400") 2px;
@@ -20,10 +26,6 @@
    */
   .video-max-width {
     max-width: calc(16 / 9 * 100 * 1vh);
-  }
-
-  .h-dvh {
-    height: calc(var(--vh, 1vh) * 100);
   }
 }
 
