@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext, ActionTypes as UserActionTypes } from "../../states/user";
+import { UserContext } from "../../states/user";
 import useCreateUser from "../../states/user/createUser";
 import Button from "../Button";
 import Input from "../Input";
