@@ -11,16 +11,24 @@ import ErrorCard from "../ErrorCard";
 import Form from "../Form";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 
-const RegisterForm = ({ disabled }: { disabled: boolean }) => {
+const RegisterForm = ({
+  disabled,
+  loading,
+  error,
+}: {
+  disabled: boolean;
+  loading: boolean;
+  error: boolean;
+}) => {
   const [name, setName] = useState("");
-  const { isLoading, error, data, mutate } = useCreateUser(name);
+  const createUser = useCreateUser(name);
   const user = useContext(UserContext);
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data) {
-      const { uri, password } = data;
+    if (createUser.data) {
+      const { uri, password } = createUser.data;
 
       user.dispatch({
         type: UserActionTypes.SET_URI_AND_ID,
@@ -31,15 +39,15 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
 
       navigate("/home");
     }
-  }, [data]);
+  }, [createUser.data]);
 
   return (
-    <Form onSubmit={() => mutate()} className="flex flex-col w-full">
+    <Form onSubmit={() => createUser.mutate()} className="flex flex-col w-full">
       <RowGroup>
         <Input
           id="connect"
-          className="!rounded-none sm:!rounded-md bg-light-primary-200 w-full"
-          placeholder="Username"
+          className="!rounded-none sm:!rounded-md w-full"
+          placeholder={loading ? "Connecting…" : "Username"}
           value={name}
           setValue={setName}
           disabled={disabled}
@@ -48,7 +56,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
         <Button
           type="submit"
           className="text-light-accent-400 w-12 pl-2 pr-4 -ml-12 z-10"
-          loading={isLoading}
+          loading={loading || createUser.isLoading}
           disabled={!isValid(name) || disabled}
         >
           <ArrowRightIcon />
@@ -59,7 +67,23 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
         show={!isValidConditions.lteTwenty(name)}
         className="!rounded-none sm:!rounded-md sm:mt-4"
       >
-        Maximum length is 20 chars
+        The maximum length is 20 chars.
+      </ErrorCard>
+
+      <ErrorCard
+        show={createUser.error ? true : false}
+        className="!rounded-none sm:!rounded-md sm:mt-4"
+      >
+        An error occured creating your username.
+      </ErrorCard>
+
+      <ErrorCard
+        show={error ? true : false}
+        className="!rounded-none sm:!rounded-md sm:mt-4"
+      >
+        An error occured, check your connection or try later.
+        <br />
+        <p className="italic opacity-90">Details in the server settings</p>
       </ErrorCard>
     </Form>
   );

@@ -55,7 +55,7 @@ const ServerDialog = ({ className }: { className?: string }) => {
   return (
     <>
       <Button onClick={openModal} className={className}>
-        Change server
+        Server settings
       </Button>
 
       <SimpleDialog
@@ -84,13 +84,19 @@ const ServerDialog = ({ className }: { className?: string }) => {
           />
 
           <ErrorCard show={error ? true : false}>
-            An error occurred while fetching the version.
+            Either :
             <br />
-            Check your internet connection and the url.
+            - Your internet connection is down
+            <br />
+            - The server is down
+            <br />- The URL is wrong
           </ErrorCard>
 
           <ErrorCard show={!error && !isCorrect}>
-            Incorrect data, is the uri correct?
+            The client expect a string from <code>/version</code> with the
+            format <code>x.x.x</code> and the data doesn&apos;t match it.
+            <br />
+            It&apos;s probably happening because of an incorrect URI.
           </ErrorCard>
 
           <ErrorCard show={!error && !isCompatible && isCorrect}>
