@@ -24,18 +24,6 @@ describe("lteTwenty", () => {
   });
 });
 
-describe("notNil", () => {
-  it("False if null or undefined", () => {
-    expect(utils.notNil("")).toBe(true);
-    expect(utils.notNil(0)).toBe(true);
-    expect(utils.notNil(1)).toBe(true);
-    expect(utils.notNil({})).toBe(true);
-    expect(utils.notNil([])).toBe(true);
-    expect(utils.notNil(null)).toBe(false);
-    expect(utils.notNil(undefined)).toBe(false);
-  });
-});
-
 describe("isValidConditions", () => {
   it("Contains conditions for user and room names", () => {
     expect(utils.isValidConditions.gteTwo).not.toBe(undefined);

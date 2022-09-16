@@ -5,11 +5,6 @@ const gteTwo = (x: string) => R.gte(R.length(x), 2);
 const lteTwenty = (x: string) => R.lte(R.length(x), 20);
 
 /**
- * Check if the passed variable is not null or undefined.
- */
-export const notNil = (x: any) => R.not(R.isNil(x));
-
-/**
  * An object that contains tests for the isValid function.
  * Used for user and room name validations and inputs helpers.
  */
