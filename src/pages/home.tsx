@@ -81,12 +81,10 @@ const Home = () => {
   if (joinRoom.isLoading && createRoom.isLoading) {
     return (
       <PlaceItemsCenter fullscreen>
-        <CenterCard>
-          <p className="text-xl text-center">
-            {share.isJoining ? "Joining the room" : "Creating the room"}
-          </p>
-          <LinearLoader />
-        </CenterCard>
+        <p className="text-xl text-center">
+          {share.isJoining ? "Joining the room" : "Creating the room"}
+        </p>
+        <LinearLoader />
       </PlaceItemsCenter>
     );
   }
@@ -94,12 +92,10 @@ const Home = () => {
   if (createRoom.error || joinRoom.error) {
     return (
       <PlaceItemsCenter fullscreen>
-        <CenterCard>
-          {createRoom.error?.message}
-          {joinRoom.error?.message}
-          <br />
-          Please refresh the page and try again
-        </CenterCard>
+        {createRoom.error?.message}
+        {joinRoom.error?.message}
+        <br />
+        Please refresh the page and try again
       </PlaceItemsCenter>
     );
   }
