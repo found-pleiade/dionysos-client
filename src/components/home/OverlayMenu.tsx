@@ -1,7 +1,6 @@
 import { MenuIcon } from "@heroicons/react/solid";
 import React from "react";
 import useSideMenu from "../../states/sideMenu";
-import { visibility } from "../../utils";
 
 type OverlayMenuProps = {
   panel: ReturnType<typeof useSideMenu>;
@@ -14,7 +13,7 @@ const OverlayMenu = ({ panel }: OverlayMenuProps) => {
   return (
     <div className="absolute top-3 left-3 z-10">
       <MenuIcon
-        className={`${iconStyle} ${visibility(!panel.isOpen)}`}
+        className={`${iconStyle} ${!panel.isOpen ? "visible" : "hidden"}`}
         onClick={() => panel.toggle()}
       />
     </div>
