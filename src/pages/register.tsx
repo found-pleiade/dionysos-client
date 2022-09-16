@@ -7,7 +7,7 @@ import useVersion from "../features/version";
 const Register = () => {
   const share = useContext(ShareContext);
   const { isLoading, error, isCorrect, isCompatible } = useVersion();
-  const wrong = error ? true : false || !isCorrect || !isCompatible;
+  const isWrong = error ? true : false || !isCorrect || !isCompatible;
 
   useEffect(() => {
     share.scanUrl();
@@ -36,9 +36,9 @@ const Register = () => {
           <ServerDialog className="ml-auto mr-4 md:mr-0 mb-3" />
 
           <RegisterForm
-            disabled={isLoading || wrong}
+            disabled={isLoading || isWrong}
             loading={isLoading}
-            error={wrong}
+            error={isWrong}
           />
         </div>
       </div>
