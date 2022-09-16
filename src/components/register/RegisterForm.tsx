@@ -47,7 +47,7 @@ const RegisterForm = ({ disabled }: { disabled: boolean }) => {
 
         <Button
           type="submit"
-          className="rounded-none md:rounded-md md:rounded-l-none text-light-accent-400 w-12 pl-2 pr-4 -ml-12 z-10"
+          className="text-light-accent-400 w-12 pl-2 pr-4 -ml-12 z-10"
           loading={isLoading}
           disabled={!isValid(name) || disabled}
         >
