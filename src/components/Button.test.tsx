@@ -5,12 +5,6 @@ import { expect, describe, it } from "vitest";
 import Button from "./Button";
 
 describe("Renders", () => {
-  it("div", () => {
-    render(<Button />);
-
-    expect(screen.getByRole("none").tagName).toBe("DIV");
-  });
-
   it("basic", () => {
     render(<Button>Hello World</Button>);
 

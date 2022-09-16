@@ -1,15 +1,12 @@
 import { CheckIcon } from "@heroicons/react/solid";
 import React, { Children } from "react";
-import { Link, To } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { isLenZero } from "../utils";
 
 const Button = ({
   id,
   className,
   title,
   type = "button",
-  to = "",
   colorless,
   onClick,
   disabled,
@@ -22,7 +19,6 @@ const Button = ({
   className?: string;
   title?: string;
   type?: "button" | "submit";
-  to?: To;
   colorless?: boolean;
   onClick?: any;
   disabled?: boolean;
@@ -31,12 +27,7 @@ const Button = ({
   loading?: boolean;
   success?: boolean;
 }) => {
-  // Return an empty button element if there are no children.
-  // Used for navigation buttons when needing a single right aligned button.
-  if (Children.toArray(children).length <= 0) return <div role="none" />;
-
-  // Tailwind classes based on props. Classes added later override
-  // earlier classes style.
+  // Tailwind classes based on props.
   const style = () => {
     if (headless) return className;
 
@@ -52,7 +43,8 @@ const Button = ({
     return `${base} ${c} ${d} ${className}`;
   };
 
-  const buttonState = () => {
+  // Override children when showing a state
+  const content = () => {
     if (loading) {
       const color = window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "#fff"
@@ -68,7 +60,7 @@ const Button = ({
     return children;
   };
 
-  const buttonTag = (
+  return (
     <button
       id={id}
       type={type}
@@ -78,25 +70,9 @@ const Button = ({
       tabIndex={0}
       disabled={disabled}
     >
-      {buttonState()}
+      {content()}
     </button>
   );
-
-  const linkComp = (
-    <Link
-      id={id}
-      type={type}
-      className={style()}
-      onClick={onClick}
-      title={title}
-      tabIndex={0}
-      to={to}
-    >
-      {buttonState()}
-    </Link>
-  );
-
-  return isLenZero(to as string) || disabled ? buttonTag : linkComp;
 };
 
 export default Button;
