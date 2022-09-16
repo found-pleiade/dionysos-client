@@ -2,20 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/**
- * Prevent users from selecting text like in a browser
- * for a more native experience.
- */
-html {
-  user-select: none;
+@layer base {
+  html {
+    font-family: "Source Sans Pro", sans-serif;
+  }
+
+  html,
+  body,
+  body > div {
+    height: 100%;
+  }
+
+  *:focus-visible {
+    outline: none;
+    outline: solid theme("colors.light.complementary.400") 2px;
+    border-radius: 2px;
+  }
 }
 
 @layer components {
-  .page {
-    height: 100vh;
-    transition: transform ease-in-out;
-  }
-
   /**
    * Prevent the video to overflow in any container ratio.
    */
@@ -31,13 +36,13 @@ html {
 .input:not(:placeholder-shown) + .placeholder {
   transform: translateY(-140%);
   font-size: theme("fontSize.sm");
-  color: theme("colors.light.secondary");
+  color: theme("colors.light.secondary.900");
 }
 
 @media (prefers-color-scheme: dark) {
   .input:focus + .placeholder,
   .input:not(:placeholder-shown) + .placeholder {
-    color: theme("colors.dark.secondary");
+    color: theme("colors.dark.secondary.100");
   }
 }
 
@@ -47,8 +52,8 @@ html {
 
 .openSideMenus,
 .closeSideMenus {
-  --min: calc(41ch + theme("spacing.3"));
-  --max: calc(41ch + theme("spacing.3"));
+  --min: calc(35ch + theme("spacing.3"));
+  --max: calc(35ch + theme("spacing.3"));
   --duration: 200ms;
   --padding: theme("spacing.3");
 }

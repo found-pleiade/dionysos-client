@@ -8,7 +8,7 @@ import useJoinRoom from "../states/room/joinRoom";
 import useDisconnectUser from "../states/room/disconnectUser";
 import useCreateRoom from "../states/room/createRoom";
 import Button from "../components/Button";
-import { ShareIcon, StarIcon } from "@heroicons/react/solid";
+import { ShareIcon, StarIcon, XIcon } from "@heroicons/react/solid";
 import SpaceBetween from "../layouts/SpaceBetween";
 import { SettingsContext } from "../states/settings";
 import SimpleDialog from "../components/SimpleDialog";
@@ -81,12 +81,12 @@ const Home = () => {
   if (joinRoom.isLoading && createRoom.isLoading) {
     return (
       <PlaceItemsCenter fullscreen>
-        <CenterCard>
-          <p className="font-medium text-xl text-center">
+        <div className="text-center flex flex-col items-center">
+          <p className="text-xl text-center">
             {share.isJoining ? "Joining the room" : "Creating the room"}
           </p>
           <LinearLoader />
-        </CenterCard>
+        </div>
       </PlaceItemsCenter>
     );
   }
@@ -94,108 +94,126 @@ const Home = () => {
   if (createRoom.error || joinRoom.error) {
     return (
       <PlaceItemsCenter fullscreen>
-        <CenterCard>
+        <div className="text-center">
           {createRoom.error?.message}
           {joinRoom.error?.message}
           <br />
           Please refresh the page and try again
-        </CenterCard>
+        </div>
       </PlaceItemsCenter>
     );
   }
 
   return (
-    <div className="page">
-      <div className="h-screen w-screen truncate flex">
-        <Panel state={panel}>
-          <>
-            <Button
-              className="ml-auto min-w-0 w-10 h-10 px-2.5 rounded-full"
-              onClick={() => {
-                setIsDialogOpen(true);
-              }}
-            >
-              <ShareIcon />
-            </Button>
+    <div
+      id="background"
+      className="h-full w-screen truncate flex"
+      onClick={(e) => {
+        const target = e.target as HTMLDivElement;
+        if (target.id === "background" || target.id === "video") {
+          return panel.setIsOpen(false);
+        }
+      }}
+    >
+      <Panel state={panel}>
+        <div className="flex ml-auto">
+          <Button
+            className="min-w-0 w-10 h-10 px-2.5 rounded-full"
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
+          >
+            <ShareIcon />
+          </Button>
 
-            <SimpleDialog
-              show={isDialogOpen}
-              closeFunction={() => {
+          <Button
+            className="min-w-0 w-10 h-10 px-2 rounded-full"
+            onClick={panel.toggle}
+            colorless
+          >
+            <XIcon />
+          </Button>
+        </div>
+
+        <SimpleDialog
+          show={isDialogOpen}
+          closeFunction={() => {
+            panel.setIsOpen(true);
+            setIsDialogOpen(false);
+          }}
+          className="text-center max-w-3xl w-auto"
+        >
+          <p className="text-lg font-semibold">
+            Share this link with your friends
+          </p>
+
+          <Button
+            headless
+            className="font-mono my-3"
+            onClick={() => {
+              navigator.clipboard.writeText(url);
+              setUrlCopied(true);
+
+              setTimeout(() => {
+                setUrlCopied(false);
+              }, 3000);
+            }}
+          >
+            <p>{url}</p>
+
+            <p
+              className={`${
+                urlCopied
+                  ? "text-light-accent-400 dark:text-dark-accent-400"
+                  : "text-light-secondary-500 dark:text-dark-secondary-500"
+              }`}
+            >
+              {urlCopied ? "copied!" : "click to copy"}
+            </p>
+          </Button>
+
+          <SpaceBetween>
+            <div />
+            <Button
+              onClick={() => {
                 panel.setIsOpen(true);
                 setIsDialogOpen(false);
               }}
-              className="text-center max-w-3xl w-auto"
+              colorless
             >
-              <p className="text-xl font-bold">
-                Share the following link to your friends:
-              </p>
+              Done
+            </Button>
+          </SpaceBetween>
+        </SimpleDialog>
 
-              <Button
-                headless
-                className="text-lg font-mono mt-3 mb-6"
-                onClick={() => {
-                  navigator.clipboard.writeText(url);
-                  setUrlCopied(true);
+        <ul className="h-full">
+          {getRoom.data?.users.map((user: any) => {
+            return (
+              <li key={user.ID} className="pb-1 flex align-middle">
+                {user.name}
+                {user.ID === getRoom.data?.ownerID ? (
+                  <StarIcon className="py-1 h-6 w-4 ml-1" />
+                ) : (
+                  <span />
+                )}
+              </li>
+            );
+          })}
+        </ul>
 
-                  setTimeout(() => {
-                    setUrlCopied(false);
-                  }, 3000);
-                }}
-              >
-                <p>{url}</p>
+        <UserDisplay />
+      </Panel>
 
-                <p
-                  className={`text-base font-medium ${
-                    urlCopied
-                      ? "text-light-accent-400 dark:text-dark-accent-400 opacity-100"
-                      : "opacity-60"
-                  }`}
-                >
-                  {urlCopied ? "copied!" : "click to copy"}
-                </p>
-              </Button>
+      {/* Video */}
+      <div
+        id="video"
+        className="relative w-[-webkit-fill-available] flex items-center justify-center"
+      >
+        {/* Player */}
+        <div className="video-max-width mx-auto w-[inherit]" />
 
-              <SpaceBetween>
-                <div />
-                <Button
-                  onClick={() => {
-                    panel.setIsOpen(true);
-                    setIsDialogOpen(false);
-                  }}
-                  colorless
-                >
-                  Done
-                </Button>
-              </SpaceBetween>
-            </SimpleDialog>
-          </>
-
-          <ul className="h-full">
-            {getRoom.data?.users.map((user: any) => {
-              return (
-                <li key={user.ID} className="pb-1 flex align-middle">
-                  {user.name}
-                  {user.ID === getRoom.data?.ownerID ? (
-                    <StarIcon className="py-1 h-6 w-4 ml-1" />
-                  ) : (
-                    <span />
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-
-          <UserDisplay />
-        </Panel>
-
-        {/* Video */}
-        <div className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center">
-          {/* Player */}
-          <div className="video-max-width mx-auto w-[inherit]" />
-
-          {/* Menus */}
-          <OverlayMenu panel={panel} />
-        </div>
+        {/* Menus */}
+        <OverlayMenu panel={panel} />
       </div>
     </div>
   );

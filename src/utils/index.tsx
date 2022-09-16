@@ -1,19 +1,8 @@
 import * as R from "ramda";
 
-/**
- * Toggle 'visible' and 'hidden' classes based on the boolean value.
- */
-export const visibility = (condition: boolean) =>
-  condition ? "visible" : "hidden";
-
 const gteTwo = (x: string) => R.gte(R.length(x), 2);
 
 const lteTwenty = (x: string) => R.lte(R.length(x), 20);
-
-/**
- * Check if the passed variable is not null or undefined.
- */
-export const notNil = (x: any) => R.not(R.isNil(x));
 
 /**
  * An object that contains tests for the isValid function.
@@ -49,8 +38,6 @@ export const invalidInput = (event: any) => {
   const isFocused = testActiveElement(event.target);
   return !(isClick || (isKeyDown && isEnter && isFocused));
 };
-
-export const isLenZero = (x: string) => R.equals(R.length(x), 0);
 
 export const isRequestValid = (res: Response) =>
   res.status >= 200 && res.status < 300;

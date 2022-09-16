@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, ReactNode } from "react";
+import React, { Fragment, ReactElement, ReactNode } from "react";
 
 const SimpleDialog = ({
   children,
@@ -11,19 +11,20 @@ const SimpleDialog = ({
 }: {
   children: ReactNode;
   show: boolean;
-  title?: string;
+  title?: string | ReactElement;
   className?: string;
   closeFunction: () => void;
   closeDelayCondition?: boolean;
 }) => {
-  const duration = 300;
-  const delay = 500;
-
-  const closeDelayClass = closeDelayCondition ? `delay-[${delay}ms]` : "";
-  const durationClass = `delay-[${duration}ms]`;
+  const closeDelayClass = closeDelayCondition ? `delay-[500ms]` : "";
+  const durationClass = `duration-[300ms]`;
 
   const titleElement = title ? (
-    <Dialog.Title as="h3" className="text-lg font-medium leading-6 mb-4">
+    <Dialog.Title
+      as="h3"
+      className="text-lg font-semibold leading-6 mb-4
+    dark:text-dark-secondary-100"
+    >
       {title}
     </Dialog.Title>
   ) : (
@@ -42,11 +43,11 @@ const SimpleDialog = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-25 dark:bg-opacity-30" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center md:p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter={`ease-out ${durationClass}`}
@@ -57,7 +58,7 @@ const SimpleDialog = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`w-full max-w-lg transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100  dark:bg-dark-primary-700 dark:text-dark-secondary ${className}`}
+                className={`w-full max-w-lg transform overflow-hidden sm:rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-light-primary-100 dark:bg-dark-primary-900 dark:text-dark-secondary-100 ${className}`}
               >
                 {titleElement}
                 {children}

@@ -4,13 +4,6 @@ import "@testing-library/jest-dom";
 import { expect, describe, it } from "vitest";
 import * as utils from ".";
 
-describe("visibility", () => {
-  it("Output visible or hidden if true or false", () => {
-    expect(utils.visibility(true)).toBe("visible");
-    expect(utils.visibility(false)).toBe("hidden");
-  });
-});
-
 describe("gteTwo", () => {
   it("True if x >= 2", () => {
     expect(utils.exportedForTesting.gteTwo("")).toBe(false);
@@ -28,18 +21,6 @@ describe("lteTwenty", () => {
     expect(utils.exportedForTesting.lteTwenty("abcdefghijklmnopqrstu")).toBe(
       false
     );
-  });
-});
-
-describe("notNil", () => {
-  it("False if null or undefined", () => {
-    expect(utils.notNil("")).toBe(true);
-    expect(utils.notNil(0)).toBe(true);
-    expect(utils.notNil(1)).toBe(true);
-    expect(utils.notNil({})).toBe(true);
-    expect(utils.notNil([])).toBe(true);
-    expect(utils.notNil(null)).toBe(false);
-    expect(utils.notNil(undefined)).toBe(false);
   });
 });
 
@@ -137,17 +118,5 @@ describe("invalidInput", () => {
     node.onkeydown = func;
     node.focus();
     fireEvent.keyDown(node, { code: "Space", charCode: 32 });
-  });
-});
-
-describe("isLenZero", () => {
-  it("True if length of string === 0", () => {
-    expect(utils.isLenZero("")).toBe(true);
-    expect(utils.isLenZero("abc")).toBe(false);
-    expect(
-      utils.isLenZero(`
-    `)
-    ).toBe(false);
-    expect(utils.isLenZero(" ")).toBe(false);
   });
 });

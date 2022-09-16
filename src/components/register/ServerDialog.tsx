@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GlobeAltIcon, ReplyIcon } from "@heroicons/react/solid";
 import Button from "../Button";
 import Input from "../Input";
 import SpaceBetween from "../../layouts/SpaceBetween";
@@ -8,12 +7,11 @@ import {
   SettingsContext,
   ActionTypes as SettingsActionTypes,
 } from "../../states/settings";
-import RowGroup from "../../layouts/RowGroup";
 import useVersion from "../../features/version";
 import Form from "../Form";
 import SimpleDialog from "../SimpleDialog";
 
-const ServerModal = () => {
+const ServerDialog = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -30,7 +28,7 @@ const ServerModal = () => {
     useVersion(serverAddress);
 
   const exitModal = () => {
-    if (!error) setServerAddress(settings.get.server);
+    if (!error && !isLoading) setServerAddress(settings.get.server);
     closeModal();
   };
 
@@ -56,45 +54,49 @@ const ServerModal = () => {
 
   return (
     <>
-      <Button
-        className="absolute top-0 right-0 min-w-0 w-10 h-10 px-2 rounded-none rounded-bl-lg"
-        onClick={openModal}
-      >
-        <GlobeAltIcon />
+      <Button onClick={openModal} className={className}>
+        Server settings
       </Button>
 
       <SimpleDialog
         show={isOpen}
         closeFunction={exitModal}
-        title="Server address"
-        closeDelayCondition={isSuccess}
-      >
-        <Form onSubmit={() => refetch()}>
-          <RowGroup>
+        title={
+          <SpaceBetween>
+            Server address
             <Button
-              className="min-w-0 self-center flex-1 rounded-r-none px-5"
+              className="text-base font-normal"
               onClick={setInitialServerAddress}
               title="Restore default address"
             >
-              <ReplyIcon className="h-5" />
+              Restore default
             </Button>
-
-            <Input
-              disabled={isLoading}
-              className="my-4 rounded-l-none"
-              value={serverAddress}
-              setValue={setServerAddress}
-            />
-          </RowGroup>
+          </SpaceBetween>
+        }
+        closeDelayCondition={isSuccess}
+      >
+        <Form onSubmit={() => refetch()}>
+          <Input
+            disabled={isLoading}
+            className="mb-4"
+            value={serverAddress}
+            setValue={setServerAddress}
+          />
 
           <ErrorCard show={error ? true : false}>
-            An error occurred while fetching the version.
+            Either :
             <br />
-            Check your internet connection and the url.
+            - Your internet connection is down
+            <br />
+            - The server is down
+            <br />- The URL is wrong
           </ErrorCard>
 
           <ErrorCard show={!error && !isCorrect}>
-            Incorrect data, is the uri correct?
+            The client expect a string from <code>/version</code> with the
+            format <code>x.x.x</code> and the data doesn&apos;t match it.
+            <br />
+            It&apos;s probably happening because of an incorrect URI.
           </ErrorCard>
 
           <ErrorCard show={!error && !isCompatible && isCorrect}>
@@ -116,4 +118,4 @@ const ServerModal = () => {
   );
 };
 
-export default ServerModal;
+export default ServerDialog;

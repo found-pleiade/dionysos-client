@@ -8,6 +8,12 @@ import useUser, { UserContext } from "./states/user";
 import useAuth, { AuthContext } from "./features/auth";
 import useShareRoom, { ShareContext } from "./features/shareRoom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "@fontsource/source-sans-pro";
+import "@fontsource/source-sans-pro/600.css";
+import "@fontsource/montserrat";
+import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat/800.css";
+import "@fontsource/fira-mono";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -30,7 +36,10 @@ const App = () => {
         <AuthContext.Provider value={auth}>
           <SettingsContext.Provider value={settings}>
             <UserContext.Provider value={user}>
-              <div className="dark:text-dark-secondary h-screen cursor-default relative">
+              <div
+                className="bg-light-primary-100 dark:bg-dark-primary-900
+              text-light-secondary-900 dark:text-dark-secondary-100 h-full"
+              >
                 <MemoryRouter>
                   <Routes>
                     <Route path="/" element={<Register />} />

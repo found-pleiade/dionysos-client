@@ -1,15 +1,12 @@
 import { CheckIcon } from "@heroicons/react/solid";
 import React, { Children } from "react";
-import { Link, To } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { isLenZero } from "../utils";
 
 const Button = ({
   id,
   className,
   title,
   type = "button",
-  to = "",
   colorless,
   onClick,
   disabled,
@@ -22,7 +19,6 @@ const Button = ({
   className?: string;
   title?: string;
   type?: "button" | "submit";
-  to?: To;
   colorless?: boolean;
   onClick?: any;
   disabled?: boolean;
@@ -31,44 +27,40 @@ const Button = ({
   loading?: boolean;
   success?: boolean;
 }) => {
-  // Return an empty button element if there are no children.
-  // Used for navigation buttons when needing a single right aligned button.
-  if (Children.toArray(children).length <= 0) return <div role="none" />;
-
-  // Tailwind classes based on props. Classes added later override
-  // earlier classes style.
+  // Tailwind classes based on props.
   const style = () => {
     if (headless) return className;
 
     const base =
-      "min-w-[12ch] h-10 grid place-items-center px-8 py-2 rounded-md ease-out transition-colors font-medium dark:text-dark-secondary whitespace-nowrap text-light-primary-100 bg-light-accent-500 hover:bg-light-accent-400 dark:bg-dark-accent-500 dark:hover:bg-dark-accent-400";
+      "grid place-items-center ease-out transition-colors whitespace-nowrap text-light-accent-400 dark:text-dark-accent-400";
 
     const c = colorless
-      ? "text-light-secondary bg-light-primary-300 hover:bg-light-primary-300/80 dark:bg-dark-primary-600 dark:hover:bg-dark-primary-500"
+      ? "!text-light-secondary-900 dark:!text-dark-secondary-100"
       : "";
 
     const d = disabled ? "cursor-not-allowed opacity-50" : "";
 
-    const s = success
-      ? "bg-light-success-400 hover:bg-light-success-400 dark:bg-dark-success-500 hover:dark:bg-dark-success-500"
-      : "";
-
-    return `${base} ${c} ${d} ${s} ${className}`;
+    return `${base} ${c} ${d} ${className}`;
   };
 
-  const buttonState = () => {
+  // Override children when showing a state
+  const content = () => {
     if (loading) {
-      return <ClipLoader size="18px" color="white" />;
+      const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "#fff"
+        : "#000";
+
+      return <ClipLoader size="18px" color={color} />;
     }
 
     if (success) {
-      return <CheckIcon className="text-white w-6 h-6" />;
+      return <CheckIcon className="text-black dark:text-white w-6 h-6" />;
     }
 
     return children;
   };
 
-  const buttonTag = (
+  return (
     <button
       id={id}
       type={type}
@@ -78,25 +70,9 @@ const Button = ({
       tabIndex={0}
       disabled={disabled}
     >
-      {buttonState()}
+      {content()}
     </button>
   );
-
-  const linkComp = (
-    <Link
-      id={id}
-      type={type}
-      className={style()}
-      onClick={onClick}
-      title={title}
-      tabIndex={0}
-      to={to}
-    >
-      {buttonState()}
-    </Link>
-  );
-
-  return isLenZero(to as string) || disabled ? buttonTag : linkComp;
 };
 
 export default Button;
