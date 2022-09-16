@@ -15,9 +15,9 @@ const ErrorCard = ({
     as={Fragment}
     enter="ease-out duration-300"
     enterFrom="max-h-0 py-0"
-    enterTo="max-h-32 py-2"
+    enterTo="max-h-40 py-2"
     leave={"ease-in duration-200"}
-    leaveFrom="max-h-32 py-2"
+    leaveFrom="max-h-40 py-2"
     leaveTo="max-h-0 py-0"
   >
     <div
