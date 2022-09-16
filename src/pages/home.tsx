@@ -207,7 +207,7 @@ const Home = () => {
       {/* Video */}
       <div
         id="video"
-        className="relative w-[-webkit-fill-available] h-screen flex items-center justify-center"
+        className="relative w-[-webkit-fill-available] flex items-center justify-center"
       >
         {/* Player */}
         <div className="video-max-width mx-auto w-[inherit]" />
