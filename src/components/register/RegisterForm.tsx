@@ -30,9 +30,9 @@ const RegisterForm = ({
     if (createUser.data) {
       const { uri, password } = createUser.data;
 
-      user.dispatch({
-        type: UserActionTypes.SET_URI_AND_ID,
-        payload: { uri },
+      user.set({
+        uri,
+        id: Number(uri.split("/").pop()),
       });
 
       auth.setPassword(password);
